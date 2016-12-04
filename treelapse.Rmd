@@ -9,7 +9,7 @@ link-citations: yes
 ---
 
 ```{r set-chunk-opts}
-knitr::opts_chunk$set(fig.align = "center", out.width = "200px")
+knitr::opts_chunk$set(fig.align = "center", out.width = "200px", echo = FALSE)
 ```
 
 ## outline ##
@@ -241,23 +241,29 @@ Conclusion
 
 ## Introduction ##
 
-In this work, we describe methods for visualization of data structured along
-trees, especially hierarchically structured collections of time
-series. Influenced by Degree of Interest trees, linked scatterplot brushing,
-and timeboxes, we have adapted the fundamental visualization principles of
-"focus + context" and "linking" to study questions that arise when analyzing
-tree structured data. Our motivating application is to the analysis of
-microbial time series, where an evolutionary tree relating microbes is
-available a priori. However, we have identified common problem types where, if
-a tree is not directly available, it can be constructed from data and then
-studied using our techniques.
+(todo: sentence about why we should care, and a high level summary
+before diving into degree-of-interest linking jargon)
 
-We have implemented our visualizations in d3, but encapsulated in an R package,
-to facilitate rapid turnover from data preparation and modeling to interactive
-exploration, and vice versa. We hope this package encourages data analysts to
-work at this border of data modeling and visualization, and more generally
-empowers a wider audience to apply less widely known, but powerful,
-visualization ideas.
+In this work, we describe methods for visualization of data structured
+along trees, especially hierarchically structured collections of time
+series. Influenced by Degree-of-Interest trees [@heer2004doitrees],
+linked scatterplot brushing [@becker1987brushing], and timeboxes
+[@hochheiser2004dynamic], we have adapted the fundamental
+visualization principles of "focus + context" and "linking" to study
+questions that arise when analyzing tree structured data. Our
+motivating application is to the analysis of microbial time series,
+where an evolutionary tree relating microbes is available a
+priori. However, we have identified common problem types where, if a
+tree is not directly available, it can be constructed from data and
+then studied using our techniques.
+
+We have implemented our visualizations in d3, but encapsulated in an R
+package, to facilitate rapid turnover from data preparation and
+modeling to interactive exploration, and vice versa. We hope this
+package encourages data analysts to work at the border between data
+modeling and visualization, and more generally empowers a wider
+audience to apply less widely known, but powerful, visualization
+ideas.
 
 The paper is organized as follows. First, we describe our microbiome
 application, and then abstract away the essential analysis tasks. This
