@@ -3,7 +3,7 @@ title: "Interactive Visualization of Hierarchically Structured Data"
 author: "Kris Sankaran"
 date: "`r Sys.Date()`"
 output:
-	bookdown::pdf_book:
+     bookdown::pdf_book:
 bibliography: ["bibliography.bib"]
 link-citations: yes
 ---
@@ -103,7 +103,7 @@ Specific Proposals
      + Exploratory analog of structSSI
      + Minor note: we use the colorbrewer palette for simpler readability
 - Timebox Trees
-     + Combines a few more ideas: linking and focus + context
+     + Combines a few more ideas: linking and focus-plus-context
      + definition and explanation of how these ideas being implemented
               * timebox recap: we're able to highlight lines passing through
                 intersection of boxes (this is focus and context)
@@ -249,7 +249,7 @@ along trees, especially hierarchically structured collections of time
 series. Influenced by Degree-of-Interest trees [@heer2004doitrees],
 linked scatterplot brushing [@becker1987brushing], and timeboxes
 [@hochheiser2004dynamic], we have adapted the fundamental
-visualization principles of "focus + context" and "linking" to study
+visualization principles of "focus-plus-context" and "linking" to study
 questions that arise when analyzing tree structured data. Our
 motivating application is to the analysis of microbial time series,
 where an evolutionary tree relating microbes is available a
@@ -316,57 +316,61 @@ for example.
 
 ### Problem Abstraction ###
 
-An abstraction that unifies thinking through both the tree structured
-differential abundance and microbial dynamic problems is to identify the data
-with a collection of random variables indexed by nodes in a prespecified tree
-structure. In the differential abundance problem, each random variable itself
-lives in $\mathbb{R}^{G}$ where $G$ is the number of groups being
-compared. Each coordinate represents the average value across one of the
-groups, and the node exhibits differential abundance when the coordinates are
-not drawn from the same distribution. In the microbial dynamics problem, each
-random variable is instead a time series, living in $\mathbb{R}^{T}$.
+To unify the tree-structured differential abundance and microbial
+dynamic problems, we identify the data with a collection of random
+variables indexed by nodes in a prespecified tree structure. In the
+differential abundance problem, each random variable lives in
+$\mathbb{R}^{G}$ where $G$ is the number of groups being
+compared. Each coordinate represents the abundance for that group, and
+a node exhibits differential abundance when the coordinates are drawn
+from different distributions. On the other hand, in the microbial
+dynamics problem, each random variable is a time series, living in
+$\mathbb{R}^{T}$.
 
-In both these applications, we constrain the values of parent nodes according
-to the value of the children nodes: we define the value at each node to be
-either the sum or average of all descendant tips, but it is possible to imagine
-situations where the internal nodes are drawn from their own distribution,
-unconstrained by descendants. In general, analysis in this abstraction focuses
-on describing the distribution of these random variables as a function of their
-position in specified subsets of the tree. The essential difficulty in these
-problems is high-dimensionality -- there are many tree nodes, each holding a
-vector-valued random variable. Even simply navigating across the tree and
-comparing coordinates in the observed variables is a challenge; ideally we
-could construct a succinct representation of the essential covariation across
-subtrees and coordinates.
+In both of these applications, we constrain the values of parent nodes
+according to the value of the children nodes: we define the value at
+each node to be either the sum or average of all descendant
+tips. However, it is possible to imagine situations where the internal
+nodes are drawn from their own distribution, unconstrained by
+descendants. In general, analysis in this abstraction focuses on
+describing the distribution of these random variables as a function of
+their position across subsets of the tree. The essential difficulty in
+these problems is high-dimensionality -- there are many tree nodes,
+each holding a vector-valued random variable. Even simply navigating
+across the tree and comparing coordinates in the observed variables is
+a challenge; ideally we could construct a succinct representation of
+the essential covariation across subtrees and coordinates.
 
-This framework suggests other potential application areas, not all of which
-have a priori known tree structures. For example, collections of spatially
-indexed time series are frequently encountered in practice -- consider energy
-consumption, product sales, or high school dropout rates across regional
-districts. This type of data has an implicit tree structure -- at the top level
-are different states, while at the bottom are individual census tracts,
-say. Analysis here revolves around the question of how variation across series
-is related to their geographic position.  An example using this type of data is
-given in the Zillow home prices case study in Section (todo: insert section
-number).
+This framework suggests other potential application areas, not all of
+which have a priori known tree structures. For example, collections of
+spatially-indexed time series are frequently encountered in practice
+-- consider energy consumption, product sales, or high school dropout
+rates across regional districts. This type of data has an implicit
+tree structure -- at the top level are different states, while at the
+bottom are individual census tracts, say. Analysis here revolves
+around the question of how variation across time series is related to
+their geographic position.  A case study to this type of data is given
+in Section \@ref(zillow-study).
 
-Alternatively, if this type of hierarchical contextual information is not
-available, a tree structure can be learned directly from the data. This can be
-most directly achieved by learning a hierarchical clustering on the original
-series. If there is contextual information, but it is not hierarchical, it is
-possible to setup a supervised problem that uses context to predict features of
-the time series. We can retrieve a tree by using a regression tree directly
-(cite: rpart) or extracting a regression tree from a more complex supervised
-model (cite: regression tree extraction methods). Analysis then focuses on how
-different partitions of the covariate (contextual) space relate to observed
-time series. This approach is described in the UCI bikesharing demand case
-study below.
+Alternatively, if this type of hierarchical contextual information is
+not directly available, a tree structure can be learned from the
+data. This could be achieved by learning a hierarchical clustering on
+the original series. Further, if contextual information is available,
+but it is not hierarchical, it is possible to setup a supervised
+problem that uses context to predict features of the time series. We
+can construct a tree by applying a tree-based classifier
+[@breiman1984classification] or extracting a regression tree from a
+more complex supervised model [@boz2002extracting,
+@saito2002extracting]. Analysis then focuses on how different
+partitions of the contextual, covariate space relate to observed time
+series. This approach is described in Section \@ref(bikesharing-study).
 
-Finally, note that, while we have focused on time series valued nodes, all of
-this discussion could be translated to studying high dimensional data via
-parallel coordinates (todo: cite parallel coordinates). The usual parallel
-coordinates challenges remain, mainly selecting scales for and ordering the
-different coordinates, but the linking and focus + context can still be
+Finally, note that, while we have focused on time series valued nodes,
+all of this discussion could be translated to studying
+high-dimensional data via parallel coordinates
+[@inselberg1991parallel]. The usual parallel coordinates challenges
+remain, mainly selecting scales for and ordering across the different
+coordinates, but the linking and focus-plus-context can still be
 employed this setting.
 
 ## Background Literature and Solution Principles ##
@@ -375,10 +379,10 @@ Now that we have specified the essential questions of interest, we survey some
 ideas from the visualization literature that can be applied to answer
 them. Again, the core difficulty is one of high dimensionality, so it should be
 no surprise that the techniques we adapt come from the literature on
-high-dimensional data visualization, namely, work on the focus + context and
+high-dimensional data visualization, namely, work on the focus-plus-context and
 linking.
 
-The focus + context principle is that it is possible to study large collections
+The focus-plus-context principle is that it is possible to study large collections
 of visual elements at multiple scales, and these scales can be juxtaposed by
 "focusing" on a few elements of interest while maintaining the "context" of the
 coarser-scale background. A simple example of this idea is to include a search
@@ -642,7 +646,7 @@ knitr::include_graphics("preterm_csts_lacto.png")
 knitr::include_graphics("preterm_preterm.png")
 ```
 
-### Dynamics in Housing Prices ###
+### Dynamics in Housing Prices {#zillow-study}
 
 We next consider an application unrelated to the microbiome, but with
 relatively clear hierarchical structure. Our data are downloaded from
@@ -730,7 +734,7 @@ knitr::include_graphics("zillow_middle_down.png")
 knitr::include_graphics("zillow_sf.png")
 ```
 
-### Sources of Variation in Bikesharing Demand ###
+### Sources of Variation in Bikesharing Demand {#bikesharing-study}
 
 Our next example is a study in bikesharing demand, included as an
 example of analyzing collections of time series when there is no
@@ -840,7 +844,7 @@ create exploratory visualizations while still deep in data analysis;
 in this way our work is a departure from the culture of polished,
 journalistic visualizations prioritized by the D3 community. Finally,
 we have given a series of examples to demonstrate how the general
-visualization techniques of focus + context and linked brushing can be
+visualization techniques of focus-plus-context and linked brushing can be
 practically incorporated into a range of practical analysis workflows,
 from studying the impact of microbes on human health to better
 allocating units in commuter bikesharing systems.
