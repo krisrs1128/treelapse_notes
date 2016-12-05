@@ -375,130 +375,140 @@ employed this setting.
 
 ## Background Literature and Solution Principles ##
 
-Now that we have specified the essential questions of interest, we survey some
-ideas from the visualization literature that can be applied to answer
-them. Again, the core difficulty is one of high dimensionality, so it should be
-no surprise that the techniques we adapt come from the literature on
-high-dimensional data visualization, namely, work on the focus-plus-context and
-linking.
+Now that we have specified the essential questions of interest, we
+survey some ideas from the visualization literature that can be
+applied to answer them. As the core difficulty is high-dimensionality,
+so it should be no surprise that the techniques we adapt come from the
+literature on high-dimensional data visualization, namely,
+focus-plus-context and linking.
 
-The focus-plus-context principle is that it is possible to study large collections
-of visual elements at multiple scales, and these scales can be juxtaposed by
-"focusing" on a few elements of interest while maintaining the "context" of the
-coarser-scale background. A simple example of this idea is to include a search
-box that highlights samples corresponding to matching terms (the focus) while
-muting those that don't (the context). Two more sophisticated methods anchored
-in this idea are timeboxes and Degree-of-Interest (DOI) trees; both are central
-to the proposals in treelapse \@cite(hochheiser2004dynamic,
-heer2004doitrees). In timeboxes, a collection of time series are graphically
-queried using interactive brushes. Series that pass through all of the
-user-specified brushes are highlighted, and the rest are faded into the
-background. Hence, time series meeting the constraints imposed by the brushes
-are focused, while the remainder remain present, though de-emphasized, as
-context. This method can be interpreted programmatically as the visual version
-of a database query, or probabilistically as the conditional distribution for
-the full series, given it passes through certain bounds.
+The focus-plus-context principle is that large collections of visual
+elements can be studied at multiple scales, by simultaneously
+focusing" on a few elements of interest and maintaining the "context"
+of the coarser-scale background. A simple example of this idea is to
+include a search box that highlights matching samples (focus) and
+mutes the rest (context). Two more sophisticated methods anchored in
+this idea are timeboxes and Degree-of-Interest (DOI) trees; both are
+central to the proposals in treelapse [@hochheiser2004dynamic,
+heer2004doitrees]. In timeboxes, a collection of time series are
+graphically queried using interactive brushes. Series that pass
+through all of the user-specified brushes are highlighted, and the
+rest are faded to the background. Hence, time series meeting the
+constraints imposed by the brushes are focused, while the remainder
+are de-emphasized, though they remain present as context. This method
+can be interpreted programmatically as the visual analog of a database
+query, or probabilistically as the conditional distribution for the
+full series, given it passes through certain bounds.
 
-In DOI Trees, the viewer's attention is focused on a collection of
-high-interest nodes, while the remaining lower-interest nodes are left on the
-fringes (or entirely hidden) as context. The implementation is modularized into
-two tasks -- the determination of a DOI distribution over nodes in the tree and
-visual layout of a tree given DOI assignments. The DOI distribution used in
-\@cite(heer2004doitrees) places maximal interest on nodes that the user clicks,
-along with all ancestors. The DOI for all other nodes is defined as the
-distance to the closest maximal interest node. The layout proposed here trimmed
-low-interest subtrees until the remaining nodes all fit within the screen
-size. By changing the minimal DOI below which nodes are hidden, the user can
-transition between node-specific and full-tree scales.
+In DOI trees, the viewer's attention is focused on a collection of
+high-interest nodes, while the remaining lower-interest nodes are left
+on the fringes as context. The implementation is modularized into two
+tasks -- the determination of a DOI distribution over nodes in the
+tree and visual layout of a tree given DOI assignments. The DOI
+distribution used in [@heer2004doitrees] places maximal interest on
+the node that the user had most recently clicked, along with all
+ancestors. The DOI for all other nodes is defined as the distance to
+the closest maximal interest node. The layout step then trims
+low-interest subtrees until the remaining nodes fit within a given
+screen size. By adjusting the minimal DOI below which nodes are
+hidden, the user can transition between node-specific and full-tree
+scales.
 
-In linking, alternative representations of the same samples are placed side by
-side in a way that suggests covariation across the representations. A canonical
-application is to linked scatterplot brushing \@cite(becker1987brushing). Here,
-a scatterplot matrix is constructed displaying the relationship between all
-pairs of variables.  Points brushed in one scatterplot are then highlighted in
-all others. For example, this helps the user determine whether an outlier in
-one dimension is an outlier in others. Another instance of this idea is in
-linking the results of dimensionality reduction methods to displays of the raw
-data, as implemented by XGobi and Cranvas, for example. As in timeboxes,
-linking ca ben interpreted as database queries or conditional probabilities:
-given a subset of the series after conditioning on the values for one set of
-features, what are the values for a second set \@cite(buja1996interactive)?
+In linking, alternative representations of the same samples are placed
+side-by-side in order to display covariation across views. A canonical
+application is to linked scatterplot brushing
+[@becker1987brushing]. Here, a scatterplot matrix gives the
+relationship between all pairs of variables.  Points brushed in one
+scatterplot are then highlighted in all others. For example, this
+helps the user determine whether an outlier in one dimension is an
+outlier in others. Another instance of this idea links the results of
+dimensionality reduction methods to displays of the raw data, as
+implemented by XGobi and Cranvas, for example [@xie2013cranvas,
+@swayne1998xgobi]. As in timeboxes, linking can be interpreted as
+database queries or conditional probabilities: given a subset of the
+series after conditioning on the values for one set of features, what
+are the values for a second set [@buja1996interactive]?
 
-Finally, while not exactly a fundamental visualization principle, we note that
-our work is deliberately grounded in the R software ecosystem. Not only does
-this make these methods more broadly accessible, we hope to encourage a more
-animated exchange between data preparation and modeling with interactive
-visualization. Moreover, our tools are intentionally limited in scope --
-designed to facilitate this dialog for a specific class of problems, rather
-than providing a toolbox for generic types of visualization design. We believe
-that this narrow context within a broad ecosystem strikes a balance between
-problem-specificity and ease-of-use.
+Finally, unrelated to established visualization principles, we note
+that our work is deliberately grounded in the R software
+ecosystem. Not only does this make these methods more broadly
+accessible, we hope to facilitate exchange between data modeling and
+interactive visualization. Moreover, our tools are intentionally
+limited in scope -- designed to facilitate this dialog for a specific
+class of problems, rather than providing a toolbox for generic types
+of visualization design. We believe that this narrow context within a
+broad ecosystem strikes a balance between problem-specificity and
+ease-of-use.
 
 ## Specific Proposals ##
 
-Our first proposed visualization technique is a minor modification of the DOI
-Tree idea. The standard DOI Tree definition does not have any notion of data
-defined at nodes, it is only used a device for navigating tree structures. A
-trivial extension can encode scalar data at nodes: make the node radius reflect
-the associated scalar value. To reinforce this effect, we also encode this
-scalar value in the width of the parent edge. When parent nodes have values
-equal to the sum of their children, this creates the effect of values "flowing"
-from the root to leaves. To help viewers make use of their domain knowledge, we
-have included a search box that highlights paths to matching node terms. Edges
-are ordered from widest on the left to narrowest on the right. While this
-method can only be used to visualize a single scalar-value per tree node, it
-suggests an approach to the tree-structured differential abundance problem,
-which we call the DOI Sankey.
+Our first proposed visualization technique is a minor modification of
+the DOI tree. The standard DOI tree definition does not have any
+notion of data defined at nodes, it is only used a device for
+navigating tree structures. A trivial extension can encode scalar data
+at nodes: have the node radius reflect the associated scalar value. To
+reinforce this effect, we can adjust the width of the parent
+edge. When parent nodes have values equal to the sum of their
+children, this creates the effect of values "flowing" from the root to
+leaves. To help viewers make use of their domain knowledge, we have
+included a search box that highlights paths to nodes with matching
+terms. Edges are ordered from widest on the left to narrowest on the
+right. While this method can only represent a single scalar-value per
+tree node, it suggests an approach to the tree-structured differential
+abundance problem, which we call the DOI sankey.
 
-In the DOI Sankey, we split each edge in the DOI Tree across different
-groups. For example, suppose we have the average counts for treatment and
-control groups at each tree node. Every edge in the tree is split into two
-colors^[We use the colorbrewer palette to facilitate readability], with the
-relative widths of the different colors reflecting the difference in sizes for
-the two groups. The overall width of each edge is represents the sum of values
-across all groups.
+In the DOI sankey, we split each edge in the DOI Tree across different
+groups. For example, suppose we have the average counts for treatment
+and control groups at each tree node. Every edge in the tree is split
+into two colors^[We use the colorbrewer palette to facilitate
+readability], with relative widths of the different colors reflecting
+differences in sizes for the two groups. The overall width of each
+edge represents the sum of values across all groups.
 
-This display is designed to facilitate investigation of the tree structured
-differential abundance question. For example, for a single node and a single
-group, we can compute the average abundance at that node among all samples in
-that group. This will give the width for that group's color on the edge leading
-to the specified node. Differentially abundant subtrees then correspond to
-subtrees where some colors occupy more space than others. That is, this
-representation makes it easier to identify points where the "flows" for
-different groups diverge -- the colors begin to separate. The DOI principle
-assists navigation across the tree structure, allowing focus on individual flow
-structures without losing broader tree context.
+This display is designed to facilitate investigation of the tree
+structured differential abundance question. For example, for a single
+node and a single group, first compute the average abundance at that
+node among all samples in that group. This will give the width for
+that group's color on the edge leading to the specified
+node. Differentially abundant subtrees then correspond to subtrees
+where some colors occupy more space than others. That is, this
+representation makes it easier to identify points where the "flows"
+for different groups diverge -- the colors begin to separate. The DOI
+principle assists navigation across the tree structure, allowing focus
+on individual flow structures without losing broader tree context.
 
-Our third display is directed at the microbial dynamics question instead. It
-ignores the DOI principle, placing emphasis rather on linking and the
-representation of full time series. Here, two panels are arranged one over the
-other; one displays all time series, while the other displays all tree nodes,
-with node sizes reflecting the average time series value at that node. For this
-reason, we call the display, Timebox Trees. In the time series panel, we have
-directly implemented the timeboxes idea. Our link is between the two panels:
-when a set of series is highlighted by the timeboxes, the associated tree nodes
-are also highlighted. For example, timeboxes can be used to focus on a set of
-series with specific shape -- increased abundance after an ecological shock,
-for example -- and then identify along what subtrees this pattern is
-present. To further focus attention, a pan-zoom scented widget is provided in
-the top right [@willett2007scented]. The widget is a miniature version of
-the full time series panel, equipped with a single brush whose extent specifies
-the limits in the main time series panel. As in the DOI trees and Sankeys, a
-search bar can be used to highlight of interest a priori.
+Our third display is directed at the microbial dynamics
+question. Here, two panels are arranged one over the other; one
+displays all time series, while the other displays all tree nodes,
+with node sizes reflecting the time series value at that node. For
+this reason, we call the display, Timebox Trees. In the time series
+panel, we have directly implemented the timeboxes idea. We then link
+the panels: when a set of series is highlighted by the timeboxes, the
+associated tree nodes are also highlighted. For example, timeboxes can
+be used to focus on a set of series with specific shape -- increased
+abundance after an ecological shock, for example -- and identify along
+what subtrees this pattern is present. To further focus on specific
+elements, a pan-zoom scented widget is provided
+[@willett2007scented]. The widget is a miniature version of the full
+time series panel, equipped with a single brush whose extent specifies
+the limits in the main time series panel. As in the DOI trees and
+sankeys, a search bar can be used to highlight those series of
+interest a priori.
 
-The final display currently implemented in the package is the natural converse
-of the Timebox Trees display. Rather than defining visual queries in terms of
-time series, we define queries using nodes in the tree. For this reason, we
-call the display Treeboxes. Rather than focusing on the intersection of
-brushes, as in Timebox Trees, we focus on the union of brushed over nodes. This
-allows us to highlight the series associated with nodes on distant
-subtrees. This display is also suited for the microbial dynamics problem. For
-example, by highlighting all nodes at one taxonomic level in the tree, we can
-easily summarize the time series pattern for all the taxa at that
-level. Alternatively, focusing on all the children below a single node makes it
-possible to see how much correlation and competition there is between
-taxonomically similar microbes. As in the Timebox Trees display, a search box
-and pan-zoom scented widget is provided.
+The final display currently implemented in the package is the natural
+converse of the Timebox Trees display. Rather than defining visual
+queries in terms of time series, it defines queries using nodes in the
+tree. For this reason, we call the display Treeboxes. Rather than
+focusing on the intersection of brushes, as in Timebox Trees, we focus
+on the union of brushed over nodes. This allows us to highlight series
+associated with nodes on distant subtrees. This display is also suited
+for the microbial dynamics problem. For example, by highlighting all
+nodes at one taxonomic level in the tree, we can easily summarize the
+time series pattern for all the taxa at that level. Alternatively,
+focusing on all the children below a single node makes it possible to
+see how much correlation and competition there is between
+taxonomically similar microbes. As in the Timebox Trees display, a
+search box and pan-zoom scented widget are provided.
 
 ## Case Studies ##
 
@@ -610,7 +620,7 @@ rather than dynamics.  We would like to provide visual representations
 of differential abundance across CSTs and also between preterm and
 non-preterm births. [@digiulio2015temporal] interpreted its CSTs using
 a heatmap, with microbes ordered according to a hierarchical
-clustering.  By using the DOI Sankey instead, we can interpret the
+clustering.  By using the DOI sankey instead, we can interpret the
 CSTs in their taxonomic context and at multiple scales of taxonomic
 resolution. Further, while [@digiulio2015temporal] focused on
 identifying associations between preterm births and CSTs -- presumably
@@ -786,7 +796,7 @@ select these series after first zooming into this time window. Figure
 warm-weekend split, which seems quite reasonable in retrospect.
 
 Finally, we can study the behavior of the regression tree itself using
-the DOI Sankey. Here, we group samples according to their quintile of
+the DOI sankey. Here, we group samples according to their quintile of
 8AM demand and then count the abundance of the groups flowing down
 different branches. We find that the quintiles are each rather
 strongly separated after descending even a few steps down the
