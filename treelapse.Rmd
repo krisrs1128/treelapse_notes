@@ -3,7 +3,7 @@ title: "Interactive Visualization of Hierarchically Structured Data"
 author: "Kris Sankaran"
 date: "`r Sys.Date()`"
 output:
-	bookdown::pdf_book:
+     bookdown::pdf_book:
 bibliography: ["bibliography.bib"]
 link-citations: yes
 ---
@@ -103,7 +103,7 @@ Specific Proposals
      + Exploratory analog of structSSI
      + Minor note: we use the colorbrewer palette for simpler readability
 - Timebox Trees
-     + Combines a few more ideas: linking and focus + context
+     + Combines a few more ideas: linking and focus-plus-context
      + definition and explanation of how these ideas being implemented
               * timebox recap: we're able to highlight lines passing through
                 intersection of boxes (this is focus and context)
@@ -249,7 +249,7 @@ along trees, especially hierarchically structured collections of time
 series. Influenced by Degree-of-Interest trees [@heer2004doitrees],
 linked scatterplot brushing [@becker1987brushing], and timeboxes
 [@hochheiser2004dynamic], we have adapted the fundamental
-visualization principles of "focus + context" and "linking" to study
+visualization principles of "focus-plus-context" and "linking" to study
 questions that arise when analyzing tree structured data. Our
 motivating application is to the analysis of microbial time series,
 where an evolutionary tree relating microbes is available a
@@ -258,241 +258,257 @@ tree is not directly available, it can be constructed from data and
 then studied using our techniques.
 
 We have implemented our visualizations in d3, but encapsulated in an R
-package, to facilitate rapid turnover from data preparation and
-modeling to interactive exploration, and vice versa. We hope this
-package encourages data analysts to work at the border between data
-modeling and visualization, and more generally empowers a wider
-audience to apply less widely known, but powerful, visualization
-ideas.
+package, called treelapse, to facilitate rapid turnover from data
+preparation and modeling to interactive exploration, and vice
+versa. We hope this package encourages data analysts to work at the
+border between data modeling and visualization, and more generally
+empowers a wider audience to apply less widely known, but powerful,
+visualization ideas.
 
-The paper is organized as follows. First, we describe our microbiome
-application, and then abstract away the essential analysis tasks. This
-abstraction suggests applications to standard problems outside of the
-microbiome, some of which we articulate here. Next, we review the underlying
-visualization principles behind our work, and provide references to the
-software systems that originally implemented them. We then connect these
-principles to analysis tasks we identified earlier, describing in detail the
-visualization methods we have implemented in treelapse. We close with several
-case studies using publicly available data.
+The paper is organized as follows. First, we describe our motivating
+application to the microbiome and the associated generic analysis
+tasks. Next, we review the underlying visualization principles behind
+our contributions. Then we then connect these principles to analysis
+tasks we identified earlier, describing in detail the visualization
+methods we have implemented in treelapse. We close with several case
+studies using publicly available data across both microbiome and
+non-microbiome related applications.
 
 ### Problem Motivation ###
 
-Microbiomics is the study of the communities of microbes living in given
-environments, for example, ocean water or the human gut. Progress in the field
-has been rapidly accelerated by the advent of genomic technologies, which
-enable detailed quantification of microbial community structure, and as the
-relationship between the microbiome and human health has become more and more
-apparent, research into the human microbiome has garnered widespread
-attention. Being concerned with both microbial community structure and human
-health, the field exists at the border between ecology and medicine;
-consequently, papers in the area often apply a blend of exploratory data
-analysis and formal statistical inference ideas.
+A microbiome is a community of microbes living in given environments,
+for example, ocean water or the human gut [@human2012structure,
+@human2012structure, @cho2012human]. Progress in the field has been
+rapidly accelerated by the advent of genomic technologies, which
+enable detailed quantification of microbial ecological structure and
+its influence in human and environmental health. Being concerned with
+both microbial community structure and human health, the field exists
+at the border between ecology and medicine; consequently, papers in
+the area often apply a blend of exploratory data analysis and formal
+statistical inference.
 
-The two essential microbiome analysis problems that motivated our work are the
-tree structured differential abundance and microbial dynamics problems. In the
-differential abundance problem, we attempt to compare the abundances of
-individual microbes across experimental conditions -- for example, treatment
-vs. control or healthy vs. diseased. This is the microbiome analog of
-differential expression analysis in genomics. We prepend the description
-"tree-structured" because, in practice, researchers generate interpretations
-about middling taxonomic orders of microbes -- it is more interesting to
-discover novel behavior taxonomic levels intermediate between high-order phyla
-and low-level sequence variants. Hence, we frame the tree-structured
-differential abundance problem as the question of identifying the largest
-taxonomic subtree whose associated microbes are differentially abundant.
+The two essential microbiome analysis problems that motivated our work
+are the tree-structured differential abundance and differential
+dynamics problems. In the differential abundance problem, we attempt
+to compare the abundances of individual microbes across experimental
+conditions -- for example, treatment vs. control or healthy
+vs. diseased. This is the microbiome analog of differential expression
+analysis in genomics [@anders2010differential]. We prepend the
+description "tree-structured" because, in practice, researchers
+generate interpretations about intermediate taxonomic orders of
+microbes -- it is more interesting to discover novel behavior
+taxonomic levels between high-order phyla and low-level
+species. Hence, we frame the tree-structured differential abundance
+problem as the question of identifying the largest taxonomic subtree
+whose associated microbes are differentially abundant.
 
-In the tree structured microbial dynamics problem, the goal is to describe
-changes in microbial abundances in an environment over time. As in the
-differential abundance problem, it is useful if these descriptions can be given
-at the highest subtree at which the pattern appears. Specific questions of
-interest often have an ecological flavor. For example, researchers are often
-interested in understanding how microbial populations respond to sudden or
-gradual environmental changes or how microbes fill, drop out from, or compete
-for certain environmental niches. Medically, these questions are important for
-illuminating the impact of antibiotic time courses or the potential for direct
-manipulation, for example.
+In the tree structured microbial dynamics problem, the goal is to
+describe changes in microbial abundances in an environment over
+time. As in the differential abundance problem, it is useful if these
+descriptions can be given at the highest subtree at which the pattern
+appears. Specific questions of interest often have an ecological
+flavor. For example, researchers are often interested in understanding
+how microbial populations respond to sudden or gradual environmental
+changes or how microbes fill, drop out from, or compete for
+environmental niches. Medically, these questions are important for
+illuminating the impact of antibiotic time courses or diet changes,
+for example.
 
 ### Problem Abstraction ###
 
-An abstraction that unifies thinking through both the tree structured
-differential abundance and microbial dynamic problems is to identify the data
-with a collection of random variables indexed by nodes in a prespecified tree
-structure. In the differential abundance problem, each random variable itself
-lives in $\mathbb{R}^{G}$ where $G$ is the number of groups being
-compared. Each coordinate represents the average value across one of the
-groups, and the node exhibits differential abundance when the coordinates are
-not drawn from the same distribution. In the microbial dynamics problem, each
-random variable is instead a time series, living in $\mathbb{R}^{T}$.
+To unify the tree-structured differential abundance and microbial
+dynamic problems, we identify the data with a collection of random
+variables indexed by nodes in a prespecified tree structure. In the
+differential abundance problem, each random variable lives in
+$\mathbb{R}^{G}$ where $G$ is the number of groups being
+compared. Each coordinate represents the abundance for that group, and
+a node exhibits differential abundance when the coordinates are drawn
+from different distributions. On the other hand, in the microbial
+dynamics problem, each random variable is a time series, living in
+$\mathbb{R}^{T}$.
 
-In both these applications, we constrain the values of parent nodes according
-to the value of the children nodes: we define the value at each node to be
-either the sum or average of all descendant tips, but it is possible to imagine
-situations where the internal nodes are drawn from their own distribution,
-unconstrained by descendants. In general, analysis in this abstraction focuses
-on describing the distribution of these random variables as a function of their
-position in specified subsets of the tree. The essential difficulty in these
-problems is high-dimensionality -- there are many tree nodes, each holding a
-vector-valued random variable. Even simply navigating across the tree and
-comparing coordinates in the observed variables is a challenge; ideally we
-could construct a succinct representation of the essential covariation across
-subtrees and coordinates.
+In both of these applications, we constrain the values of parent nodes
+according to the value of the children nodes: we define the value at
+each node to be either the sum or average of all descendant
+tips. However, it is possible to imagine situations where the internal
+nodes are drawn from their own distribution, unconstrained by
+descendants. In general, analysis in this abstraction focuses on
+describing the distribution of these random variables as a function of
+their position across subsets of the tree. The essential difficulty in
+these problems is high-dimensionality -- there are many tree nodes,
+each holding a vector-valued random variable. Even simply navigating
+across the tree and comparing coordinates in the observed variables is
+a challenge; ideally we could construct a succinct representation of
+the essential covariation across subtrees and coordinates.
 
-This framework suggests other potential application areas, not all of which
-have a priori known tree structures. For example, collections of spatially
-indexed time series are frequently encountered in practice -- consider energy
-consumption, product sales, or high school dropout rates across regional
-districts. This type of data has an implicit tree structure -- at the top level
-are different states, while at the bottom are individual census tracts,
-say. Analysis here revolves around the question of how variation across series
-is related to their geographic position.  An example using this type of data is
-given in the Zillow home prices case study in Section (todo: insert section
-number).
+This framework suggests other potential application areas, not all of
+which have a priori known tree structures. For example, collections of
+spatially-indexed time series are frequently encountered in practice
+-- consider energy consumption, product sales, or high school dropout
+rates across regional districts. This type of data has an implicit
+tree structure -- at the top level are different states, while at the
+bottom are individual census tracts, say. Analysis here revolves
+around the question of how variation across time series is related to
+their geographic position.  A case study to this type of data is given
+in Section \@ref(zillow-study).
 
-Alternatively, if this type of hierarchical contextual information is not
-available, a tree structure can be learned directly from the data. This can be
-most directly achieved by learning a hierarchical clustering on the original
-series. If there is contextual information, but it is not hierarchical, it is
-possible to setup a supervised problem that uses context to predict features of
-the time series. We can retrieve a tree by using a regression tree directly
-(cite: rpart) or extracting a regression tree from a more complex supervised
-model (cite: regression tree extraction methods). Analysis then focuses on how
-different partitions of the covariate (contextual) space relate to observed
-time series. This approach is described in the UCI bikesharing demand case
-study below.
+Alternatively, if this type of hierarchical contextual information is
+not directly available, a tree structure can be learned from the
+data. This could be achieved by learning a hierarchical clustering on
+the original series. Further, if contextual information is available,
+but it is not hierarchical, it is possible to setup a supervised
+problem that uses context to predict features of the time series. We
+can construct a tree by applying a tree-based classifier
+[@breiman1984classification] or extracting a regression tree from a
+more complex supervised model [@boz2002extracting,
+@saito2002extracting]. Analysis then focuses on how different
+partitions of the contextual, covariate space relate to observed time
+series. This approach is described in Section \@ref(bikesharing-study).
 
-Finally, note that, while we have focused on time series valued nodes, all of
-this discussion could be translated to studying high dimensional data via
-parallel coordinates (todo: cite parallel coordinates). The usual parallel
-coordinates challenges remain, mainly selecting scales for and ordering the
-different coordinates, but the linking and focus + context can still be
+Finally, note that, while we have focused on time series valued nodes,
+all of this discussion could be translated to studying
+high-dimensional data via parallel coordinates
+[@inselberg1991parallel]. The usual parallel coordinates challenges
+remain, mainly selecting scales for and ordering across the different
+coordinates, but the linking and focus-plus-context can still be
 employed this setting.
 
 ## Background Literature and Solution Principles ##
 
-Now that we have specified the essential questions of interest, we survey some
-ideas from the visualization literature that can be applied to answer
-them. Again, the core difficulty is one of high dimensionality, so it should be
-no surprise that the techniques we adapt come from the literature on
-high-dimensional data visualization, namely, work on the focus + context and
-linking.
+Now that we have specified the essential questions of interest, we
+survey some ideas from the visualization literature that can be
+applied to answer them. As the core difficulty is high-dimensionality,
+so it should be no surprise that the techniques we adapt come from the
+literature on high-dimensional data visualization, namely,
+focus-plus-context and linking.
 
-The focus + context principle is that it is possible to study large collections
-of visual elements at multiple scales, and these scales can be juxtaposed by
-"focusing" on a few elements of interest while maintaining the "context" of the
-coarser-scale background. A simple example of this idea is to include a search
-box that highlights samples corresponding to matching terms (the focus) while
-muting those that don't (the context). Two more sophisticated methods anchored
-in this idea are timeboxes and Degree-of-Interest (DOI) trees; both are central
-to the proposals in treelapse \@cite(hochheiser2004dynamic,
-heer2004doitrees). In timeboxes, a collection of time series are graphically
-queried using interactive brushes. Series that pass through all of the
-user-specified brushes are highlighted, and the rest are faded into the
-background. Hence, time series meeting the constraints imposed by the brushes
-are focused, while the remainder remain present, though de-emphasized, as
-context. This method can be interpreted programmatically as the visual version
-of a database query, or probabilistically as the conditional distribution for
-the full series, given it passes through certain bounds.
+The focus-plus-context principle is that large collections of visual
+elements can be studied at multiple scales, by simultaneously
+focusing" on a few elements of interest and maintaining the "context"
+of the coarser-scale background. A simple example of this idea is to
+include a search box that highlights matching samples (focus) and
+mutes the rest (context). Two more sophisticated methods anchored in
+this idea are timeboxes and Degree-of-Interest (DOI) trees; both are
+central to the proposals in treelapse [@hochheiser2004dynamic,
+heer2004doitrees]. In timeboxes, a collection of time series are
+graphically queried using interactive brushes. Series that pass
+through all of the user-specified brushes are highlighted, and the
+rest are faded to the background. Hence, time series meeting the
+constraints imposed by the brushes are focused, while the remainder
+are de-emphasized, though they remain present as context. This method
+can be interpreted programmatically as the visual analog of a database
+query, or probabilistically as the conditional distribution for the
+full series, given it passes through certain bounds.
 
-In DOI Trees, the viewer's attention is focused on a collection of
-high-interest nodes, while the remaining lower-interest nodes are left on the
-fringes (or entirely hidden) as context. The implementation is modularized into
-two tasks -- the determination of a DOI distribution over nodes in the tree and
-visual layout of a tree given DOI assignments. The DOI distribution used in
-\@cite(heer2004doitrees) places maximal interest on nodes that the user clicks,
-along with all ancestors. The DOI for all other nodes is defined as the
-distance to the closest maximal interest node. The layout proposed here trimmed
-low-interest subtrees until the remaining nodes all fit within the screen
-size. By changing the minimal DOI below which nodes are hidden, the user can
-transition between node-specific and full-tree scales.
+In DOI trees, the viewer's attention is focused on a collection of
+high-interest nodes, while the remaining lower-interest nodes are left
+on the fringes as context. The implementation is modularized into two
+tasks -- the determination of a DOI distribution over nodes in the
+tree and visual layout of a tree given DOI assignments. The DOI
+distribution used in [@heer2004doitrees] places maximal interest on
+the node that the user had most recently clicked, along with all
+ancestors. The DOI for all other nodes is defined as the distance to
+the closest maximal interest node. The layout step then trims
+low-interest subtrees until the remaining nodes fit within a given
+screen size. By adjusting the minimal DOI below which nodes are
+hidden, the user can transition between node-specific and full-tree
+scales.
 
-In linking, alternative representations of the same samples are placed side by
-side in a way that suggests covariation across the representations. A canonical
-application is to linked scatterplot brushing \@cite(becker1987brushing). Here,
-a scatterplot matrix is constructed displaying the relationship between all
-pairs of variables.  Points brushed in one scatterplot are then highlighted in
-all others. For example, this helps the user determine whether an outlier in
-one dimension is an outlier in others. Another instance of this idea is in
-linking the results of dimensionality reduction methods to displays of the raw
-data, as implemented by XGobi and Cranvas, for example. As in timeboxes,
-linking ca ben interpreted as database queries or conditional probabilities:
-given a subset of the series after conditioning on the values for one set of
-features, what are the values for a second set \@cite(buja1996interactive)?
+In linking, alternative representations of the same samples are placed
+side-by-side in order to display covariation across views. A canonical
+application is to linked scatterplot brushing
+[@becker1987brushing]. Here, a scatterplot matrix gives the
+relationship between all pairs of variables.  Points brushed in one
+scatterplot are then highlighted in all others. For example, this
+helps the user determine whether an outlier in one dimension is an
+outlier in others. Another instance of this idea links the results of
+dimensionality reduction methods to displays of the raw data, as
+implemented by XGobi and Cranvas, for example [@xie2013cranvas,
+@swayne1998xgobi]. As in timeboxes, linking can be interpreted as
+database queries or conditional probabilities: given a subset of the
+series after conditioning on the values for one set of features, what
+are the values for a second set [@buja1996interactive]?
 
-Finally, while not exactly a fundamental visualization principle, we note that
-our work is deliberately grounded in the R software ecosystem. Not only does
-this make these methods more broadly accessible, we hope to encourage a more
-animated exchange between data preparation and modeling with interactive
-visualization. Moreover, our tools are intentionally limited in scope --
-designed to facilitate this dialog for a specific class of problems, rather
-than providing a toolbox for generic types of visualization design. We believe
-that this narrow context within a broad ecosystem strikes a balance between
-problem-specificity and ease-of-use.
+Finally, unrelated to established visualization principles, we note
+that our work is deliberately grounded in the R software
+ecosystem. Not only does this make these methods more broadly
+accessible, we hope to facilitate exchange between data modeling and
+interactive visualization. Moreover, our tools are intentionally
+limited in scope -- designed to facilitate this dialog for a specific
+class of problems, rather than providing a toolbox for generic types
+of visualization design. We believe that this narrow context within a
+broad ecosystem strikes a balance between problem-specificity and
+ease-of-use.
 
 ## Specific Proposals ##
 
-Our first proposed visualization technique is a minor modification of the DOI
-Tree idea. The standard DOI Tree definition does not have any notion of data
-defined at nodes, it is only used a device for navigating tree structures. A
-trivial extension can encode scalar data at nodes: make the node radius reflect
-the associated scalar value. To reinforce this effect, we also encode this
-scalar value in the width of the parent edge. When parent nodes have values
-equal to the sum of their children, this creates the effect of values "flowing"
-from the root to leaves. To help viewers make use of their domain knowledge, we
-have included a search box that highlights paths to matching node terms. Edges
-are ordered from widest on the left to narrowest on the right. While this
-method can only be used to visualize a single scalar-value per tree node, it
-suggests an approach to the tree-structured differential abundance problem,
-which we call the DOI Sankey.
+Our first proposed visualization technique is a minor modification of
+the DOI tree. The standard DOI tree definition does not have any
+notion of data defined at nodes, it is only used a device for
+navigating tree structures. A trivial extension can encode scalar data
+at nodes: have the node radius reflect the associated scalar value. To
+reinforce this effect, we can adjust the width of the parent
+edge. When parent nodes have values equal to the sum of their
+children, this creates the effect of values "flowing" from the root to
+leaves. To help viewers make use of their domain knowledge, we have
+included a search box that highlights paths to nodes with matching
+terms. Edges are ordered from widest on the left to narrowest on the
+right. While this method can only represent a single scalar-value per
+tree node, it suggests an approach to the tree-structured differential
+abundance problem, which we call the DOI sankey.
 
-In the DOI Sankey, we split each edge in the DOI Tree across different
-groups. For example, suppose we have the average counts for treatment and
-control groups at each tree node. Every edge in the tree is split into two
-colors^[We use the colorbrewer palette to facilitate readability], with the
-relative widths of the different colors reflecting the difference in sizes for
-the two groups. The overall width of each edge is represents the sum of values
-across all groups.
+In the DOI sankey, we split each edge in the DOI Tree across different
+groups. For example, suppose we have the average counts for treatment
+and control groups at each tree node. Every edge in the tree is split
+into two colors^[We use the colorbrewer palette to facilitate
+readability], with relative widths of the different colors reflecting
+differences in sizes for the two groups. The overall width of each
+edge represents the sum of values across all groups.
 
-This display is designed to facilitate investigation of the tree structured
-differential abundance question. For example, for a single node and a single
-group, we can compute the average abundance at that node among all samples in
-that group. This will give the width for that group's color on the edge leading
-to the specified node. Differentially abundant subtrees then correspond to
-subtrees where some colors occupy more space than others. That is, this
-representation makes it easier to identify points where the "flows" for
-different groups diverge -- the colors begin to separate. The DOI principle
-assists navigation across the tree structure, allowing focus on individual flow
-structures without losing broader tree context.
+This display is designed to facilitate investigation of the tree
+structured differential abundance question. For example, for a single
+node and a single group, first compute the average abundance at that
+node among all samples in that group. This will give the width for
+that group's color on the edge leading to the specified
+node. Differentially abundant subtrees then correspond to subtrees
+where some colors occupy more space than others. That is, this
+representation makes it easier to identify points where the "flows"
+for different groups diverge -- the colors begin to separate. The DOI
+principle assists navigation across the tree structure, allowing focus
+on individual flow structures without losing broader tree context.
 
-Our third display is directed at the microbial dynamics question instead. It
-ignores the DOI principle, placing emphasis rather on linking and the
-representation of full time series. Here, two panels are arranged one over the
-other; one displays all time series, while the other displays all tree nodes,
-with node sizes reflecting the average time series value at that node. For this
-reason, we call the display, Timebox Trees. In the time series panel, we have
-directly implemented the timeboxes idea. Our link is between the two panels:
-when a set of series is highlighted by the timeboxes, the associated tree nodes
-are also highlighted. For example, timeboxes can be used to focus on a set of
-series with specific shape -- increased abundance after an ecological shock,
-for example -- and then identify along what subtrees this pattern is
-present. To further focus attention, a pan-zoom scented widget is provided in
-the top right [@willett2007scented]. The widget is a miniature version of
-the full time series panel, equipped with a single brush whose extent specifies
-the limits in the main time series panel. As in the DOI trees and Sankeys, a
-search bar can be used to highlight of interest a priori.
+Our third display is directed at the microbial dynamics
+question. Here, two panels are arranged one over the other; one
+displays all time series, while the other displays all tree nodes,
+with node sizes reflecting the time series value at that node. For
+this reason, we call the display, Timebox Trees. In the time series
+panel, we have directly implemented the timeboxes idea. We then link
+the panels: when a set of series is highlighted by the timeboxes, the
+associated tree nodes are also highlighted. For example, timeboxes can
+be used to focus on a set of series with specific shape -- increased
+abundance after an ecological shock, for example -- and identify along
+what subtrees this pattern is present. To further focus on specific
+elements, a pan-zoom scented widget is provided
+[@willett2007scented]. The widget is a miniature version of the full
+time series panel, equipped with a single brush whose extent specifies
+the limits in the main time series panel. As in the DOI trees and
+sankeys, a search bar can be used to highlight those series of
+interest a priori.
 
-The final display currently implemented in the package is the natural converse
-of the Timebox Trees display. Rather than defining visual queries in terms of
-time series, we define queries using nodes in the tree. For this reason, we
-call the display Treeboxes. Rather than focusing on the intersection of
-brushes, as in Timebox Trees, we focus on the union of brushed over nodes. This
-allows us to highlight the series associated with nodes on distant
-subtrees. This display is also suited for the microbial dynamics problem. For
-example, by highlighting all nodes at one taxonomic level in the tree, we can
-easily summarize the time series pattern for all the taxa at that
-level. Alternatively, focusing on all the children below a single node makes it
-possible to see how much correlation and competition there is between
-taxonomically similar microbes. As in the Timebox Trees display, a search box
-and pan-zoom scented widget is provided.
+The final display currently implemented in the package is the natural
+converse of the Timebox Trees display. Rather than defining visual
+queries in terms of time series, it defines queries using nodes in the
+tree. For this reason, we call the display Treeboxes. Rather than
+focusing on the intersection of brushes, as in Timebox Trees, we focus
+on the union of brushed over nodes. This allows us to highlight series
+associated with nodes on distant subtrees. This display is also suited
+for the microbial dynamics problem. For example, by highlighting all
+nodes at one taxonomic level in the tree, we can easily summarize the
+time series pattern for all the taxa at that level. Alternatively,
+focusing on all the children below a single node makes it possible to
+see how much correlation and competition there is between
+taxonomically similar microbes. As in the Timebox Trees display, a
+search box and pan-zoom scented widget are provided.
 
 ## Case Studies ##
 
@@ -604,7 +620,7 @@ rather than dynamics.  We would like to provide visual representations
 of differential abundance across CSTs and also between preterm and
 non-preterm births. [@digiulio2015temporal] interpreted its CSTs using
 a heatmap, with microbes ordered according to a hierarchical
-clustering.  By using the DOI Sankey instead, we can interpret the
+clustering.  By using the DOI sankey instead, we can interpret the
 CSTs in their taxonomic context and at multiple scales of taxonomic
 resolution. Further, while [@digiulio2015temporal] focused on
 identifying associations between preterm births and CSTs -- presumably
@@ -640,7 +656,7 @@ knitr::include_graphics("preterm_csts_lacto.png")
 knitr::include_graphics("preterm_preterm.png")
 ```
 
-### Dynamics in Housing Prices ###
+### Dynamics in Housing Prices {#zillow-study}
 
 We next consider an application unrelated to the microbiome, but with
 relatively clear hierarchical structure. Our data are downloaded from
@@ -728,7 +744,7 @@ knitr::include_graphics("zillow_middle_down.png")
 knitr::include_graphics("zillow_sf.png")
 ```
 
-### Sources of Variation in Bikesharing Demand ###
+### Sources of Variation in Bikesharing Demand {#bikesharing-study}
 
 Our next example is a study in bikesharing demand, included as an
 example of analyzing collections of time series when there is no
@@ -780,7 +796,7 @@ select these series after first zooming into this time window. Figure
 warm-weekend split, which seems quite reasonable in retrospect.
 
 Finally, we can study the behavior of the regression tree itself using
-the DOI Sankey. Here, we group samples according to their quintile of
+the DOI sankey. Here, we group samples according to their quintile of
 8AM demand and then count the abundance of the groups flowing down
 different branches. We find that the quintiles are each rather
 strongly separated after descending even a few steps down the
@@ -838,7 +854,7 @@ create exploratory visualizations while still deep in data analysis;
 in this way our work is a departure from the culture of polished,
 journalistic visualizations prioritized by the D3 community. Finally,
 we have given a series of examples to demonstrate how the general
-visualization techniques of focus + context and linked brushing can be
+visualization techniques of focus-plus-context and linked brushing can be
 practically incorporated into a range of practical analysis workflows,
 from studying the impact of microbes on human health to better
 allocating units in commuter bikesharing systems.
