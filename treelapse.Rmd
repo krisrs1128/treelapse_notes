@@ -1,245 +1,25 @@
 ---
 title: "Interactive Visualization of Hierarchically Structured Data"
-author: "Kris Sankaran"
+author: "Kris Sankaran and Susan Holmes"
 date: "`r Sys.Date()`"
 output:
-     bookdown::pdf_book:
+    bookdown::pdf_book:
+        toc: false
 bibliography: ["bibliography.bib"]
+biblio-style: "agsm"
 link-citations: yes
 ---
 
-```{r set-chunk-opts}
-knitr::opts_chunk$set(fig.align = "center", out.width = "200px", echo = FALSE)
-```
-
-## outline ##
-
-This is an outline for the treelapse article I want to write.
-
-Introduction
-
-- Give core theses
-    + Using principles from the data visualization literature, we have designed
-      a tool that we hope will be useful for analyzing tree structured data,
-      especially hierarchically structured collections of time series.
-    + Focus / context and linking are central to each of our visualizations
-    + We hope our implementation makes this specific tool more widely
-      accessible
-- Describe paper structure
-
-Problem Motivation
-
-- Microbiome motivation
-      + The meeting of ideas from medicine and ecology
-      + The differential abundance problem: treatment vs. control in
-        experiments
-      + The ecological dynamics problem
-             * Are there niches?
-             * Is there competition?
-- Abstraction
-      + Random variables at nodes
-	  + In differential abundance, we have a vector of counts, one coordinate
-        per group
-	  + For microbial dynamics, we have a time series at nodes
-	  + In these applications, we define values at nodes as linear combinations
-        of descendants (sum or average). This sort of constraint is not
-		necessary though
-- Problems with related structure
-      + Spatial hierarchy when working with time series
-      + Creating trees
-             * Hierarchical clustering
-             * CART
-             * When variables don't have intrinsic order, but have comparable
-               ranges, can interpret time series as parallel coordinates
-
-Solution Principles / Background Literature
-
-- Focus and Context (summary then examples)
-      + Degree of interest -- a way of navigating graph structures. Modularize
-        the problem of graph layout and interaction. One part is determination
-        of a degree of interest for nodes. The other is determining a layout
-        given a particular degree of interest distribution. Blocks are trimmed
-        away depending on their average degree of interest.
-      + Timeboxes -- A way of querying the types of shapes that appear in a
-        given collection of time series. You draw boxes, and it highlights
-        series that pass through them. The focus is on highlighted series, the
-        context is the collection of series in the background.
-      + Visual scent -- Determine pan and zoom based on a smaller version of
-        the larger figure. Similar to interactively adjusting bounds
-        numerically, but more intuitive. Focus is on the part of the scent that
-        is highlighted, context is the rest of the scent.
-- Linking (summary then examples)
-      + Linked scatterplot brushes: Let you see many dimensions for the same
-        few points. Conditional on having high values for one series, what are
-        values for other variables? This is analogous to timeboxes on parallel
-        coordinates plots.
-      + Visual queries / conditional interpretation: Power is in querying one
-        variable and seeing values in the other.
-      + XGobi: Historical example of linking views, grounded in
-        multidimensional scaling
-
-- Participation in broader R software ecosystem
-    + Can iterate through many interactive visualizations (like in ggvis)
-    + Limited scope, but easier to maintain and more likely to remain relevant
-    + Rely heavily on htmlwidgets
-         * Also note similarity with networkD3: though, we have focused more on
-           principles for a specific problem setup, rather than constructing
-           foundational building blocks (in a way, this is more applied)
-
-Specific Proposals
-
-- DOI Trees
-     + definition and (microbiome) use case: for a single sample, where are
-       most bacteria?
-     + principles it relies on: just DOI tree.
-     + This is the only visualization that is completely thought through from
-       before (but which as far as we can tell hasn't had easily accessible
-       implementations).
-     + well not exactly...we are also encoding abundance in edge widths / node
-       sizes
-- DOI Sankeys
-     + Definition and use case: treatment vs. control in tree structured data,
-       but using DOI principle
-     + Exploratory analog of structSSI
-     + Minor note: we use the colorbrewer palette for simpler readability
-- Timebox Trees
-     + Combines a few more ideas: linking and focus-plus-context
-     + definition and explanation of how these ideas being implemented
-              * timebox recap: we're able to highlight lines passing through
-                intersection of boxes (this is focus and context)
-              * Link the display between tree and time series. Interpretation:
-                Position on tree conditional on time series
-                shape. Alternatively, database query on one field, returning
-                over all of them.
-              * Focus and context / pan and zoom using visual scent [so we have
-                two focus and context ideas, and one linking idea, in this one
-                display]
-      + Primary use case this is designed for -- we notice a pattern in how a
-        clump of microbial series look like, and we try to figure out which
-        subtrees have this behavior (or, if that behavior is appear at
-        different places on the tree).
-- Treeboxes
-       + Describe as the natural analog of timebox trees
-       + Intentionally avoided queries on both tree and time series
-       + Example use case: we can see how different parts of the tree have
-         different series.
-               * Or, we can look at all the phyla / orders at once
-               * Or, we can observe if there is any competition within a
-                 particular clade
-       + Conditional on coming from a part of a tree, what are the observed
-         series?
-
-Case Studies
-
-- Introduction
-      + Practically, want to provide example output and how to interpret it
-      + This is only a partial goal (there are many vignettes that describe
-        this in more detail and are explicitly designed as tutorials) -- more
-        of the focus here is on explaining how the visual principles described
-        above can substantively improve data analysis in this problem domain
-      + Purpose is to motivate potential workflows that incorporate the
-        treelapse package. Show how it can be incorporated into any existing R
-        data analysis workflow (this was all done in a single R document)
-      + Argue that the problem of navigating hierarchical collections of time
-        series is actually more generic than you might think
-
-- Antibiotics
-      + Study background: (check out abstract to confirm) How does microbiota
-        respond to a time course of antibiotics. Especially relevant given
-        growing understanding of importance of microbes in *health* (not just
-        disease)
-      + Framing as a timebox / treebox problem
-      + Initial view: can clearly discern decrease across all microbes
-      + Selecting some series, notice that the Firmicutes are more strongly
-        affected
-      + Can zoom into period around perturbation, using the scent idea
-      + Can rerun using node averaged data -- this is only possible because we
-        have linked it with R (it would not be possible in a standard d3 Block,
-        for example)
-      + Ideally: comparison with gPCA? Show how it complements.
-- DOI Sankey: Preterm births
-      + Basic goal of the study -- are certain microbiome signatures associated
-        with preterm births?
-      + Formal inferential approach was taken by the original publication,
-        testing each microbe for an association with term / preterm
-      + Also had an unsupervised analysis: cluster into CSTs
-                - We can follow-up this unsupervised work using treelapse (this
-                  is analogous to gPCA followup)
-                - They used a heatmap, which gets the main points across, but
-                  without the tree context (or allowing interactive focus +
-                  context)
-      + We immediately note that CST 4 has much more diversity
-      + navigating down the tree, we notice that the main way the other CSTs
-        are different is in the different types of Lactobacillus
-- Housing prices
-      + A non-microbial example, but with relatively obvious hierarchical
-        (spatial) structure
-      + Basic goal: How were home prices affected by recession, and how do
-        prices and trends in prices differ across regions?
-      + Findings from timebox / treebox:
-                 * Can see quickly which neighborhoods are richer than others
-                 * Can also see that poorer areas were more strongly affected
-                   by the recession
-                 * Can also see the variation in home prices within individual
-                   counties
-      + Limitations: We never actually see the spatial locations for the
-        series. Can easily imagine a linking between the map and the original
-        series (cite xgobi), but this is out of scope (at least for now)
-- Bikesharing
-      + A non-microbial example, and with non-obvious hierarchical structure
-      + To induce hierarchical structure, we perform classification using a
-        supplementary data table
-                * We take advantage of the fact that this is essentially a two
-                  table problem (one whose rows are different time series,
-                  another giving the supplemental data)
-                * Perform classification using classification trees (similar to
-                  Kaggle, but not quite -- we treat a whole series as a sample,
-                  not just a single time point).
-       + Observations
-                * Quickly notice difference between weekend and weekday
-                * Also more subtle differences though -- temperature and year
-                  effects, for example
-                * The 3AM people on warm weekends (importance of focus)
-       + Ideal scenario: Develop model using ideas from here, relate model to
-         hierarchical structure again. Alternatively, fit a tree on correct and
-         incorrect cases from another algorithm, inspect what are features of
-         incorrectly classified cases, build these into new features.
-- Potentially: genetics and hierarchical clustering?
-- Summary: Tree structured data and collections of related time series are
-  common than you might suspect, the principles of data visualization actually
-  facilitate navigation of high dimensional data, and since it's in R, it's
-  easy to alternate between interactive visualization, data regeneration /
-  preparation, and statistical modeling.
-
-Conclusion
-
-- Potential future work
-   + Arrangement
-        * Cognostics for arranging views
-        * Faceting timebox / treebox views
-        * Linking with DPCOA / gPCA? In practice, microbiome literature cares a
-          lot about these ordinations, we can try to explicitly tie them
-          together in one visualization (rather than iterating, like we do
-          now).
-   + Incorporating the DOI idea into the timebox trees?
-   + Other layouts? Graphs? DAGs?
-   + Grammar
-        * Is it possible to modularize the key ideas, so we can create similar
-          kinds of linked and arranged views without so much effort?
-- Summary
-    + Developed an R package based on ideas from the visualization community
-    + Think there is power in interactive visualization for hands on data
-      analysis, not just polished public tools
-    + Think there is a relationship between statistical modeling and data
-      visualization: it can be more useful to visualize raw data in relation to
-      models
-    + Focused on solving a very specific methodological problem, rather than
-      building a generic system. But this methodological problem appears in a
-      variety of domains.
-
-## text ##
-
 ## Introduction ##
+
+```{r set_chunk_opts, echo = FALSE}
+knitr::opts_chunk$set(
+  fig.align = "center",
+  out.width = "250px",
+  echo = FALSE,
+  cache = TRUE
+)
+```
 
 (todo: sentence about why we should care, and a high level summary
 before diving into degree-of-interest linking jargon)
@@ -249,7 +29,7 @@ along trees, especially hierarchically structured collections of time
 series. Influenced by Degree-of-Interest trees [@heer2004doitrees],
 linked scatterplot brushing [@becker1987brushing], and timeboxes
 [@hochheiser2004dynamic], we have adapted the fundamental
-visualization principles of "focus-plus-context" and "linking" to study
+visualization principles of focus-plus-context and linking to study
 questions that arise when analyzing tree structured data. Our
 motivating application is to the analysis of microbial time series,
 where an evolutionary tree relating microbes is available a
@@ -390,7 +170,7 @@ include a search box that highlights matching samples (focus) and
 mutes the rest (context). Two more sophisticated methods anchored in
 this idea are timeboxes and Degree-of-Interest (DOI) trees; both are
 central to the proposals in treelapse [@hochheiser2004dynamic,
-heer2004doitrees]. In timeboxes, a collection of time series are
+@heer2004doitrees]. In timeboxes, a collection of time series are
 graphically queried using interactive brushes. Series that pass
 through all of the user-specified brushes are highlighted, and the
 rest are faded to the background. Hence, time series meeting the
@@ -461,9 +241,10 @@ In the DOI sankey, we split each edge in the DOI Tree across different
 groups. For example, suppose we have the average counts for treatment
 and control groups at each tree node. Every edge in the tree is split
 into two colors^[We use the colorbrewer palette to facilitate
-readability], with relative widths of the different colors reflecting
-differences in sizes for the two groups. The overall width of each
-edge represents the sum of values across all groups.
+readability [@brewer2003colorbrewer]], with relative widths of the
+different colors reflecting differences in sizes for the two
+groups. The overall width of each edge represents the sum of values
+across all groups.
 
 This display is designed to facilitate investigation of the tree
 structured differential abundance question. For example, for a single
@@ -496,10 +277,10 @@ sankeys, a search bar can be used to highlight those series of
 interest a priori.
 
 The final display currently implemented in the package is the natural
-converse of the Timebox Trees display. Rather than defining visual
+converse of the timebox trees display. Rather than defining visual
 queries in terms of time series, it defines queries using nodes in the
 tree. For this reason, we call the display Treeboxes. Rather than
-focusing on the intersection of brushes, as in Timebox Trees, we focus
+focusing on the intersection of brushes, as in timebox trees, we focus
 on the union of brushed over nodes. This allows us to highlight series
 associated with nodes on distant subtrees. This display is also suited
 for the microbial dynamics problem. For example, by highlighting all
@@ -507,38 +288,37 @@ nodes at one taxonomic level in the tree, we can easily summarize the
 time series pattern for all the taxa at that level. Alternatively,
 focusing on all the children below a single node makes it possible to
 see how much correlation and competition there is between
-taxonomically similar microbes. As in the Timebox Trees display, a
+taxonomically similar microbes. As in the timebox trees display, a
 search box and pan-zoom scented widget are provided.
 
 ## Case Studies ##
 
-We now delve into concrete examples of applying treelapse to real
-data. Our goals are is to illustrate potential workflows that
-incorporate treelapse, describe the formulation of questions that can
-be naturally investigated with our methods, and provide example
-interpretations for specific treelapse output. Our examples are also
-chosen to reflect the range of problem domains to which the package
-can be applied -- though it was motivated by applications to the
-microbiome, it is not tied to it. More importantly, we argue that the
-visualization principles described earlier can substantively improve
-the practice of data analysis in the class of problems we have focused
-attention on.
+We now delve into applications on real data. Our goals are to
+illustrate potential workflows that incorporate treelapse, describe
+the formulation of questions that can be naturally investigated with
+our methods, and provide example interpretations on treelapse
+output. Our examples are also chosen to reflect the range of problem
+domains to which the package can be applied -- though it was motivated
+by applications to the microbiome, it is not tied to it. More
+importantly, we argue that the visualization principles reviewed above
+can substantively improve the practice of data analysis in the class
+of problems to which we have limited ourselves.
 
 ### Microbial Dynamics of Antibiotics Time Courses ###
 
-[@dethlefsen2008pervasive] investigates the effect of antibiotics on microbial
-community composition from an ecological perspective. The study tracks the
-microbiome of *x* patients across *y* weeks (todo: give the numbers), with
-antibiotic two time courses introduced during * and *, respectively. Discerning
-the variation in resilience across microbes is important, considering the
-community's increasing acceptance of the idea that microbes are central to human
-health and not just disease.
+[@dethlefsen2008pervasive] investigates the effect of antibiotics on
+microbial community composition from an ecological perspective. The
+study tracks the microbiome of three patients across ten months, with
+two five-day antibiotic time courses separated by 6 months. Discerning
+the variation in resilience across microbes is important, considering
+the the role of microbes in health and not just disease.
 
-We approach the data using the linked time and treebox views, after first
-filtering low variance taxa and taking an $asinh$ transformation. An initial
-view, Figure \@ref(fig:antibioticoverview), reveals two dramatic drops in the
-overall microbial abundance time series at the time of the antibiotics time
-courses. Two more subtle effects are also suggested from this view,
+We approach the data using the linked time and treebox views, after
+first filtering low variance taxa and taking an $\text{asinh}$
+transformation. An initial view, Figure \@ref(fig:antibioticoverview),
+reveals two dramatic drops in the overall microbial abundance time
+series during the antibiotics time courses. Two more subtle effects
+are also suggested from this view,
 
 * The second antibiotic treatment seems to have a more lasting effect, as the
 series take longer to return to their original values.
@@ -558,27 +338,29 @@ knitr::include_graphics("antibiotic_bacteroidetes.png")
 Next, using the scented widget, we focus on the window around the
 second antibiotic treatment. We apply the treebox display to compare
 then behavior of different families of Firmicutes, Lachnospiraceae and
-Ruminoccocus. We suspect these taxa are associated with the delayed
-recovery after the second time course. To inspect this, we these
-family names in the search box to isolate their positions on the tree,
-and then we apply brushes to highlight the series that contribute to
-these higher-level families. The resulting view is given by Figure
-\@ref(fig:antibioticfirmicutes)
+Ruminoccocus. We suspect that these taxa are associated with the
+delayed recovery after the second time course. To investigate this, we
+input these family names in the search box to isolate their positions
+on the tree; then we apply brushes to highlight the series that
+contribute to these higher-level families. The resulting view is given
+by Figure \@ref(fig:antibioticfirmicutes)
 
 ```{r antibioticfirmicutes, fig.cap = "Zooming into the second antibiotic timecourse and highlighting the Lachnospiraceae and Ruminococcus, we see that the Ruminoccocus took more time to recover to pre-treatment levels."}
 knitr::include_graphics("antibiotic_firmicutes.png")
 ```
 
-Alternatively, we can summarize each node by the average of its descendants --
-this brings attention to individual microbes that may be underlying some of the
-broader taxonomic patterns we have noted when studying the subtree sums. For
-example, in Figure \@ref(fig:ruminococcus), we highlight all families below the
-Ruminococcus, suggesting that the decrease due to antibiotics occurs uniformly
-across almost all families. A point that was not evident in the earlier
-sum-across-descendants view is that, after the second treatment of antibiotics,
-a few of the Ruminoccocus families recover more rapidly than the rest, for
-example the Unc095d3 (highlighted in red) are only briefly affected. In
-contrast, most families seem to recover in unison after the first treatment.
+Alternatively, we can summarize each node by the average across its
+descendants -- this brings attention to individual microbes that may
+be underlying some of the broader taxonomic patterns we have noted
+when studying the subtree sums. For example, in Figure
+\@ref(fig:ruminococcus), we highlight all families below order
+Ruminococcus, suggesting that the decrease due to antibiotics occurs
+uniformly across almost all families. A point that was not evident in
+the earlier sum-across-descendants view is that, after the second
+treatment of antibiotics, a few of the Ruminoccocus families recover
+more rapidly than the rest, for example the Unc095d3 (highlighted in
+red) are only briefly affected. In contrast, most families seem to
+recover in unison after the first treatment.
 
 ```{r ruminococcus, fig.cap = "By hovering over the Ruminoccocus branches, we see that there is a prolonged effect of the antibiotics time courses more or less uniformly across the lower taxonomic orders, with the except of "}
 knitr::include_graphics("ruminococcus.png")
@@ -588,13 +370,13 @@ Further, note that in this subtree averages view, the tree display has
 changed. This is because, at each branching point, we place the node
 with larger average value on the left. This places the
 Verrucomicrobiae at the far left, which seem to have large abundance
-over many time points. This phylum had been previously obfuscated,
-because there are not many leaves associated with this phylum, hence
-the sum was small. Interestingly, the abundance of these microbes
-seems to *increase* after the first antibiotics treatment.  Be
-cautious, however, that the average over only a few Verrucomicrobiae
-species will be a more variable estimate than the averages over the
-more prevalent phyla.
+over many time points. This phylum had been previously obfuscated --
+because there are not many leaves associated with this phylum, the sum
+was small. Interestingly, the abundance of these microbes seems to
+*increase* after the first antibiotics treatment.  Be cautious,
+however, that the average over only a few Verrucomicrobiae species
+will be a more variable estimate than the averages over the more
+prevalent phyla.
 
 ```{r verrucomicrobiae, fig.cap = "The subtree averages aggregation brings attention to the Verrucomicrobiae, which though only present as a few species, are each rather abundant. In particular, they seem to increase after the first antibiotic time course."}
 knitr::include_graphics("verrucomicrobiae.png")
@@ -602,23 +384,26 @@ knitr::include_graphics("verrucomicrobiae.png")
 
 ### Differential Microbial Abundance and Preterm Births ###
 
-The study [@digiulio2015temporal] tracked the abundance of microbes in the
-during vaginal microbiome during pregnancy in an effort to study relationships
-between microbial community composition and preterm birth. Ideally, it would be
-possible to develop clear microbial signatures associated with preterm births.
+The study [@digiulio2015temporal] tracked the abundance of microbes in
+the vaginal microbiome during pregnancy in an effort to study
+relationships between microbial community composition and preterm
+birth. Ideally, it would be possible to develop clear microbial
+signatures associated with preterm births.
 
-Unlike the antibiotics study, we have measurements across more individuals than
-we could reasonably inspect one at a time. While we could average across all
-individuals, we will take our cue from [@digiulio2015temporal] and place each
-sample into one of five Community State Types (CSTs), identified via k-medoids.
-Using a linear model, one of these CSTs (CST 4) was found to be more diverse,
-further it appeared associated with preterm births. Here, we corroborate this
-finding using exploratory views.
+Unlike the antibiotics study, we have measurements across more
+individuals than we could reasonably inspect one at a time. While we
+could average across all individuals, we will take our cue from
+[@digiulio2015temporal] and place each sample into one of five
+Community State Types (CSTs), identified via k-medoids.  In that
+study, a linear model identified one of these CSTs (CST 4) as
+significantly more diverse, further it appeared associated with
+preterm births. Here, we corroborate this finding using exploratory
+views.
 
 Therefore, our focus here is on the differential abundance question,
 rather than dynamics.  We would like to provide visual representations
 of differential abundance across CSTs and also between preterm and
-non-preterm births. [@digiulio2015temporal] interpreted its CSTs using
+non-preterm births. [@digiulio2015temporal] interpreted the CSTs using
 a heatmap, with microbes ordered according to a hierarchical
 clustering.  By using the DOI sankey instead, we can interpret the
 CSTs in their taxonomic context and at multiple scales of taxonomic
@@ -631,16 +416,16 @@ subtrees, without requiring CSTs as an intermediary.
 In Figure \@ref(fig:pretermcsts), we compare the 5 CSTs according to
 their values along the subtree. Specifically, we took the average of
 all samples within each CST to define values at the (microbe-level)
-leaf nodes, and then aggregated the counts up to the root. It is
+leaf nodes, and then aggregated the averages up to the root. It is
 immediately clear that samples from CST 4 have much more taxonomic
 diversity. Further, focusing on the Lactobacillaceae family, we note
-that the differential abundnace of these microbes distinguishes th
+that the differential abundance of these microbes distinguishes the
 remaining CSTs, see Figure \@ref(fig:pretermcstslacto).
 
-Alternatively, in Figure \@ref(fig:preterm), we avoid working with
+Alternatively, in Figure \@ref(fig:pretermcsts), we avoid working with
 CSTs, displaying instead averages among samples associated with either
 preterm or term births. The green edges are associated with preterm
-births -- we see that they contribute more weight to Phyla outside the
+births -- we see that they contribute more weight to phyla outside the
 Firmicutes. This is consistent with the claim that CST 4, the most
 diverse of the CSTs, is associated with preterm births.
 
@@ -660,26 +445,27 @@ knitr::include_graphics("preterm_preterm.png")
 
 We next consider an application unrelated to the microbiome, but with
 relatively clear hierarchical structure. Our data are downloaded from
-Zillow^[http://www.zillow.com/research/data/](http://www.zillow.com/research/data/)],
+Zillow[^[http://www.zillow.com/research/data/](http://www.zillow.com/research/data/)]],
 and give the Zillow Home Value Indexes at the neighborhood level,
-across the country, given monthly between 1996 and 2016. In our
+across the country, computed monthly between 1996 and 2016. In our
 display, we have taken the base 10 log of these indexes. As our
 hierarchical structure, we use each neighborhood's assignment to
 state, regional, county, and city levels. We represent each of these
 coarser spatial categories using the average of all neighborhoods
 contained in them. We have filtered down to the 890 neighborhoods in
 California; rendering more neighborhoods while keeping all 246
-timepoints causes the interface to lag^[See the Future Work section
-for potential optimizations, however.].
+timepoints causes the interface to lag^[See the Section
+\@ref(conclusion) for potential optimizations, however.].
 
 Our basic analysis revolves around geographic and temporal variation
 in home prices. We are especially interested in the effect of the 2008
-recession and any variation in the lead-up or recovery. These
-questions can be naturally framed using timebox trees and treeboxes.
+recession and any variation in the lead-up to or recovery from this
+event. These questions can be naturally framed using timebox trees and
+treeboxes.
 
 We first study variation in prices at the city level. These series can
 be highlighted using a single brush in treeboxes, since each spatial
-level is displayed at the same height in the tree. THe resulting
+level is displayed at the same height in the tree. The resulting
 display is given in Figure \@ref(fig:zillowcities). From a high level,
 the housing bubble, decrease in prices due to the recession, and
 subsequent recovery are readily apparent. The city-level view makes it
@@ -692,11 +478,11 @@ increases during the housing bubble. Finally, we note that the range
 in home prices seems to have increased after the recession, speaking
 to the differential long-term effect of the recession on prices.
 
-Alternatively, we can consider the trajectories of home prices among
-neighborhoods, conditional on their being that were middle-income
-before the recession.  We generate the sequence of views in Figures
+Alternatively, we can study the trajectories of home prices among
+neighborhoods, conditional on their being middle-income before the
+recession. We generate the sequence of views in Figures
 \@ref(fig:zillowmiddlepre), \@ref(fig:zillowmiddleup), and
-\@ref(fig:zillowmiddledown) in this vein. The first of these figures
+\@ref(fig:zillowmiddledown) to this end. The first of these figures
 isolates neighborhoods with middle incomes before the recession, using
 a single timebox. Since there appears to be a divergence in
 trajectories after the recession, we introduce a second post-recession
@@ -714,14 +500,14 @@ The previous analysis highlights the fact that, within even narrow geographic
 regions, there can be substantial variation in prices. We can study this
 directly using treeboxes. In Figure \@ref(fig:zillowsf) we have highlighted all
 series in San Francisco County. We see that, in 2016, prices range from around
-$10^{5.6} \approx \$400,000$ to $10^{6.7} \approx \$5 \text{million}$. So, while
+$10^{5.6} \approx \$400,000$ to $10^{6.7} \approx \$5 \text{ million}$. So, while
 all these neighborhoods tend to be among the more expensive ones in California,
 prices can vary in a non-smooth way across geographic space.
 
 We conclude this example with a caveat that the Zillow data are not
 representative of all neighborhoods in California, only those with
 enough listings on the site, so should be supplemented by other data
-sources for more substantial decision-making.
+sources for any substantial decision-making.
 
 ```{r zillowcities, fig.cap = "California home prices at the city level, between 1996 and 2016. The effect of the 2008 recession is clear, and we have hovered over the San Bernardino series, to display the identity of one of the cities most strongly affected by the recession."}
 knitr::include_graphics("zillow_cities.png")
@@ -748,32 +534,32 @@ knitr::include_graphics("zillow_sf.png")
 
 Our next example is a study in bikesharing demand, included as an
 example of analyzing collections of time series when there is no
-obvious hierarchical structure a priori. The data are downloaded from the
-[UCI Repository](https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset) and
-were originally collected by a Washington D.C.-based bikesharing
+obvious hierarchical structure a priori. The data are available at
+the [UCI
+Repository][^[(https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset)](https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset)]
+and were originally collected by a Washington D.C.-based bikesharing
 system for use in a Kaggle prediction competition. The data are hourly
 measurements of bike demand, aggregated across all bikesharing
-stations, over two years, along with some supplemental weather
-data. In the competition, participants were asked to predict the
-hourly demand on a held-out test set. Here, we adopt a descriptive
-view instead, attempting to characterize factors associated with
-variation in bikesharing demand.
+stations, over two years, along with supplemental weather data. In the
+competition, participants were asked to predict the hourly demand on a
+held-out test set. Here, we adopt a descriptive view instead,
+attempting to characterize factors associated with variation in
+bikesharing demand.
 
 Like the Zillow home prices application, we study this problem as one
 of describing a large collection of related time series. Here, we
 consider the demand during a single day to be one time series; this is
 a natural choice considering the daily periodicity of bike demand. To
-relate these daily series according to an interpretable tree
-structure, we apply a regression tree relating the supplemental data
-to the bikesharing demand (J.  Friedman, Hastie, and Tibshirani
-2001). In more detail, we build this tree by noting the “two table”
-structure of this problem: one describes bike demand, the other holds
-the supplemental data. In both, the rows index days, while the columns
-index hours and supplemental features for the two tables,
-respectively. Our tree is the trained regression tree after predicting
-demand at 8AM based on the supplemental data. We choose this response
-because (1) we need a univariate response in order to apply regression
-trees and (2) the more straightforwards reduction to
+arrange these daily series along an interpretable tree structure, we
+apply a regression tree relating the supplemental data to the
+bikesharing demand [@breiman1984classification]. In more detail, we
+built this tree by noting the “two table” structure of this problem:
+one describes bike demand, the other holds the supplemental data. In
+both, the rows index days, while the columns index either hours or
+supplemental features. Our tree is the trained regression tree after
+predicting demand at 8AM based on the supplemental data. We choose
+this response because (1) we need a univariate response in order to
+apply regression trees and (2) the more straightforwards reduction to
 daily-average-demand fails to distinguish between weekdays and
 weekends, whose series appear qualitatively very different from each
 other.
@@ -782,81 +568,100 @@ Given this response, the first split in the regression tree is
 (unsurprisingly) the difference between weekends and weekdays. This is
 emphasized in Figures 14 and 15, respectively; using timeboxes to
 isolate the two types of series highlight the left and right sides of
-the tree, respectively. For a mroe subtle effect, we select the
+the tree, respectively. For a more subtle effect, we select the
 internal nodes associated with the first split below the weekday
 vs. weekend split; these are given in Figures 16 and 17. This suggests
-that more commuters became aware or interested in bikesharing during
-the second year of data collection.
+that weekday demand increased during the second year.
 
-To contrast with these general questions about daily demand, we ask a
-more granular question about demand at night: what characterizes days
-on which there is larger than average demand after midnight? We can
-select these series after first zooming into this time window. Figure
-18 reveals that the highlighted series are associated with the
-warm-weekend split, which seems quite reasonable in retrospect.
+In contrast to these general questions about daily demand, we could
+ask a more granular question about specific time windows. For example,
+what characterizes days on which there is larger than average demand
+after midnight? We can select these series after first zooming into
+this time window. Figure 18 reveals that the highlighted series are
+associated with the warm-weekend split, which seems quite reasonable
+in retrospect.
 
 Finally, we can study the behavior of the regression tree itself using
 the DOI sankey. Here, we group samples according to their quintile of
 8AM demand and then count the abundance of the groups flowing down
 different branches. We find that the quintiles are each rather
 strongly separated after descending even a few steps down the
-regression tree – for example, in Figure ?? focuses on 2011 vs. 2012
-split among weekday samples, showing that this split distinguishes
-between samples falling in the second and third quintiles of 8AM
-demand.
+regression tree – for example, Figures \@ref(fig:weekday2011) and
+\@ref(fig:weekday2012) focuse on 2011 vs. 2012 split among weekday
+samples, showing that this split distinguishes between samples falling
+in the second and third quintiles of 8AM demand.
 
 This interactive representation of regression trees is potentially
 more useful on larger trees that cannot be easily parsed in a single
-view; in this sense the bikesharing tree is relatively
-simple. Further, in light of research on approximating more complex
-supervised learning algorithms using decision trees (Boz 2002, Saito
-and Nakano (2002)), this approach of modeling and interpreting
-two-table data could be used in conjunction with more sophisticated
-regression methods. In our ideas data analysis workflow, we imagine
-the analyst applying interactive visualization and modeling techniques
-in an iterative, nonlinear fashion.
+view; in this sense the bikesharing tree is relatively simple. In our
+ideal data analysis workflow, we imagine the analyst applying
+interactive visualization and modeling techniques in an iterative,
+nonlinear fashion.
 
-## Conclusion and Future Work ##
+```{r working, fig.cap = "The two peaks at rush hour distinguish weekday series from the rest."}
+knitr::include_graphics("working.png")
+```
 
-Here, we have reviewed some fundamental principles of data visualization and described their implementation
-in a new treelapse package. Further, we have provided examples of the practical usefulness of these
-principles in real-world data analysis situations.
+```{r weekend, fig.cap = "Unlike weekday demand, weekend demand is unimodal. The few weekday series with unimodal series seem to be associated with holidays. This is the case for New Years' Eve, which is currently hovered over in the tree."}
+knitr::include_graphics("weekend.png")
+```
 
-This package has only developed some of the most basic ideas, and
-there are a number of potentially useful extensions worth
-exploring. For example, we have not considered the principle of
-arrangement in our visualizations (Buja, Cook, and Swayne 1996),
-though many of our conclusions were based on comparing alternative
-selections of the same display. We could imagine faceting our displays
-across groups to make these types of comparisons more
-accessible. Further, we have only worked with the DOI distribution
-described in (Heer and Card 2004). It would be interesting to define a
-more statistical notion of interest along nodes, based on cognostics,
-for example (Hafen et al. 2013, J. H. Friedman and Stuetzle
-(2002)). Further, it could be helpful to link the visualization-based
-workflow described in this work with more traditional multivariate and
-inferential statistics workflows – it is easy to imagine an
-interactive version of ordinations that display representations of the
-raw data upon selection. A simple extension could be to allow graph
-layouts instead of trees in time and treebox displays, for data that
-cannot be coerced into a hierarchical structure. Finally, if these
-ideas turn out to be useful in practice, it would be valuable to
-modularize the basic visualization layouts and relationships into a
-library, allowing the wider community to construct linked, interactive
-graphics with minimal effort.
+```{r weekday2011, fig.cap = "Weeday demand appears larger in 2012 than 2011 -- compare with the next figure."}
+knitr::include_graphics("weekday_2011.png")
+```
 
-All these potential extensions aside, we have built an easily
-accessible R package for visualization techniques in a very specific
-methodology problem – analysis of differential abundance and dynamics
-in hierarchical structured data – that appears in a variety of
-application domains. We have leveraged (Vaidyanathan et al.  2014) to
-create exploratory visualizations while still deep in data analysis;
-in this way our work is a departure from the culture of polished,
-journalistic visualizations prioritized by the D3 community. Finally,
-we have given a series of examples to demonstrate how the general
-visualization techniques of focus-plus-context and linked brushing can be
-practically incorporated into a range of practical analysis workflows,
-from studying the impact of microbes on human health to better
-allocating units in commuter bikesharing systems.
+```{r weekday2012, fig.cap = "Weekday demand increased in 2012 -- compare with the previous figure."}
+knitr::include_graphics("weekday_2012.png")
+```
+
+```{r warmweekend, fig.cap = "The samples with highest night demand tend to fall on warm weekends."}
+knitr::include_graphics("warm_weekend.png")
+```
+
+```{r bikesankey, fig.cap = "We can interpret the regression tree using an interactive DOI representation."}
+knitr::include_graphics("bike_sankey.png")
+```
+
+
+
+## Conclusion and Future Work {#conclusion}
+
+Here, we have reviewed some fundamental principles of data
+visualization and described their implementation in a new treelapse
+package. Further, we have provided examples of the practical
+usefulness of these principles in real-world data analysis situations.
+
+This package has only developed basic ideas, and there are a number of
+potentially useful extensions worth exploring. For example, we have
+not considered the principle of arrangement in our visualizations
+[@buja1996interactive], though many of our conclusions were based on
+comparing alternative selections of the same display. We could imagine
+faceting our displays across groups to make these types of comparisons
+more accessible. Further, we have only worked with the DOI
+distribution described in [@heer2004doitrees]. It would be interesting
+to define a more statistical notion of interest along nodes, based on
+cognostics, for example [@hafen2013trelliscope, @friedman2002john]. A
+simple extension could be to allow graph layouts instead of trees in
+time and treebox displays, for data that cannot be coerced into a
+hierarchical structure. Finally, if these ideas turn out to be useful
+in practice, it would be valuable to modularize the basic
+visualization layouts and relationships into a library, allowing the
+wider community to construct novel linked, interactive graphics with
+minimal effort.
+
+In summary, we have built an easily accessible R package for
+visualization techniques in a very specific methodology problem –
+analysis of differential abundance and dynamics in hierarchically
+structured data – that appears in a variety of application domains. We
+have leveraged a link between R and D3 [@vaidyanathan2014htmlwidgets]
+to create exploratory visualizations while still deep in data
+analysis; in this way our work is a departure from the culture of
+polished, journalistic visualizations prioritized by the D3
+community. Finally, we have given a series of examples to demonstrate
+how the general visualization techniques of focus-plus-context and
+linked brushing can be practically incorporated into a range of
+practical analysis workflows, from studying the impact of microbes on
+human health to better allocating units in commuter bikesharing
+systems.
 
 ## References ##
