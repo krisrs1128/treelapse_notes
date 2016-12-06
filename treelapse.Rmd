@@ -1,6 +1,4 @@
 ---
-author: "Kris Sankaran and Susan Holmes"
-date: "`r Sys.Date()`"
 standalone: true
 documentclass: article
 fontsize: 12pt
