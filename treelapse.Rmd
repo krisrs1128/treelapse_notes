@@ -445,7 +445,7 @@ knitr::include_graphics("figure/preterm_csts_lacto.png")
 ```
 
 ```{r pretermpreterm, fig.cap = "Samples with high levels of phyla other than Firmicutes appear to be related to preterm births."}
-knitr::include_graphics("preterm_preterm.png")
+#oknitr::include_graphics("figure/preterm_preterm.png")
 ```
 
 ### Dynamics in Housing Prices {#zillow-study}
@@ -606,23 +606,23 @@ interactive visualization and modeling techniques in an iterative,
 nonlinear fashion.
 
 ```{r working, fig.cap = "The two peaks at rush hour distinguish weekday series from the rest."}
-knitr::include_graphics("working.png")
+knitr::include_graphics("figure/working.pdf")
 ```
 
 ```{r weekend, fig.cap = "Unlike weekday demand, weekend demand is unimodal. The few weekday series with unimodal series seem to be associated with holidays. This is the case for New Years' Eve, which is currently hovered over in the tree."}
-knitr::include_graphics("weekend.png")
+knitr::include_graphics("figure/weekend.pdf")
 ```
 
 ```{r weekday2011, fig.cap = "Weeday demand appears larger in 2012 than 2011 -- compare with the next figure."}
-knitr::include_graphics("weekday_2011.png")
+knitr::include_graphics("figure/weekday_2011.pdf")
 ```
 
 ```{r weekday2012, fig.cap = "Weekday demand increased in 2012 -- compare with the previous figure."}
-knitr::include_graphics("weekday_2012.png")
+knitr::include_graphics("figure/weekday_2012.pdf")
 ```
 
 ```{r warmweekend, fig.cap = "The samples with highest night demand tend to fall on warm weekends."}
-knitr::include_graphics("warm_weekend.png")
+knitr::include_graphics("figure/warm_weekend.pdf")
 ```
 
 ```{r bikesankey, fig.cap = "We can interpret the regression tree using an interactive DOI representation."}
