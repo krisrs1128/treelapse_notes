@@ -1,10 +1,16 @@
 ---
-title: "Interactive Visualization of Hierarchically Structured Data"
 author: "Kris Sankaran and Susan Holmes"
 date: "`r Sys.Date()`"
+standalone: true
+documentclass: article
+fontsize: 12pt
 output:
-    bookdown::pdf_book:
-        toc: false
+  bookdown::pdf_book:
+    keep_tex: yes
+    toc: false
+    includes:
+      in_header: preamble.tex
+      before_body: before_body.tex
 bibliography: ["bibliography.bib"]
 biblio-style: "agsm"
 link-citations: yes
