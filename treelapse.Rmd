@@ -25,23 +25,24 @@ knitr::opts_chunk$set(
 )
 ```
 
-(todo: sentence about why we should care, and a high level summary
-before diving into degree-of-interest linking jargon)
+We introduce methods for visualization of data structured along trees,
+especially hierarchically structured collections of time series. We
+hope both to characterize generically useful techniques for
+interactively visualizing hierarchical data and to offer practical
+tools for implementing such displays. To this end, we identify
+questions that often emerge when working with hierarchical data and
+provide an R package to simplify their investigation [@ripley2001r].
 
-In this work, we describe methods for visualization of data structured
-along trees, especially hierarchically structured collections of time
-series. Influenced by Degree-of-Interest trees [@heer2004doitrees],
-linked scatterplot brushing [@becker1987brushing], and timeboxes
-[@hochheiser2004dynamic], we have adapted the fundamental
-visualization principles of focus-plus-context and linking to study
-questions that arise when analyzing tree structured data. Our
-motivating application is to the analysis of microbial time series,
-where an evolutionary tree relating microbes is available a
-priori. However, we have identified common problem types where, if a
-tree is not directly available, it can be constructed from data and
-then studied using our techniques.
+Our key contribution is the adaptation of the visualization principles
+of focus-plus-context and linking to the study of tree-structured data
+[@buja1996interactive, @becker1987brushing]. Our motivating
+application is to the analysis of microbial time series, where an
+evolutionary tree relating microbes is available a priori. However, we
+have identified common problem types where, if a tree is not directly
+available, it can be constructed from data and then studied using our
+techniques.
 
-We have implemented our visualizations in d3, but encapsulated in an R
+We have implemented our visualizations in D3, but encapsulated in an R
 package, called treelapse, to facilitate rapid turnover from data
 preparation and modeling to interactive exploration, and vice
 versa. We hope this package encourages data analysts to work at the
@@ -215,12 +216,14 @@ are the values for a second set [@buja1996interactive]?
 
 Finally, unrelated to established visualization principles, we note
 that our work is deliberately grounded in the R software
-ecosystem. Not only does this make these methods more broadly
-accessible, we hope to facilitate exchange between data modeling and
-interactive visualization. Moreover, our tools are intentionally
-limited in scope -- designed to facilitate this dialog for a specific
-class of problems, rather than providing a toolbox for generic types
-of visualization design. We believe that this narrow context within a
+ecosystem. This connection is made using the htmlwidgets package
+[@vaidyanathan2014htmlwidgets]. Not only does linking R with D3 make
+these visualization methods more broadly accessible, we hope to
+facilitate exchange between data modeling and interactive
+visualization. Moreover, our tools are intentionally limited in scope
+-- designed to facilitate this dialog for a specific class of
+problems, rather than providing a toolbox for generic types of
+visualization design. We believe that this narrow context within a
 broad ecosystem strikes a balance between problem-specificity and
 ease-of-use.
 
@@ -449,7 +452,7 @@ knitr::include_graphics("preterm_preterm.png")
 
 We next consider an application unrelated to the microbiome, but with
 relatively clear hierarchical structure. Our data are downloaded from
-Zillow[^[http://www.zillow.com/research/data/](http://www.zillow.com/research/data/)]],
+Zillow^[[http://www.zillow.com/research/data/](http://www.zillow.com/research/data/)],
 and give the Zillow Home Value Indexes at the neighborhood level,
 across the country, computed monthly between 1996 and 2016. In our
 display, we have taken the base 10 log of these indexes. As our
@@ -517,20 +520,20 @@ sources for any substantial decision-making.
 knitr::include_graphics("zillow_cities.png")
 ```
 
-```{r zillowmiddlepre}
+```{r zillowmiddlepre, fig.cap = "Neighborhoods with mid-range home prices before the recession are selected here. Note that the collection of series seems to widen after 2008 -- we are interested in whether there are reliable predictors of these alternate trajectories, given their similar starting points."}
 knitr::include_graphics("zillow_middle_pre.png")
 ```
 
-```{r zillowmiddleup}
+```{r zillowmiddleup, fig.cap = "Among those neighborhoods with mid-range prices before the recession, we have selected those that recovered more rapidly. These appear to be located mainly in Los Angeles and San Diego counties."}
 knitr::include_graphics("zillow_middle_up.png")
 ```
 
-```{r zillowmiddledown}
+```{r zillowmiddledown, fig.cap = "Rather than selecting mid-range series that recovered quickly, we can isolate those whose prices remained depressed after the recession. These seem mostly to be located in Central California and the East San Francisco Bay Area."}
 knitr::include_graphics("zillow_middle_down.png")
 ```
 
 
-```{r zillowsf}
+```{r zillowsf, fig.cap = "To study teh range in home prices within San Francisco County, we can select the associated nodes using a treebox."}
 knitr::include_graphics("zillow_sf.png")
 ```
 
@@ -539,8 +542,8 @@ knitr::include_graphics("zillow_sf.png")
 Our next example is a study in bikesharing demand, included as an
 example of analyzing collections of time series when there is no
 obvious hierarchical structure a priori. The data are available at
-the [UCI
-Repository][^[(https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset)](https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset)]
+the UCI
+Repository^[[https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset](https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset)]
 and were originally collected by a Washington D.C.-based bikesharing
 system for use in a Kaggle prediction competition. The data are hourly
 measurements of bike demand, aggregated across all bikesharing
@@ -591,7 +594,7 @@ the DOI sankey. Here, we group samples according to their quintile of
 different branches. We find that the quintiles are each rather
 strongly separated after descending even a few steps down the
 regression tree – for example, Figures \@ref(fig:weekday2011) and
-\@ref(fig:weekday2012) focuse on 2011 vs. 2012 split among weekday
+\@ref(fig:weekday2012) focus on 2011 vs. 2012 split among weekday
 samples, showing that this split distinguishes between samples falling
 in the second and third quintiles of 8AM demand.
 
@@ -667,5 +670,11 @@ linked brushing can be practically incorporated into a range of
 practical analysis workflows, from studying the impact of microbes on
 human health to better allocating units in commuter bikesharing
 systems.
+
+Potential sections to write
+
+* describe extension from svg to canvas
+* give example of parallel coordinates / hierarchical clustering?
+* explain incorporation into / give example of shiny app?
 
 ## References ##
