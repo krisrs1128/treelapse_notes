@@ -517,24 +517,24 @@ enough listings on the site, so should be supplemented by other data
 sources for any substantial decision-making.
 
 ```{r zillowcities, fig.cap = "California home prices at the city level, between 1996 and 2016. The effect of the 2008 recession is clear, and we have hovered over the San Bernardino series, to display the identity of one of the cities most strongly affected by the recession."}
-knitr::include_graphics("zillow_cities.png")
+knitr::include_graphics("figure/zillow_cities.pdf")
 ```
 
 ```{r zillowmiddlepre, fig.cap = "Neighborhoods with mid-range home prices before the recession are selected here. Note that the collection of series seems to widen after 2008 -- we are interested in whether there are reliable predictors of these alternate trajectories, given their similar starting points."}
-knitr::include_graphics("zillow_middle_pre.png")
+knitr::include_graphics("figure/zillow_middle_pre.pdf")
 ```
 
 ```{r zillowmiddleup, fig.cap = "Among those neighborhoods with mid-range prices before the recession, we have selected those that recovered more rapidly. These appear to be located mainly in Los Angeles and San Diego counties."}
-knitr::include_graphics("zillow_middle_up.png")
+knitr::include_graphics("figure/zillow_middle_up.pdf")
 ```
 
 ```{r zillowmiddledown, fig.cap = "Rather than selecting mid-range series that recovered quickly, we can isolate those whose prices remained depressed after the recession. These seem mostly to be located in Central California and the East San Francisco Bay Area."}
-knitr::include_graphics("zillow_middle_down.png")
+knitr::include_graphics("figure/zillow_middle_down.pdf")
 ```
 
 
 ```{r zillowsf, fig.cap = "To study teh range in home prices within San Francisco County, we can select the associated nodes using a treebox."}
-knitr::include_graphics("zillow_sf.png")
+knitr::include_graphics("figure/zillow_sf.pdf")
 ```
 
 ### Sources of Variation in Bikesharing Demand {#bikesharing-study}
