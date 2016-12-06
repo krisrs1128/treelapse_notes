@@ -335,11 +335,11 @@ able to identify these as members of the Bacteroidetes phylum, see
 Figure \@ref(fig:antibioticbacteroidetes).
 
 ```{r antibioticoverview, fig.cap = "The two antibiotic time courses are readily apparent even when only highlighting the most abundant taxa."}
-knitr::include_graphics("antibiotic_overview.png")
+knitr::include_graphics("figure/antibiotic_overview.pdf")
 ```
 
 ```{r antibioticbacteroidetes, fig.cap = "Introducing a second box into the timebox display identifies the Bacteroidaceae as a taxon only midly impacted by antibiotics."}
-knitr::include_graphics("antibiotic_bacteroidetes.png")
+knitr::include_graphics("figure/antibiotic_bacteroidetes.pdf")
 ```
 
 Next, using the scented widget, we focus on the window around the
@@ -353,7 +353,7 @@ contribute to these higher-level families. The resulting view is given
 by Figure \@ref(fig:antibioticfirmicutes)
 
 ```{r antibioticfirmicutes, fig.cap = "Zooming into the second antibiotic timecourse and highlighting the Lachnospiraceae and Ruminococcus, we see that the Ruminoccocus took more time to recover to pre-treatment levels."}
-knitr::include_graphics("antibiotic_firmicutes.png")
+knitr::include_graphics("figure/antibiotic_firmicutes.png")
 ```
 
 Alternatively, we can summarize each node by the average across its
@@ -370,7 +370,7 @@ red) are only briefly affected. In contrast, most families seem to
 recover in unison after the first treatment.
 
 ```{r ruminococcus, fig.cap = "By hovering over the Ruminoccocus branches, we see that there is a prolonged effect of the antibiotics time courses more or less uniformly across the lower taxonomic orders, with the except of "}
-knitr::include_graphics("ruminococcus.png")
+knitr::include_graphics("figure/ruminococcus.pdf")
 ```
 
 Further, note that in this subtree averages view, the tree display has
@@ -386,7 +386,7 @@ will be a more variable estimate than the averages over the more
 prevalent phyla.
 
 ```{r verrucomicrobiae, fig.cap = "The subtree averages aggregation brings attention to the Verrucomicrobiae, which though only present as a few species, are each rather abundant. In particular, they seem to increase after the first antibiotic time course."}
-knitr::include_graphics("verrucomicrobiae.png")
+knitr::include_graphics("figure/verrucomicrobiae.pdf")
 ```
 
 ### Differential Microbial Abundance and Preterm Births ###
@@ -437,15 +437,15 @@ Firmicutes. This is consistent with the claim that CST 4, the most
 diverse of the CSTs, is associated with preterm births.
 
 ```{r pretermcsts, fig.cap = "The increased diversity among samples in CST 4 is represented by the relatively larger contribution of red edges to branches outside of the Firmicutes."}
-knitr::include_graphics("preterm_csts.png")
+knitr::include_graphics("figure/preterm_csts.pdf")
 ```
 
 ```{r pretermcstslacto, fig.cap = "Zooming into the Lactobacillaceae family, we notice that the difference between the remaining four CSTs is related to which types of Lactobacillus are most prominent."}
-knitr::include_graphics("preterm_csts_lacto.png")
+knitr::include_graphics("figure/preterm_csts_lacto.png")
 ```
 
 ```{r pretermpreterm, fig.cap = "Samples with high levels of phyla other than Firmicutes appear to be related to preterm births."}
-knitr::include_graphics("preterm_preterm.png")
+#oknitr::include_graphics("figure/preterm_preterm.png")
 ```
 
 ### Dynamics in Housing Prices {#zillow-study}
@@ -517,24 +517,24 @@ enough listings on the site, so should be supplemented by other data
 sources for any substantial decision-making.
 
 ```{r zillowcities, fig.cap = "California home prices at the city level, between 1996 and 2016. The effect of the 2008 recession is clear, and we have hovered over the San Bernardino series, to display the identity of one of the cities most strongly affected by the recession."}
-knitr::include_graphics("zillow_cities.png")
+knitr::include_graphics("figure/zillow_cities.pdf")
 ```
 
 ```{r zillowmiddlepre, fig.cap = "Neighborhoods with mid-range home prices before the recession are selected here. Note that the collection of series seems to widen after 2008 -- we are interested in whether there are reliable predictors of these alternate trajectories, given their similar starting points."}
-knitr::include_graphics("zillow_middle_pre.png")
+knitr::include_graphics("figure/zillow_middle_pre.pdf")
 ```
 
 ```{r zillowmiddleup, fig.cap = "Among those neighborhoods with mid-range prices before the recession, we have selected those that recovered more rapidly. These appear to be located mainly in Los Angeles and San Diego counties."}
-knitr::include_graphics("zillow_middle_up.png")
+knitr::include_graphics("figure/zillow_middle_up.pdf")
 ```
 
 ```{r zillowmiddledown, fig.cap = "Rather than selecting mid-range series that recovered quickly, we can isolate those whose prices remained depressed after the recession. These seem mostly to be located in Central California and the East San Francisco Bay Area."}
-knitr::include_graphics("zillow_middle_down.png")
+knitr::include_graphics("figure/zillow_middle_down.pdf")
 ```
 
 
 ```{r zillowsf, fig.cap = "To study teh range in home prices within San Francisco County, we can select the associated nodes using a treebox."}
-knitr::include_graphics("zillow_sf.png")
+knitr::include_graphics("figure/zillow_sf.pdf")
 ```
 
 ### Sources of Variation in Bikesharing Demand {#bikesharing-study}
@@ -606,23 +606,23 @@ interactive visualization and modeling techniques in an iterative,
 nonlinear fashion.
 
 ```{r working, fig.cap = "The two peaks at rush hour distinguish weekday series from the rest."}
-knitr::include_graphics("working.png")
+knitr::include_graphics("figure/working.pdf")
 ```
 
 ```{r weekend, fig.cap = "Unlike weekday demand, weekend demand is unimodal. The few weekday series with unimodal series seem to be associated with holidays. This is the case for New Years' Eve, which is currently hovered over in the tree."}
-knitr::include_graphics("weekend.png")
+knitr::include_graphics("figure/weekend.pdf")
 ```
 
 ```{r weekday2011, fig.cap = "Weeday demand appears larger in 2012 than 2011 -- compare with the next figure."}
-knitr::include_graphics("weekday_2011.png")
+knitr::include_graphics("figure/weekday_2011.pdf")
 ```
 
 ```{r weekday2012, fig.cap = "Weekday demand increased in 2012 -- compare with the previous figure."}
-knitr::include_graphics("weekday_2012.png")
+knitr::include_graphics("figure/weekday_2012.pdf")
 ```
 
 ```{r warmweekend, fig.cap = "The samples with highest night demand tend to fall on warm weekends."}
-knitr::include_graphics("warm_weekend.png")
+knitr::include_graphics("figure/warm_weekend.pdf")
 ```
 
 ```{r bikesankey, fig.cap = "We can interpret the regression tree using an interactive DOI representation."}
