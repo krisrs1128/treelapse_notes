@@ -441,11 +441,11 @@ knitr::include_graphics("figure/preterm_csts.pdf")
 ```
 
 ```{r pretermcstslacto, fig.cap = "Zooming into the Lactobacillaceae family, we notice that the difference between the remaining four CSTs is related to which types of Lactobacillus are most prominent."}
-knitr::include_graphics("figure/preterm_csts_lacto.png")
+knitr::include_graphics("figure/preterm_csts_lacto.pdf")
 ```
 
 ```{r pretermpreterm, fig.cap = "Samples with high levels of phyla other than Firmicutes appear to be related to preterm births."}
-#oknitr::include_graphics("figure/preterm_preterm.png")
+knitr::include_graphics("figure/preterm_preterm.pdf")
 ```
 
 ### Dynamics in Housing Prices {#zillow-study}
@@ -626,7 +626,7 @@ knitr::include_graphics("figure/warm_weekend.pdf")
 ```
 
 ```{r bikesankey, fig.cap = "We can interpret the regression tree using an interactive DOI representation."}
-knitr::include_graphics("bike_sankey.png")
+knitr::include_graphics("figure/bike_sankey.pdf")
 ```
 
 
