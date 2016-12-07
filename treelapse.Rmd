@@ -626,7 +626,7 @@ knitr::include_graphics("figure/warm_weekend.pdf")
 ```
 
 ```{r bikesankey, fig.cap = "We can interpret the regression tree using an interactive DOI representation."}
-knitr::include_graphics("bike_sankey.png")
+knitr::include_graphics("figure/bike_sankey.pdf")
 ```
 
 
