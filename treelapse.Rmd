@@ -632,6 +632,7 @@ include_graphics("figure/bike_sankey.pdf")
 
 ### Hierarchically Clustering the Iris Data {#iris}
 
+
 Each of the timebox tree and treebox examples presented so far have focused on
 data with a clear time component. We note however that these techniques could
 alternatively be applied to high-dimensional data, via the use of parallel
@@ -651,7 +652,7 @@ contribution is to display the resulting hierarchy together with a parallel
 coordinates view of the raw data, see Figure \@ref(fig:iristimebox).
 
 ```{r iristimebox, fig.cap = "A toy application to the Iris data gives an example of how linking in treelapse can be applied to combine hierarchical clustering and parallel coordinates views."}
-include_graphics("iris_timebox.pdf")
+include_graphics("figure/iris_timebox.pdf")
 ```
 
 From Figure \@ref(fig:iristimebox), the fact that the highest split in the
