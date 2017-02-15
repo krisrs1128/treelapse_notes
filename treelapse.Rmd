@@ -336,11 +336,11 @@ able to identify these as members of the Bacteroidetes phylum, see
 Figure \@ref(fig:antibioticbacteroidetes).
 
 ```{r antibioticoverview, fig.cap = "The two antibiotic time courses are readily apparent even when only highlighting the most abundant taxa."}
-include_graphics("figure/antibiotic_overview.pdf")
+include_graphics("figure/antibiotic_overview.png")
 ```
 
 ```{r antibioticbacteroidetes, fig.cap = "Introducing a second box into the timebox display identifies the Bacteroidaceae as a taxon only midly impacted by antibiotics."}
-include_graphics("figure/antibiotic_bacteroidetes.pdf")
+include_graphics("figure/antibiotic_bacteroidetes.png")
 ```
 
 Next, using the scented widget, we focus on the window around the
@@ -371,7 +371,7 @@ red) are only briefly affected. In contrast, most families seem to
 recover in unison after the first treatment.
 
 ```{r ruminococcus, fig.cap = "By hovering over the Ruminoccocus branches, we see that there is a prolonged effect of the antibiotics time courses more or less uniformly across the lower taxonomic orders."}
-include_graphics("figure/ruminococcus.pdf")
+include_graphics("figure/ruminococcus.png")
 ```
 
 Further, note that in this subtree averages view, the tree display has
@@ -387,7 +387,7 @@ will be a more variable estimate than the averages over the more
 prevalent phyla.
 
 ```{r verrucomicrobiae, fig.cap = "The subtree averages aggregation brings attention to the Verrucomicrobiae, which though only present as a few species, are each rather abundant. In particular, they seem to increase after the first antibiotic time course."}
-include_graphics("figure/verrucomicrobiae.pdf")
+include_graphics("figure/verrucomicrobiae.png")
 ```
 
 ### Differential Microbial Abundance and Preterm Births ###
@@ -438,15 +438,15 @@ Firmicutes. This is consistent with the claim that CST 4, the most
 diverse of the CSTs, is associated with preterm births.
 
 ```{r pretermcsts, fig.cap = "The increased diversity among samples in CST 4 is represented by the relatively larger contribution of red edges to branches outside of the Firmicutes."}
-include_graphics("figure/preterm_csts.pdf")
+include_graphics("figure/preterm_csts.png")
 ```
 
 ```{r pretermcstslacto, fig.cap = "Zooming into the Lactobacillaceae family, we notice that the difference between the remaining four CSTs is related to which types of Lactobacillus are most prominent."}
-include_graphics("figure/preterm_csts_lacto.pdf")
+include_graphics("figure/preterm_csts_lacto.png")
 ```
 
 ```{r pretermpreterm, fig.cap = "Samples with high levels of phyla other than Firmicutes appear to be related to preterm births."}
-include_graphics("figure/preterm_preterm.pdf")
+include_graphics("figure/preterm_preterm.png")
 ```
 
 ### Dynamics in Housing Prices {#zillow-study}
@@ -518,24 +518,24 @@ enough listings on the site, so should be supplemented by other data
 sources for any substantial decision-making.
 
 ```{r zillowcities, fig.cap = "California home prices at the city level, between 1996 and 2016. The effect of the 2008 recession is clear, and we have hovered over the San Bernardino series, to display the identity of one of the cities most strongly affected by the recession."}
-include_graphics("figure/zillow_cities.pdf")
+include_graphics("figure/zillow_cities.png")
 ```
 
 ```{r zillowmiddlepre, fig.cap = "Neighborhoods with mid-range home prices before the recession are selected here. Note that the collection of series seems to widen after 2008 -- we are interested in whether there are reliable predictors of these alternate trajectories, given their similar starting points."}
-include_graphics("figure/zillow_middle_pre.pdf")
+include_graphics("figure/zillow_middle_pre.png")
 ```
 
 ```{r zillowmiddleup, fig.cap = "Among those neighborhoods with mid-range prices before the recession, we have selected those that recovered more rapidly. These appear to be located mainly in Los Angeles and San Diego counties."}
-include_graphics("figure/zillow_middle_up.pdf")
+include_graphics("figure/zillow_middle_up.png")
 ```
 
 ```{r zillowmiddledown, fig.cap = "Rather than selecting mid-range series that recovered quickly, we can isolate those whose prices remained depressed after the recession. These seem mostly to be located in Central California and the East San Francisco Bay Area."}
-include_graphics("figure/zillow_middle_down.pdf")
+include_graphics("figure/zillow_middle_down.png")
 ```
 
 
 ```{r zillowsf, fig.cap = "To study teh range in home prices within San Francisco County, we can select the associated nodes using a treebox."}
-include_graphics("figure/zillow_sf.pdf")
+include_graphics("figure/zillow_sf.png")
 ```
 
 ### Sources of Variation in Bikesharing Demand {#bikesharing-study}
@@ -607,27 +607,27 @@ interactive visualization and modeling techniques in an iterative,
 nonlinear fashion.
 
 ```{r working, fig.cap = "The two peaks at rush hour distinguish weekday series from the rest."}
-include_graphics("figure/working.pdf")
+include_graphics("figure/working.png")
 ```
 
 ```{r weekend, fig.cap = "Unlike weekday demand, weekend demand is unimodal. The few weekday series with unimodal series seem to be associated with holidays. This is the case for New Years' Eve, which is currently hovered over in the tree."}
-include_graphics("figure/weekend.pdf")
+include_graphics("figure/weekend.png")
 ```
 
 ```{r weekday2011, fig.cap = "Weeday demand appears larger in 2012 than 2011 -- compare with the next figure."}
-include_graphics("figure/weekday_2011.pdf")
+include_graphics("figure/weekday_2011.png")
 ```
 
 ```{r weekday2012, fig.cap = "Weekday demand increased in 2012 -- compare with the previous figure."}
-include_graphics("figure/weekday_2012.pdf")
+include_graphics("figure/weekday_2012.png")
 ```
 
 ```{r warmweekend, fig.cap = "The samples with highest night demand tend to fall on warm weekends."}
-include_graphics("figure/warm_weekend.pdf")
+include_graphics("figure/warm_weekend.png")
 ```
 
 ```{r bikesankey, fig.cap = "We can interpret the regression tree using an interactive DOI representation."}
-include_graphics("figure/bike_sankey.pdf")
+include_graphics("figure/bike_sankey.png")
 ```
 
 ### Hierarchically Clustering the Iris Data {#iris}
@@ -652,7 +652,7 @@ contribution is to display the resulting hierarchy together with a parallel
 coordinates view of the raw data, see Figure \@ref(fig:iristimebox).
 
 ```{r iristimebox, fig.cap = "A toy application to the Iris data gives an example of how linking in treelapse can be applied to combine hierarchical clustering and parallel coordinates views."}
-include_graphics("figure/iris_timebox.pdf")
+include_graphics("figure/iris_timebox.png")
 ```
 
 From Figure \@ref(fig:iristimebox), the fact that the highest split in the
