@@ -17,7 +17,8 @@ link-citations: yes
 ## Introduction ##
 
 ```{r set_chunk_opts, echo = FALSE}
-knitr::opts_chunk$set(
+library("knitr")
+opts_chunk$set(
   fig.align = "center",
   out.width = "250px",
   echo = FALSE,
@@ -335,11 +336,11 @@ able to identify these as members of the Bacteroidetes phylum, see
 Figure \@ref(fig:antibioticbacteroidetes).
 
 ```{r antibioticoverview, fig.cap = "The two antibiotic time courses are readily apparent even when only highlighting the most abundant taxa."}
-knitr::include_graphics("figure/antibiotic_overview.pdf")
+include_graphics("figure/antibiotic_overview.pdf")
 ```
 
 ```{r antibioticbacteroidetes, fig.cap = "Introducing a second box into the timebox display identifies the Bacteroidaceae as a taxon only midly impacted by antibiotics."}
-knitr::include_graphics("figure/antibiotic_bacteroidetes.pdf")
+include_graphics("figure/antibiotic_bacteroidetes.pdf")
 ```
 
 Next, using the scented widget, we focus on the window around the
@@ -353,7 +354,7 @@ contribute to these higher-level families. The resulting view is given
 by Figure \@ref(fig:antibioticfirmicutes)
 
 ```{r antibioticfirmicutes, fig.cap = "Zooming into the second antibiotic timecourse and highlighting the Lachnospiraceae and Ruminococcus, we see that the Ruminoccocus took more time to recover to pre-treatment levels."}
-knitr::include_graphics("figure/antibiotic_firmicutes.png")
+include_graphics("figure/antibiotic_firmicutes.png")
 ```
 
 Alternatively, we can summarize each node by the average across its
@@ -369,8 +370,8 @@ more rapidly than the rest, for example the Unc095d3 (highlighted in
 red) are only briefly affected. In contrast, most families seem to
 recover in unison after the first treatment.
 
-```{r ruminococcus, fig.cap = "By hovering over the Ruminoccocus branches, we see that there is a prolonged effect of the antibiotics time courses more or less uniformly across the lower taxonomic orders, with the except of "}
-knitr::include_graphics("figure/ruminococcus.pdf")
+```{r ruminococcus, fig.cap = "By hovering over the Ruminoccocus branches, we see that there is a prolonged effect of the antibiotics time courses more or less uniformly across the lower taxonomic orders."}
+include_graphics("figure/ruminococcus.pdf")
 ```
 
 Further, note that in this subtree averages view, the tree display has
@@ -386,7 +387,7 @@ will be a more variable estimate than the averages over the more
 prevalent phyla.
 
 ```{r verrucomicrobiae, fig.cap = "The subtree averages aggregation brings attention to the Verrucomicrobiae, which though only present as a few species, are each rather abundant. In particular, they seem to increase after the first antibiotic time course."}
-knitr::include_graphics("figure/verrucomicrobiae.pdf")
+include_graphics("figure/verrucomicrobiae.pdf")
 ```
 
 ### Differential Microbial Abundance and Preterm Births ###
@@ -437,15 +438,15 @@ Firmicutes. This is consistent with the claim that CST 4, the most
 diverse of the CSTs, is associated with preterm births.
 
 ```{r pretermcsts, fig.cap = "The increased diversity among samples in CST 4 is represented by the relatively larger contribution of red edges to branches outside of the Firmicutes."}
-knitr::include_graphics("figure/preterm_csts.pdf")
+include_graphics("figure/preterm_csts.pdf")
 ```
 
 ```{r pretermcstslacto, fig.cap = "Zooming into the Lactobacillaceae family, we notice that the difference between the remaining four CSTs is related to which types of Lactobacillus are most prominent."}
-knitr::include_graphics("figure/preterm_csts_lacto.pdf")
+include_graphics("figure/preterm_csts_lacto.pdf")
 ```
 
 ```{r pretermpreterm, fig.cap = "Samples with high levels of phyla other than Firmicutes appear to be related to preterm births."}
-knitr::include_graphics("figure/preterm_preterm.pdf")
+include_graphics("figure/preterm_preterm.pdf")
 ```
 
 ### Dynamics in Housing Prices {#zillow-study}
@@ -461,7 +462,7 @@ state, regional, county, and city levels. We represent each of these
 coarser spatial categories using the average of all neighborhoods
 contained in them. We have filtered down to the 890 neighborhoods in
 California; rendering more neighborhoods while keeping all 246
-timepoints causes the interface to lag^[See the Section
+timepoints causes the interface to lag^[See Section
 \@ref(conclusion) for potential optimizations, however.].
 
 Our basic analysis revolves around geographic and temporal variation
@@ -517,24 +518,24 @@ enough listings on the site, so should be supplemented by other data
 sources for any substantial decision-making.
 
 ```{r zillowcities, fig.cap = "California home prices at the city level, between 1996 and 2016. The effect of the 2008 recession is clear, and we have hovered over the San Bernardino series, to display the identity of one of the cities most strongly affected by the recession."}
-knitr::include_graphics("figure/zillow_cities.pdf")
+include_graphics("figure/zillow_cities.pdf")
 ```
 
 ```{r zillowmiddlepre, fig.cap = "Neighborhoods with mid-range home prices before the recession are selected here. Note that the collection of series seems to widen after 2008 -- we are interested in whether there are reliable predictors of these alternate trajectories, given their similar starting points."}
-knitr::include_graphics("figure/zillow_middle_pre.pdf")
+include_graphics("figure/zillow_middle_pre.pdf")
 ```
 
 ```{r zillowmiddleup, fig.cap = "Among those neighborhoods with mid-range prices before the recession, we have selected those that recovered more rapidly. These appear to be located mainly in Los Angeles and San Diego counties."}
-knitr::include_graphics("figure/zillow_middle_up.pdf")
+include_graphics("figure/zillow_middle_up.pdf")
 ```
 
 ```{r zillowmiddledown, fig.cap = "Rather than selecting mid-range series that recovered quickly, we can isolate those whose prices remained depressed after the recession. These seem mostly to be located in Central California and the East San Francisco Bay Area."}
-knitr::include_graphics("figure/zillow_middle_down.pdf")
+include_graphics("figure/zillow_middle_down.pdf")
 ```
 
 
 ```{r zillowsf, fig.cap = "To study teh range in home prices within San Francisco County, we can select the associated nodes using a treebox."}
-knitr::include_graphics("figure/zillow_sf.pdf")
+include_graphics("figure/zillow_sf.pdf")
 ```
 
 ### Sources of Variation in Bikesharing Demand {#bikesharing-study}
@@ -606,30 +607,61 @@ interactive visualization and modeling techniques in an iterative,
 nonlinear fashion.
 
 ```{r working, fig.cap = "The two peaks at rush hour distinguish weekday series from the rest."}
-knitr::include_graphics("figure/working.pdf")
+include_graphics("figure/working.pdf")
 ```
 
 ```{r weekend, fig.cap = "Unlike weekday demand, weekend demand is unimodal. The few weekday series with unimodal series seem to be associated with holidays. This is the case for New Years' Eve, which is currently hovered over in the tree."}
-knitr::include_graphics("figure/weekend.pdf")
+include_graphics("figure/weekend.pdf")
 ```
 
 ```{r weekday2011, fig.cap = "Weeday demand appears larger in 2012 than 2011 -- compare with the next figure."}
-knitr::include_graphics("figure/weekday_2011.pdf")
+include_graphics("figure/weekday_2011.pdf")
 ```
 
 ```{r weekday2012, fig.cap = "Weekday demand increased in 2012 -- compare with the previous figure."}
-knitr::include_graphics("figure/weekday_2012.pdf")
+include_graphics("figure/weekday_2012.pdf")
 ```
 
 ```{r warmweekend, fig.cap = "The samples with highest night demand tend to fall on warm weekends."}
-knitr::include_graphics("figure/warm_weekend.pdf")
+include_graphics("figure/warm_weekend.pdf")
 ```
 
 ```{r bikesankey, fig.cap = "We can interpret the regression tree using an interactive DOI representation."}
-knitr::include_graphics("figure/bike_sankey.pdf")
+include_graphics("figure/bike_sankey.pdf")
 ```
 
+### Hierarchically Clustering the Iris Data {#iris}
 
+Each of the timebox tree and treebox examples presented so far have focused on
+data with a clear time component. We note however that these techniques could
+alternatively be applied to high-dimensional data, via the use of parallel
+coordinates [@inselberg1991parallel]. The usual parallel coordinates challenges
+remain, namely selecteing scales for and an ordering across the different
+coordinates, but the linking and focus-plus-context ideas can still be employed
+in this setting. Here we provide a simple implementation of this idea, using the
+famous Iris data, inspired by the hierarchical clustering vignette in
+[@galili2015dendextend].
+
+The Iris data set is a collection of 150 measurements of four variables --
+widths and lengths of Iris sepals and petals [@fisher1936use]. There are 50
+samples for each of three species of Iris, \textit{setosa}, \textit{versicolor}
+and \textit{virgnica}. As in [@galili2015dendextend], we hierarchical cluster
+samples\footnote{We use complete linkage and the euclidean distance.}. Our
+contribution is to display the resulting hierarchy together with a parallel
+coordinates view of the raw data, see Figure \@ref(fig:iristimebox).
+
+```{r iristimebox, fig.cap = "A toy application to the Iris data gives an example of how linking in treelapse can be applied to combine hierarchical clustering and parallel coordinates views."}
+include_graphics("iris_timebox.pdf")
+```
+
+From Figure \@ref(fig:iristimebox), the fact that the highest split in the
+hierarchical clustering distinguishes those samples with small petal lengths
+from the rest. Upon inspecting the associated IDs, we find that this cluster
+includes all the samples from setosa. The similarity between versicolor and
+virginica is reflected in their proximity in the clustering. Further, applying a
+treebox view to scan the subtrees associated with these two species reveals the
+more subtle differences in sepal and petal lengths that can be used to
+distinguish them.
 
 ## Conclusion and Future Work {#conclusion}
 
@@ -670,11 +702,5 @@ linked brushing can be practically incorporated into a range of
 practical analysis workflows, from studying the impact of microbes on
 human health to better allocating units in commuter bikesharing
 systems.
-
-Potential sections to write
-
-* describe extension from svg to canvas
-* give example of parallel coordinates / hierarchical clustering?
-* explain incorporation into / give example of shiny app?
 
 ## References ##
