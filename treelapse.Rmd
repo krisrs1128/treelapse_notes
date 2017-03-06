@@ -46,10 +46,11 @@ techniques.
 We have implemented our visualizations in D3, but encapsulated in an R package,
 called treelapse, to facilitate rapid turnover from data preparation and
 modeling to interactive exploration, and vice versa. Our code is open-source,
-and available at \url{https://github.com/krisrs1128/treelapse}. We hope this
-package encourages data analysts to work at the border between data modeling and
-visualization, and more generally empowers a wider audience to apply less widely
-known, but powerful, visualization ideas.
+and available at \url{xxxxxxxxx}\footnote{Link removed in blinded manuscript,
+but available to editor.}. We hope this package encourages data analysts to work
+at the border between data modeling and visualization, and more generally
+empowers a wider audience to apply less widely known, but powerful,
+visualization ideas.
 
 The paper is organized as follows. First, we describe our motivating
 application to the microbiome and the associated generic analysis
