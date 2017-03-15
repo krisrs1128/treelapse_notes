@@ -20,7 +20,7 @@ link-citations: yes
 library("knitr")
 opts_chunk$set(
   fig.align = "center",
-  out.width = "250px",
+  out.width = "350px",
   echo = FALSE,
   cache = TRUE
 )
@@ -32,7 +32,7 @@ hope both to characterize generically useful techniques for
 interactively visualizing hierarchical data and to offer practical
 tools for implementing such displays. To this end, we identify
 questions that often emerge when working with hierarchical data and
-provide an R package to simplify their investigation [@ripley2001r].
+provide an R package to simplify their investigation [@ihaka1996r].
 
 Our key contribution is the adaptation of the visualization principles
 of focus-plus-context and linking to the study of tree-structured data
@@ -631,39 +631,39 @@ include_graphics("figure/warm_weekend.png")
 include_graphics("figure/bike_sankey.png")
 ```
 
-### Hierarchically Clustering the Iris Data {#iris}
-
+### Hierarchically Clustering the Global Patterns Data {#global_patterns}
 
 Each of the timebox tree and treebox examples presented so far have focused on
 data with a clear time component. We note however that these techniques could
 alternatively be applied to high-dimensional data, via the use of parallel
 coordinates [@inselberg1991parallel]. The usual parallel coordinates challenges
-remain, namely selecteing scales for and an ordering across the different
+remain, namely selecting scales for and an ordering across the different
 coordinates, but the linking and focus-plus-context ideas can still be employed
-in this setting. Here we provide a simple implementation of this idea, using the
-famous Iris data, inspired by the hierarchical clustering vignette in
-[@galili2015dendextend].
+in this setting. Here we provide an implementation of this idea on a dataset
+comparing microbiomes across various ecological environments
+[@caporaso2011global], which is publicly accessible through phyloseq
+[@mcmurdie2013phyloseq].
 
-The Iris data set is a collection of 150 measurements of four variables --
-widths and lengths of Iris sepals and petals [@fisher1936use]. There are 50
-samples for each of three species of Iris, \textit{setosa}, \textit{versicolor}
-and \textit{virgnica}. As in [@galili2015dendextend], we hierarchical cluster
-samples\footnote{We use complete linkage and the euclidean distance.}. Our
-contribution is to display the resulting hierarchy together with a parallel
-coordinates view of the raw data, see Figure \@ref(fig:iristimebox).
+The original Global Patterns data consists of 26 samples across 9 environments
+(for example, freshwater and soil). In each site, there are counts across 19216
+taxa -- to simplify visualization, we filter to the 500 most abundant taxa.
 
-```{r iristimebox, fig.cap = "A toy application to the Iris data gives an example of how linking in treelapse can be applied to combine hierarchical clustering and parallel coordinates views."}
-include_graphics("figure/iris_timebox.png")
+We hierarchically cluster these 26 samples based on the 500 most abundant taxa,
+using complete linkage on the UniFrac distance. Figure \@ref(gptimebox) displays
+the resulting hierarchy together with a parallel coordinates view of the
+$\text{asinh}$ transformed taxa.
+
+```{r gptimebox, fig.cap = "An application to the Global Patterns demonstrates how linking in treelapse can be applied to combine hierarchical clustering and parallel coordinates views."}
+include_graphics(c("figure/gp_cluster1.png", "figure/gp_cluster2.png"))
 ```
 
-From Figure \@ref(fig:iristimebox), the fact that the highest split in the
-hierarchical clustering distinguishes those samples with small petal lengths
-from the rest. Upon inspecting the associated IDs, we find that this cluster
-includes all the samples from setosa. The similarity between versicolor and
-virginica is reflected in their proximity in the clustering. Further, applying a
-treebox view to scan the subtrees associated with these two species reveals the
-more subtle differences in sepal and petal lengths that can be used to
-distinguish them.
+In Figure \@ref(fig:gptimebox), we compare two subclusters from the hierarchical
+clustering tree, after zooming to a few of the microbes that distinguish between
+the clusters. Upon revisiting the original data, it becomes clear that the
+samples highlighted on the left come from freshwater samples, while those on the
+right come from soil and skin, and looking up taxonomic groups associated with
+the distinguishing microbes confirms this. For example, many of the microbes
+with high abundances in the left figure come from order Oceanospirillales.
 
 ## Conclusion and Future Work {#conclusion}
 
