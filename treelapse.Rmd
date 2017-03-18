@@ -88,7 +88,7 @@ species. Hence, we frame the tree-structured differential abundance problem as
 the question of identifying the largest taxonomic subtree whose associated
 bacteria are differentially abundant.
 
-In the tree structured bacterial dynamics problem, the goal is to
+In the tree-structured bacterial dynamics problem, the goal is to
 describe changes in bacterial abundances in an environment over
 time. As in the differential abundance problem, it is useful if these
 descriptions can be given at the highest subtree at which the pattern
@@ -335,8 +335,8 @@ antibiotic treatment.  By more closely inspecting the display, we are
 able to identify these as members of the Bacteroidetes phylum, see
 Figure \@ref(fig:antibioticbacteroidetes).
 
-```{r antibioticoverview, fig.cap = "The two antibiotic time courses are readily apparent even when only highlighting the most abundant taxa."}
-include_graphics("figure/antibiotic_overview.png")
+```{r antibioticoverview, fig.cap = "The two antibiotic time courses are readily apparent even when only highlighting the most abundant taxa. We have annotated the figure with its three main components."}
+include_graphics("figure/annotated_antibiotic_overview.png")
 ```
 
 ```{r antibioticbacteroidetes, fig.cap = "Introducing a second box into the timebox display identifies the Bacteroidaceae as a taxon only midly impacted by antibiotics."}
@@ -534,7 +534,7 @@ include_graphics("figure/zillow_middle_down.png")
 ```
 
 
-```{r zillowsf, fig.cap = "To study teh range in home prices within San Francisco County, we can select the associated nodes using a treebox."}
+```{r zillowsf, fig.cap = "To study the range in home prices within San Francisco County, we can select the associated nodes using a treebox."}
 include_graphics("figure/zillow_sf.png")
 ```
 
@@ -652,7 +652,7 @@ using complete linkage on the UniFrac distance. Figure \@ref(fig:gptimebox) disp
 the resulting hierarchy together with a parallel coordinates view of the
 $\text{asinh}$ transformed taxa.
 
-```{r gptimebox, out.width = "200px", fig.show = "hold", fig.cap = "An application to the Global Patterns demonstrates how linking in treelapse can be applied to combine hierarchical clustering and parallel coordinates views."}
+```{r gptimebox, out.width = "250px", fig.show = "hold", fig.cap = "An application to the Global Patterns demonstrates how linking in treelapse can be applied to combine hierarchical clustering and parallel coordinates views."}
 include_graphics(c("figure/gp_cluster1.png", "figure/gp_cluster2.png"))
 ```
 
@@ -694,13 +694,12 @@ visualization techniques in a very specific methodology problem –
 analysis of differential abundance and dynamics in hierarchically
 structured data – that appears in a variety of application domains. We
 have leveraged a link between R and D3 [@vaidyanathan2014htmlwidgets]
-to create exploratory visualizations while still deep in data
-analysis; in this way our work is a departure from the culture of
-polished, journalistic visualizations prioritized by the D3
-community. Finally, we have given a series of examples to demonstrate
-how the general visualization techniques of focus-plus-context and
-linked brushing can be practically incorporated into a range of
-practical analysis workflows, from studying the impact of bacteria on
+to create visualizations during the exploratory phase of data analysis; in this
+way our work is a departure from the culture of polished, journalistic
+visualizations prioritized by the D3 community. Finally, we have given a series
+of examples to demonstrate how the general visualization techniques of
+focus-plus-context and linked brushing can be practically incorporated into a
+range of practical analysis workflows, from studying the impact of bacteria on
 human health to better allocating units in commuter bikesharing
 systems.
 
