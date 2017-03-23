@@ -12,6 +12,7 @@ output:
 bibliography: ["bibliography.bib"]
 biblio-style: "agsm"
 link-citations: yes
+number-sections: false
 ---
 
 ## Introduction ##
