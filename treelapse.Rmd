@@ -314,7 +314,7 @@ of problems to which we have limited ourselves.
 
 ### Bacterial Dynamics of Antibiotics Time Courses ###
 
-[@dethlefsen2008pervasive] investigates the effect of antibiotics on
+@dethlefsen2008pervasive investigated the effect of antibiotics on
 bacterial community composition from an ecological perspective. The
 study tracks the microbiome of three patients across ten months, with
 two five-day antibiotic time courses separated by 6 months. Discerning
@@ -392,7 +392,7 @@ include_graphics("figure/verrucomicrobiae.png")
 
 ### Differential Bacterial Abundance and Preterm Births ###
 
-The study [@digiulio2015temporal] tracked the abundance of bacteria in
+@digiulio2015temporal tracked the abundance of bacteria in
 the vaginal microbiome during pregnancy in an effort to study
 relationships between bacterial community composition and preterm
 birth. Ideally, it would be possible to develop clear bacterial
@@ -663,6 +663,55 @@ samples highlighted on the left come from freshwater samples, while those on the
 right come from soil and skin, and looking up taxonomic groups associated with
 the distinguishing bacteria confirms this. For example, many of the species
 with high abundances in the left figure come from order Oceanospirillales.
+
+### Inspecting Confirmatory Analysis {#structssi}
+
+In addition to facilitating exploratory study, treelapse has potential value as
+a device for inspecting confirmatory analysis. We provide an illustration
+extending an example from [@callahan2016bioconductor], which formally tested
+bacterial species for association with age in a sample of mice. The testing
+approach advocated there is particularly well-suited to visualization with
+treelapse, since it sought to detect associations at multiple levels of
+phylogenetic resolution, using statistical tools developed in
+[@yekutieli2008hierarchical; @sankaran2014structssi].
+
+The data of interest in [@callahan2016bioconductor] are bacterial counts
+collected across old and young mice. After variance-stabilizing these counts
+using DESeq2 [@love2014moderated], a $t$-test was applied to each node in a
+phylogenetic tree, comparing abundances between old and young mice. To account
+for multiple testing, we employ the structSSI algorithm
+[@yekutieli2008hierarchical; @sankaran2014structssi] along with methods
+available in the `multtest` package [@pollard2005multiple].
+
+To interpret the results, we apply timebox trees. Our goals are to (1) identify
+subtrees with consistently elevated differential abundance across age groups
+and (2) compare alternative multiple testing adjustment procedures. Our approach
+is to display the negative-log raw and adjusted $p$-values for each node, with
+alternative methods compared via parallel coordinates. One view of the resulting
+display is captured in Figure \@ref(fig:structssi). First, we see that
+significant nodes tend to be significant across all methods -- the ordering
+between different series appears stable. Interestingly, the Sidak one-step and
+structSSI procedures seem to have lower power than the others, including
+conservative FWER-controlling methods, like the Bonferroni procedure. Further,
+in this application, FDR-controlling techniques do not seem to offer notably
+different adjusted $p$-values, relative to those controlling FWER. This suggests
+that, for this problem, bacteria are either strongly associated with age, or not
+associated at all, so that there is little gain from using more sensitive
+procedures.
+
+```{r structssi, fig.cap = "Viewing a tree of $p$-values across different methods highlights two subtrees with strong associations with mouse age, across several testing procedures."}
+include_graphics("figure/structssi.png")
+```
+
+Further, selecting series with strong association between abundance and age, two
+major subtrees are brought to the forefront. Separately querying the the
+taxonomic identities of these bacteria reveals that they are two subgroups of
+Clostridia, which is consistent with the analysis of
+[@callahan2016bioconductor]. More than this specific analysis outcome, this view
+demonstrates that interactive visual inspection of results from confirmatory
+analysis provides deeper insight than the standard practice of printing tables
+of (adjusted or unadjusted) $p$-values: the relationship between significant
+nodes is only clear upon visualization on the tree. 
 
 ## Conclusion and Future Work {#conclusion}
 
