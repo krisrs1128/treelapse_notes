@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage{natbib}
+\usepackage{graphicx}
+\input{preamble.tex}
+
+\begin{document}
+
+We would like to thank the two reviewers and the associate editor for insightful
+and constructive comments on our work. Below, we describe changes to the paper
+text and software based on this feedback.
+
+\subsection{Reviewer 1}
+
+\textit{This small sampling of a large body of work points to the need for a
+  cleaner conceptualization and clarifications of the contribution of the work
+  presented in this paper relative to prior efforts.}
+
+We have have modified our literature review to begin with a broader discussion
+of tree and time series visualization methods, before proceeding to those
+methods used more directly in our work. Further, we have added a bullet list
+describing more concretely the contributions of this paper within the broader
+body of knowledge.
+
+\textit{My main concern regarding the presentation of the work lies in the third
+  and fourth views - why are they presented as distinct? It would seem to me
+  that all of the described functionality could be configured in that one view.
+  In fact, I could imagine including the DOi in the same view as well - why are
+  multiple views needed?}
+
+Yes, it would be possible to develop a view that highlights series based on the
+intersection of (1) the union of brushes over the trees and (2) the intersection
+of brushes over the time series. We imagined that it would be easier for users
+to interpret the display by explicitly modularizing the separate visual tasks.
+(todo: we should try to experiment with this idea, to see if it is feasible)
+
+\textit{Some detail about the scale of the tool would be useful. How many nodes
+  can be included in the tree? How many time series, of what length? Rough
+  estimates would help readers assess utility.}
+
+We have added a description in Section ? describing the scales of different
+inputs before the interface begins to lag.
+
+\subsection{Reviewer 2}
+
+
+\textit{In the case studies, it would be interesting to see how the highlighted
+  nodes change when you shrink or pan the selecting area in the time series
+  plot.}
+
+This is visible online in our video demo. It is also possible to see this effect
+directly by interacting with precompiled versions in our compiled rmarkdown
+vignettes. We have further added a short supplementary note providing static
+figures describing this effect.
+
+\textit{Is it possible to combine the DOI sankey idea with the timebox trees, so
+  that the time series can be conditioned on the categorical variable?}
+
+It would be possible to colo series according to different properties, or
+alternatively faceting different series into separate panels. We have these
+extensions in mind for a future version of the package, though these are not
+possible in the package as it currently stands.
+
+\textit{As the authors mentioned in the conclusion part, faceting is an
+  important feature to be added in the interactive time series plot. Also,
+  zooming in $y$-scale is needed when the lines are very intensive, like the
+  bottom of Figure 1.}
+
+As mentioned above, faceting is a natural next step, but we have not implemented
+it yet. On zooming however, it is already possible to zoom the $y$-axis, using
+the pan-zoom widget.
+
+\textit{In the case studies, when there are two colors in the time series plot
+  (Figures 4, 9, 13, 16), the brown color is almost hidden by the blue. It would
+  be nicer to have the brown highlighted on the top, or add the transparency to
+  the blue.}
+
+It is already possible to customize the transparency of the blue selected lines
+by using the \texttt{ts\$opacity\_selected} argument in the \texttt{style\_opts}
+argument to the R plotting functions. However, we realize this is not the ideal
+approach to displaying the searched series, and since searching is an important
+function, we have revised our implementation and the relevant figures so that
+the searched series are always displayed on top.
+
+\textit{In the clustering example, it doesn't make sense to show the internal
+  nodes. It is better to display only the leaves in the time series plot.}
+
+We actually think that the nodes are useful to plot, because they can be
+interpreted as centroids of the associated subtree, which are a natural object
+of study.
+
+\textit{Page 7, Line 46, ``node sizes reflecting the time series value at that
+  node''. Does that mean the node size will change when the time changes?}
+
+Sorry, what we actually meant is that the node size reflects the
+\textit{average} value across all times. This has been clarified in the text.
+
+\textit{Page 11, lines 28-40. Should have referred to Figure 5.}
+
+We have added a reference to Figure 5 at the point that we start describing the
+series for Verrucomicrobiae.
+
+\textit{Page 13, Line 42. ``The red edges are associated with preterm births''.
+  Actually red represents term in Figure 8. Hence lines 45-47 are not correct.}
+
+We have fixed this in the text to refer to the green and yellow edges.
+
+\textit{Page 15, Line 46. How did you get the numbers of the power, 5.6 and 6.7?
+  In Figure 13 the $y$-axis goes from around 11 to 15, and I can't find any
+  number close to 6.}
+
+We had accidentally changed the base of the log between generating this figure
+and our text. The text and figure now both use base 10 logs.
+
+\textit{Some of the analysis from the figures are not grounded. For example,
+  page 14 lines 45-47 can not be concluded from Figure 9 easily. The analysis on
+  page 15 lines 37-39 are not directly from the plot, because Figures 11 and 12
+  themselves do not tell the county names.}
+
+We realize this is a difficulty of explaining inferences gathered from
+interactive visualizations through a sequence of static figures. In the text, we
+have now noted some of the interactive gestures the user would have to make to
+completely ground these analysis. For this issue of reproducibility, we have
+also made compiled interactive versions of these examples avaialble so that
+users can confirm the analysis for themselves, without having to install
+treelapse or rerun examples.
+
+\subsection{Associate Editor Review}
+
+\end{document}
