@@ -318,22 +318,21 @@ colors begin to separate. The DOI principle assists navigation across
 the tree structure, allowing focus on individual flow structures without
 losing broader tree context.
 
-Our third display is directed at the bacterial dynamics question. Here,
-two panels are arranged one over the other; one displays all time
-series, while the other displays all tree nodes, with node sizes
-reflecting the time series value at that node. For this reason, we call
-the display, timebox trees. In the time series panel, we have directly
-implemented the timeboxes idea. We then link the panels: when a set of
-series is highlighted by the timeboxes, the associated tree nodes are
-also highlighted. For example, timeboxes can be used to focus on a set
-of series with specific shape -- increased abundance after an ecological
-shock, for example -- and identify along what subtrees this pattern is
-present. To further focus on specific elements, a pan-zoom scented
-widget is provided \citep{willett2007scented}. The widget is a miniature version
-of the full time series panel, equipped with a single brush whose extent
-specifies the limits in the main time series panel. As in the DOI trees and
-sankeys, a search bar can be used to highlight those series of interest a
-priori.
+Our third display is directed at the bacterial dynamics question. Here, two
+panels are arranged one over the other; one displays all time series, while the
+other displays all tree nodes, with node sizes reflecting the value at that node
+averaged across all time points. For this reason, we call the display, timebox
+trees. In the time series panel, we have directly implemented the timeboxes
+idea. We then link the panels: when a set of series is highlighted by the
+timeboxes, the associated tree nodes are also highlighted. For example,
+timeboxes can be used to focus on a set of series with specific shape --
+increased abundance after an ecological shock, for example -- and identify along
+what subtrees this pattern is present. To further focus on specific elements, a
+pan-zoom scented widget is provided \citep{willett2007scented}. The widget is a
+miniature version of the full time series panel, equipped with a single brush
+whose extent specifies the limits in the main time series panel. As in the DOI
+trees and sankeys, a search bar can be used to highlight those series of
+interest a priori.
 
 The final display currently implemented in the package is the natural
 converse of the timebox trees display. Rather than defining visual
@@ -451,16 +450,16 @@ recover in unison after the first treatment.
 \caption{By hovering over the Ruminoccocus branches, we see that there is a prolonged effect of the antibiotics time courses more or less uniformly across the lower taxonomic orders.}\label{fig:ruminococcus}
 \end{figure}
 
-Further, note that in this subtree averages view, the tree display has
-changed. This is because, at each branching point, we place the node
-with larger average value on the left. This places the Verrucomicrobiae
-at the far left, which seem to have large abundance over many time
-points. This phylum had been previously obfuscated -- because there are
-not many leaves associated with this phylum, the sum was small.
-Interestingly, the abundance of these bacteria seems to \emph{increase}
-after the first antibiotics treatment. Be cautious, however, that the
-average over only a few Verrucomicrobiae species will be a more variable
-estimate than the averages over the more prevalent phyla.
+Further, note that in this subtree averages view, the tree display has changed.
+This is because, at each branching point, we place the node with larger average
+value on the left. Figure \ref{fig:fig:verrucomicrobiae} notes that the nodes at
+the far left in the tree are associated with phylum Verrucomicrobiae,
+corresponding to a large average abundance across time points. This phylum had
+been previously obfuscated -- because there are not many leaves associated with
+this phylum, the sum was small. Interestingly, the abundance of these bacteria
+seems to \emph{increase} after the first antibiotics treatment. Be cautious,
+however, that the average over only a few Verrucomicrobiae species will be a
+more variable estimate than the averages over the more prevalent phyla.
 
 \begin{figure}
 
@@ -468,7 +467,10 @@ estimate than the averages over the more prevalent phyla.
 
 }
 
-\caption{The subtree averages aggregation brings attention to the Verrucomicrobiae, which though only present as a few species, are each rather abundant. In particular, they seem to increase after the first antibiotic time course.}\label{fig:verrucomicrobiae}
+\caption{The subtree averages aggregation brings attention to the
+  Verrucomicrobiae, which though only present as a few species, are each rather
+  abundant. In particular, they seem to increase after the first antibiotic time
+  course.}\label{fig:verrucomicrobiae}
 \end{figure}
 
 \subsubsection*{Differential Bacterial Abundance and Preterm
@@ -511,12 +513,12 @@ diversity. Further, focusing on the Lactobacillaceae family, we note
 that the differential abundance of these bacteria distinguishes the
 remaining CSTs, see Figure \ref{fig:pretermcstslacto}.
 
-Alternatively, in Figure \ref{fig:pretermpreterm}, we avoid working with
-CSTs, displaying instead averages among samples associated with either
-preterm or term births. The red edges are associated with preterm
-births -- we see that they contribute more weight to phyla outside the
-Firmicutes. This is consistent with the claim that CST 4, the most
-diverse of the CSTs, is associated with preterm births.
+Alternatively, in Figure \ref{fig:pretermpreterm}, we avoid working with CSTs,
+displaying instead averages among samples associated with either preterm or term
+births. The green and yellow edges are associated with preterm births -- we see
+that they contribute more weight to phyla outside the Firmicutes. This is
+consistent with the claim that CST 4, the most diverse of the CSTs, is
+associated with preterm births.
 
 \begin{figure}
 
