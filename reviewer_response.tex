@@ -27,11 +27,18 @@ body of knowledge.
   In fact, I could imagine including the DOi in the same view as well - why are
   multiple views needed?}
 
-Yes, it would be possible to develop a view that highlights series based on the
-intersection of (1) the union of brushes over the trees and (2) the intersection
-of brushes over the time series. We imagined that it would be easier for users
-to interpret the display by explicitly modularizing the separate visual tasks.
-(todo: we should try to experiment with this idea, to see if it is feasible)
+The idea of combining these displays is interesting, and we have attempted to
+implement a version which would highlight the series / nodes that lay in both
+(1) the union of all treeboxes and (2) the intersection of all timeboxes.
+However, we found this idea difficult to implement, for technical rather than
+conceptual reasons -- when attempting to have both brush interactions for
+querying and mouseover interactions for providing detail, the events conflict.
+Indeed, we implemented the first and third recommendations described in
+\href{https://github.com/d3/d3/issues/1604}{this d3 issue}, but in both cases we
+found it necessary to introduce a lag between mousedown and the start of
+brushing in order for the event to properly register. This lag created a drag on
+responsiveness, and the value gained by unifying the displays did not seem worth
+the cost of less fluid interactivity.
 
 \textit{Some detail about the scale of the tool would be useful. How many nodes
   can be included in the tree? How many time series, of what length? Rough
@@ -41,7 +48,6 @@ We have added a description in Section ? describing the scales of different
 inputs before the interface begins to lag.
 
 \subsection{Reviewer 2}
-
 
 \textit{In the case studies, it would be interesting to see how the highlighted
   nodes change when you shrink or pan the selecting area in the time series
