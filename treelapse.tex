@@ -78,7 +78,7 @@ the proposed visualization methods.
 \newpage
 \spacingset{1.45} % DON'T change the spacing!
 
-\subsection*{Introduction}\label{introduction}
+\section{Introduction}\label{introduction}
 
 We introduce methods for visualization of data structured along trees,
 especially hierarchically structured collections of time series. We hope
@@ -116,7 +116,7 @@ have implemented in treelapse. We close with several case studies using
 publicly available data across both microbiome and non-microbiome
 related applications.
 
-\subsubsection*{Problem Motivation}\label{problem-motivation}
+\subsection{Problem Motivation}\label{problem-motivation}
 
 A microbiome is a community of bacteria living in given environments,
 for example, ocean water or the human gut
@@ -155,7 +155,7 @@ or how species fill, drop out from, or compete for environmental niches.
 Medically, these questions are important for illuminating the impact of
 antibiotic time courses or diet changes, for example.
 
-\subsubsection*{Problem Abstraction}\label{problem-abstraction}
+\subsection{Problem Abstraction}\label{problem-abstraction}
 
 To unify the tree-structured differential abundance and bacterial
 dynamics problems, we identify the data with a collection of random
@@ -211,7 +211,7 @@ coordinates challenges remain, mainly selecting scales for and ordering
 across the different coordinates, but the linking and focus-plus-context
 can still be employed this setting.
 
-\subsection*{Background Literature and Solution
+\subsection{Background Literature and Solution
 Principles}\label{background-literature-and-solution-principles}
 
 Now that we have specified the essential questions of interest, we
@@ -280,7 +280,7 @@ problems, rather than providing a toolbox for generic types of
 visualization design. We believe that this narrow context within a broad
 ecosystem strikes a balance between problem-specificity and ease-of-use.
 
-\subsection*{Specific Proposals}\label{specific-proposals}
+\subsection{Specific Proposals}\label{specific-proposals}
 
 Our first proposed visualization technique is a minor modification of
 the DOI tree. The standard DOI tree definition does not have any notion
@@ -349,7 +349,7 @@ see how much correlation and competition there is between taxonomically
 similar bacteria. As in the timebox trees display, a search box and
 pan-zoom scented widget are provided.
 
-\subsection*{Case Studies}\label{case-studies}
+\section{Case Studies}\label{case-studies}
 
 We now delve into applications on real data. Our goals are to illustrate
 potential workflows that incorporate treelapse, describe the formulation
@@ -362,7 +362,7 @@ visualization principles reviewed above can substantively improve the
 practice of data analysis in the class of problems to which we have
 limited ourselves.
 
-\subsubsection*{Bacterial Dynamics of Antibiotics Time
+\subsection{Bacterial Dynamics of Antibiotics Time
 Courses}\label{bacterial-dynamics-of-antibiotics-time-courses}
 
 \citet{dethlefsen2008pervasive} investigated the
@@ -473,7 +473,7 @@ more variable estimate than the averages over the more prevalent phyla.
   course.}\label{fig:verrucomicrobiae}
 \end{figure}
 
-\subsubsection*{Differential Bacterial Abundance and Preterm
+\subsection{Differential Bacterial Abundance and Preterm
 Births}\label{differential-bacterial-abundance-and-preterm-births}
 
 \citet{digiulio2015temporal}
@@ -547,7 +547,7 @@ associated with preterm births.
 \caption{Samples with high levels of phyla other than Firmicutes appear to be related to preterm births.}\label{fig:pretermpreterm}
 \end{figure}
 
-\subsubsection*{Dynamics in Housing Prices}\label{zillow-study}
+\subsection{Dynamics in Housing Prices}\label{zillow-study}
 
 We next consider an application unrelated to the microbiome, but with
 relatively clear hierarchical structure. Our data are downloaded from
@@ -659,7 +659,7 @@ sources for any substantial decision-making.
 \caption{To study the range in home prices within San Francisco County, we can select the associated nodes using a treebox.}\label{fig:zillowsf}
 \end{figure}
 
-\subsubsection*{Sources of Variation in Bikesharing
+\subsection{Sources of Variation in Bikesharing
 Demand}\label{bikesharing-study}
 
 Our next example is a study in bikesharing demand, included as an
@@ -779,7 +779,7 @@ analysis workflow, we imagine the analyst applying interactive
 visualization and modeling techniques in an iterative, nonlinear
 fashion.
 
-\subsubsection*{Hierarchically Clustering the Global Patterns Data}\label{global_patterns}
+\subsection{Hierarchically Clustering the Global Patterns Data}\label{global_patterns}
 
 Each of the timebox tree and treebox examples presented so far have
 focused on data with a clear time component. We note however that these
@@ -821,7 +821,7 @@ skin, and looking up taxonomic groups associated with the distinguishing
 bacteria confirms this. For example, many of the species with high
 abundances in the left figure come from order Oceanospirillales.
 
-\subsubsection*{Inspecting Confirmatory Analysis}\label{structssi}
+\subsection{Inspecting Confirmatory Analysis}\label{structssi}
 
 In addition to facilitating exploratory study, treelapse has potential
 value as a device for inspecting confirmatory analysis. We provide an
@@ -877,7 +877,7 @@ confirmatory analysis provides deeper insight than the standard practice of
 printing tables of (adjusted or unadjusted) $p$-values: the relationship between
 significant nodes is only clear upon visualization on the tree.
 
-\subsection*{Conclusion and Future Work}\label{conclusion}
+\section{Conclusion and Future Work}\label{conclusion}
 
 Here, we have reviewed some fundamental principles of data visualization
 and described their implementation in a new treelapse package. Further,
