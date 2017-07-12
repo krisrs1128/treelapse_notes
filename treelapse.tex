@@ -377,13 +377,16 @@ which we have limited ourselves.
 
 \begin{table}
 \centering
-\begin{tabular}{lll}
-Data            & Number of timepoints & Number of nodes \\
-Antibiotics     & 56                 & 386             \\
-Preterm births  & 216                & 318             \\
-Housing prices  & 254                & 944             \\
-Bikesharing     & 24                 & 819             \\
-Global patterns & 500                & 51             
+\begin{tabular}{|l|l|l|}
+  \hline
+  Data            & Number of timepoints & Number of nodes \\
+  \hline
+  Antibiotics     & 56                 & 386             \\
+  Preterm births  & 216                & 318             \\
+  Housing prices  & 254                & 944             \\
+  Bikesharing     & 24                 & 819             \\
+  Global patterns & 500                & 51             \\
+  \hline
 \end{tabular}
 \caption{Problem dimensions for each of the case studies. For problems with
   dimensions larger than that in the housing prices problem, we recommend an
@@ -424,9 +427,18 @@ Two more subtle effects are also suggested from this view,
 
 }
 
-\caption{The two antibiotic time courses are readily apparent even when only
-  highlighting the most abundant taxa. We have annotated the figure with its
-  three main components.}\label{fig:antibioticoverview}
+\caption{Here we display the primary timebox tree view of the antibiotics data
+  set from \citep{dethlefsen2008}, annotated with the main components of the
+  visualization. The tree at the top is a taxonomic tree of all the bacteria
+  contained within the sample, and it is visually linked to the time series at
+  the bottom: each node in the tree corresponds to a path among the time series.
+  The selection brush is used to focus attention on the time series that go
+  through it -- these are highlighted in blue -- and other brushes can be added
+  using a button not displayed here. The pan-zoom widget at the top right is
+  used to update the scales of the main time series display so that only
+  particular time windows and $y$-axis ranges are visible. This view is the
+  basis for all the timebox tree and treebox displays that appear
+  below. \label{antibioticoverview}}
 \end{figure}
 
 \begin{figure}
@@ -436,8 +448,14 @@ Two more subtle effects are also suggested from this view,
 }
 
 \caption{Introducing a second box into the timebox display identifies the
-  Bacteroidaceae as a taxon only midly impacted by
-  antibiotics.}\label{fig:antibioticbacteroidetes}
+  Bacteroidetes as a taxon only midly impacted by antibiotics. The layout is
+  identical to Figure 1, except two small brushes are placed over the time
+  series between 10 and 20 days, and now only those time series and
+  corresponding nodes in the tree are highlighted in blue. Further, the user has
+  hovered over the top blue node in the tree, revealing the taxonomic identity
+  of these series. Hence, brushing the time series and linking with the tree can
+  be used to discover and characterize notable variation within the
+  data.\label{fig:antibioticbacteroidetes}}
 \end{figure}
 
 Next, using the scented widget, we focus on the window around the second
@@ -456,21 +474,26 @@ given by Figure \ref{fig:antibioticfirmicutes}
 
 \caption{Zooming into the second antibiotic timecourse and highlighting the
   Lachnospiraceae and Ruminococcus, we see that the Ruminoccocus took more time
-  to recover to pre-treatment levels.}\label{fig:antibioticfirmicutes}
+  to recover to pre-treatment levels. Here, the red lines and nodes are those
+  that match the text search provided by the user in a search box just below the
+  figure (not displayed here). Hovering the mouse over these lines provides
+  their identities -- the top red line is Lachnospiraceae, and the bottom red
+  line is Ruminoccocus. Note that the brush in the treebox display is located
+  over the tree, rather than over the time series. In particular, the search box
+  and interactive brushing can be combined to interrogate hypotheses of apriori
+  interest. \label{fig:antibioticfirmicutes}}
 \end{figure}
 
-Alternatively, we can summarize each node by the average across its
-descendants -- this brings attention to individual bacteria that may be
-underlying some of the broader taxonomic patterns we have noted when
-studying the subtree sums. For example, in Figure
-\ref{fig:ruminococcus}, we highlight all families below order
-Ruminococcus, suggesting that the decrease due to antibiotics occurs
-uniformly across almost all families. A point that was not evident in
-the earlier sum-across-descendants view is that, after the second
-treatment of antibiotics, a few of the Ruminoccocus families recover
-more rapidly than the rest, for example the Unc095d3 (highlighted in
-red) are only briefly affected. In contrast, most families seem to
-recover in unison after the first treatment.
+Alternatively, we can summarize each node by the average across its descendants
+-- this brings attention to individual bacteria that may be underlying some of
+the broader taxonomic patterns we have noted when studying the subtree sums. For
+example, in Figure \ref{fig:ruminococcus}, we highlight all families below order
+Ruminococcus, suggesting that the decrease due to antibiotics occurs uniformly
+across almost all families. A point that was not evident in the earlier
+sum-across-descendants view is that, after the second treatment of antibiotics,
+a few of the Ruminoccocus families recover more rapidly than the rest, for
+example the Unc095d3 (highlighted in red) are only briefly affected. In
+contrast, most families seem to recover in unison after the first treatment.
 
 \begin{figure}
 
@@ -480,7 +503,14 @@ recover in unison after the first treatment.
 
 \caption{By hovering over the Ruminoccocus branches, we see that there is a
   prolonged effect of the antibiotics time courses more or less uniformly across
-  the lower taxonomic orders.}\label{fig:ruminococcus}
+  the lower taxonomic orders. The graphical elements are the same as before,
+  except the user has searched for Ruminoccocus and species Unc095d3, which has
+  the highest average abundance within this taxon. By displaying averages rather
+  than sums, we see that the effect of antibiotics visible at higher taxonomic
+  orders is not created by a single dominant species becoming less abundant, but
+  rather the decline in populations across all descendant species. The same
+  display applied to different data can yield different
+  insights.}\label{fig:ruminococcus}
 \end{figure}
 
 Further, note that in this subtree averages view, the tree display has changed.
@@ -503,7 +533,13 @@ more variable estimate than the averages over the more prevalent phyla.
 \caption{The subtree averages aggregation brings attention to the
   Verrucomicrobiae, which though only present as a few species, are each rather
   abundant. In particular, they seem to increase after the first antibiotic time
-  course.}\label{fig:verrucomicrobiae}
+  course, which occurs between days 15 and 20. This view was generated by
+  placing a brush over the branch on the far left, which has those nodes with
+  the largest averages across all timepoints. The user's mouse is over the blue
+  series, which brings up the associated taxonomic label. The determination of
+  species whose abundances increase during antibiotics, which would require many
+  hypothesis tests using a more standard approach, becomes quickly apparent
+  via interactive visualization.}\label{fig:verrucomicrobiae}
 \end{figure}
 
 \subsection{Differential Bacterial Abundance and Preterm
@@ -559,9 +595,20 @@ associated with preterm births.
 
 }
 
-\caption{The increased diversity among samples in CST 4 is represented by the
-  relatively larger contribution of red edges to branches outside of the
-  Firmicutes.}\label{fig:pretermcsts}
+\caption{The increased diversity among samples in community state type (CST) 4
+  is represented by the relatively larger contribution of red edges to branches
+  outside of the Firmicutes. This display shows the top of the DOI sankey
+  visualization of the preterm birth data studied in
+  \citep{digiulio2015temporal}. The root of the tree is the taxonomic kingdom
+  Bacteria, its children are labeled according to their phylum names. Each color
+  within a branch is associated with CST, and the width of the associated color
+  corresponds to the average abundance of that taxonomic group among all samples
+  belonging to the corresponding CST, as indicated by the legend at the left.
+  Phyla are sorted from most to least abundant. This initial display of the DOI
+  sankey provides a summary of overall abundances across taxonomic groups and
+  CSTs, and suggests subtrees to navigate into, to extract more detailed
+  abundance information.
+}\label{fig:pretermcsts}
 \end{figure}
 
 \begin{figure}
@@ -572,7 +619,12 @@ associated with preterm births.
 
 \caption{Zooming into the Lactobacillaceae family, we notice that the difference
   between the remaining four CSTs is related to which types of Lactobacillus are
-  most prominent.}\label{fig:pretermcstslacto}
+  most prominent. The DOI sankey refocuses the tree around the last group that
+  was clicked on, in this case showing more detail about order Lactobacillales
+  and its descendants. The overview display can be recovered by navigating back
+  up to higher-level taxa. Hence, it is possible to navigate between broad
+  overview and detailed displays in a way that facilitates interpretation of
+  results from statistical analysis.}\label{fig:pretermcstslacto}
 \end{figure}
 
 \begin{figure}
@@ -582,7 +634,14 @@ associated with preterm births.
 }
 
 \caption{Samples with high levels of phyla other than Firmicutes appear to be
-  related to preterm births.}\label{fig:pretermpreterm}
+  related to preterm births. Here, we again display the preterm birth data with
+  a DOI sankey, but instead of grouping samples according to statistically
+  generated CSTs, we directly assign samples to preterm vs. not preterm
+  according to whether the mother eventually had a preterm birth. These new
+  states are visible in the updated legend. Through interactivity, it becomes
+  possible to develop meaningful visual summaries even before calculating formal
+  statistical ones.}
+}\label{fig:pretermpreterm}
 \end{figure}
 
 \subsection{Dynamics in Housing Prices}\label{zillow-study}
