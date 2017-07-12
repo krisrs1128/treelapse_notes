@@ -156,11 +156,11 @@ antibiotic time courses or diet changes, for example.
 To unify the tree-structured differential abundance and bacterial dynamics
 problems, we identify the data with a collection of random variables indexed by
 nodes in a prespecified tree structure. In the differential abundance problem,
-each random variable lives in \(\mathbb{R}^{G}\) where \(G\) is the number of
+each random variable lives in $\mathbb{R}^{G}$ where $G$ is the number of
 groups being compared. Each coordinate represents the abundance for that group,
 and a node exhibits differential abundance when the coordinates are drawn from
 different distributions. On the other hand, in the bacterial dynamics problem,
-each random variable is a time series, living in \(\mathbb{R}^{T}\).
+each random variable is a time series, living in $\mathbb{R}^{T}$.
 
 In both of these applications, we constrain the values of parent nodes according
 to the value of the children nodes: we define the value at each node to be
@@ -341,6 +341,9 @@ comfortable recommending timebox trees for data on the order of 500 tree tips
 and 50 timepoints We note the sizes of the data sets in each case study below,
 which each render fluidly, with the possible exception of the California housing
 data, where there is a noticeable lag in the timebox tree and treebox displays.
+In problems of larger size, we recommend a preliminary filtering or aggregation
+step across nodes or, if the time series is smooth, across neighboring
+timepoints, in order to avoid these potential scaling difficulties.
 
 \section{Case Studies}\label{case-studies}
 
@@ -353,6 +356,22 @@ though it was motivated by applications to the microbiome, it is not tied to it.
 More importantly, we argue that the visualization principles reviewed above can
 substantively improve the practice of data analysis in the class of problems to
 which we have limited ourselves.
+
+\begin{table}
+\centering
+\begin{tabular}{lll}
+Data            & Number of timepoints & Number of nodes \\
+Antibiotics     & 56                 & 386             \\
+Preterm births  & 216                & 318             \\
+Housing prices  & 254                & 944             \\
+Bikesharing     & 24                 & 819             \\
+Global patterns & 500                & 51             
+\end{tabular}
+\caption{Problem dimensions for each of the case studies. For problems with
+  dimensions larger than that in the housing prices problem, we recommend an
+  initial summarization or filtering step to prevent performance
+  issues. \label{problem-scaling}}
+\end{table}
 
 \subsection{Bacterial Dynamics of Antibiotics Time
 Courses}\label{bacterial-dynamics-of-antibiotics-time-courses}
@@ -396,7 +415,9 @@ Two more subtle effects are also suggested from this view,
 
 }
 
-\caption{Introducing a second box into the timebox display identifies the Bacteroidaceae as a taxon only midly impacted by antibiotics.}\label{fig:antibioticbacteroidetes}
+\caption{Introducing a second box into the timebox display identifies the
+  Bacteroidaceae as a taxon only midly impacted by
+  antibiotics.}\label{fig:antibioticbacteroidetes}
 \end{figure}
 
 Next, using the scented widget, we focus on the window around the second
@@ -413,7 +434,9 @@ given by Figure \ref{fig:antibioticfirmicutes}
 
 }
 
-\caption{Zooming into the second antibiotic timecourse and highlighting the Lachnospiraceae and Ruminococcus, we see that the Ruminoccocus took more time to recover to pre-treatment levels.}\label{fig:antibioticfirmicutes}
+\caption{Zooming into the second antibiotic timecourse and highlighting the
+  Lachnospiraceae and Ruminococcus, we see that the Ruminoccocus took more time
+  to recover to pre-treatment levels.}\label{fig:antibioticfirmicutes}
 \end{figure}
 
 Alternatively, we can summarize each node by the average across its
@@ -435,7 +458,9 @@ recover in unison after the first treatment.
 
 }
 
-\caption{By hovering over the Ruminoccocus branches, we see that there is a prolonged effect of the antibiotics time courses more or less uniformly across the lower taxonomic orders.}\label{fig:ruminococcus}
+\caption{By hovering over the Ruminoccocus branches, we see that there is a
+  prolonged effect of the antibiotics time courses more or less uniformly across
+  the lower taxonomic orders.}\label{fig:ruminococcus}
 \end{figure}
 
 Further, note that in this subtree averages view, the tree display has changed.
