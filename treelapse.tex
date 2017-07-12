@@ -401,7 +401,7 @@ Courses}\label{bacterial-dynamics-of-antibiotics-time-courses}
 bacterial community composition from an ecological perspective. The study tracks
 the microbiome of three patients across ten months, with two five-day antibiotic
 time courses separated by 6 months. Discerning the variation in resilience
-across bacteria is important, considering the the role of bacteria in health and
+across bacteria is important, considering the role of bacteria in health and
 not just disease.
 
 We approach the data using the linked time and treebox views, after first
@@ -428,7 +428,7 @@ Two more subtle effects are also suggested from this view,
 }
 
 \caption{Here we display the primary timebox tree view of the antibiotics data
-  set from \citep{dethlefsen2008}, annotated with the main components of the
+  set from \citep{dethlefsen2008pervasive}, annotated with the main components of the
   visualization. The tree at the top is a taxonomic tree of all the bacteria
   contained within the sample, and it is visually linked to the time series at
   the bottom: each node in the tree corresponds to a path among the time series.
@@ -438,7 +438,7 @@ Two more subtle effects are also suggested from this view,
   used to update the scales of the main time series display so that only
   particular time windows and $y$-axis ranges are visible. This view is the
   basis for all the timebox tree and treebox displays that appear
-  below. \label{antibioticoverview}}
+  below. \label{fig:antibioticoverview}}
 \end{figure}
 
 \begin{figure}
@@ -448,7 +448,7 @@ Two more subtle effects are also suggested from this view,
 }
 
 \caption{Introducing a second box into the timebox display identifies the
-  Bacteroidetes as a taxon only midly impacted by antibiotics. The layout is
+  Bacteroidetes as a taxon only mildly impacted by antibiotics. The layout is
   identical to Figure 1, except two small brushes are placed over the time
   series between 10 and 20 days, and now only those time series and
   corresponding nodes in the tree are highlighted in blue. Further, the user has
@@ -472,7 +472,7 @@ given by Figure \ref{fig:antibioticfirmicutes}
 
 }
 
-\caption{Zooming into the second antibiotic timecourse and highlighting the
+\caption{Zooming into the second antibiotic time course and highlighting the
   Lachnospiraceae and Ruminococcus, we see that the Ruminoccocus took more time
   to recover to pre-treatment levels. Here, the red lines and nodes are those
   that match the text search provided by the user in a search box just below the
@@ -480,7 +480,7 @@ given by Figure \ref{fig:antibioticfirmicutes}
   their identities -- the top red line is Lachnospiraceae, and the bottom red
   line is Ruminoccocus. Note that the brush in the treebox display is located
   over the tree, rather than over the time series. In particular, the search box
-  and interactive brushing can be combined to interrogate hypotheses of apriori
+  and interactive brushing can be combined to interrogate hypotheses of a priori
   interest. \label{fig:antibioticfirmicutes}}
 \end{figure}
 
@@ -629,9 +629,7 @@ associated with preterm births.
 
 \begin{figure}
 
-{\centering \includegraphics[width=300px]{figure/preterm_preterm}
-
-}
+{\centering \includegraphics[width=300px]{figure/preterm_preterm}}
 
 \caption{Samples with high levels of phyla other than Firmicutes appear to be
   related to preterm births. Here, we again display the preterm birth data with
@@ -641,7 +639,7 @@ associated with preterm births.
   states are visible in the updated legend. Through interactivity, it becomes
   possible to develop meaningful visual summaries even before calculating formal
   statistical ones.}
-}\label{fig:pretermpreterm}
+\label{fig:pretermpreterm}
 \end{figure}
 
 \subsection{Dynamics in Housing Prices}\label{zillow-study}
@@ -689,7 +687,7 @@ period. This is the content of Figures \ref{fig:zillowmiddleup} and
 \ref{fig:zillowmiddledown}. Inspecting the highlighted tree nodes associated
 with these series, we find that most of the middle-income series that increased
 after the recession are associated with middle-income neighborhoods within the
-coastal Southern California counties. In constrast, those middle income series
+coastal Southern California counties. In contrast, those middle income series
 that saw decreases were mostly located in Central California and Oakland.
 
 The previous analysis highlights the fact that, within even narrow geographic
@@ -711,10 +709,17 @@ substantial decision-making.
 
 }
 
-\caption{California home prices at the city level, between 1996 and 2016. The
-  effect of the 2008 recession is clear, and we have hovered over the San
-  Bernardino series, to display the identity of one of the cities most strongly
-  affected by the recession.}\label{fig:zillowcities}
+\caption{California home prices at the city level, between 1996 and 2016. Here,
+  we provide a treebox display, as in Figure \ref{fig:antibioticfirmicutes}, but
+  of the California home prices data. In this case, the tree corresponds to a
+  geographic hierarchy, with regions at the top and neighborhoods at the bottom, while
+  time series correspond to home prices collected weekly between 1996 and 2016.
+  A brush is drawn over all nodes at the city level. The effect of the 2008
+  recession is clear, and we have hovered over the San Bernardino series, to
+  display the identity of one of the cities most strongly affected by the
+  recession. This provides an example of a dataset with meaningful (spatial)
+  hierarchical structure that might not initially be studied using trees.
+\label{fig:zillowcities}}
 \end{figure}
 
 \begin{figure}
@@ -724,9 +729,13 @@ substantial decision-making.
 }
 
 \caption{Neighborhoods with mid-range home prices before the recession are
-  selected here. Note that the collection of series seems to widen after 2008 --
-  we are interested in whether there are reliable predictors of these alternate
-  trajectories, given their similar starting points.}\label{fig:zillowmiddlepre}
+  brushed here, using a timebox tree version of Figure \ref{fig:zillowcities}.
+  The associated tree nodes are highlighted at the top. Note that the collection
+  of series seems to widen after 2008 -- we are interested in whether there are
+  reliable predictors of these alternate trajectories, given their similar
+  starting points. This serves as a baseline with which to compare Figure
+  \ref{fig:zillowmiddleup} -- these views are easy to transition between
+  interactively.}\label{fig:zillowmiddlepre}
 \end{figure}
 
 \begin{figure}
@@ -736,8 +745,13 @@ substantial decision-making.
 }
 
 \caption{Among those neighborhoods with mid-range prices before the recession,
-  we have selected those that recovered more rapidly. These appear to be located
-  mainly in Los Angeles and San Diego counties.}\label{fig:zillowmiddleup}
+  displayed in Figure \ref{fig:zillowmiddlepre}, we have selected those that
+  recovered more rapidly by introducing a brush at the top right of the time
+  series panel. By hovering a brush over a collection of tree nodes that all
+  seem to be highlighted, we infer that the associated neighborhoods are located
+  mainly in Los Angeles and San Diego counties. This follow-up view is
+  interesting to contrast with Figure \ref{fig:zillowmiddledown}.
+}\label{fig:zillowmiddleup}
 \end{figure}
 
 \begin{figure}
@@ -746,10 +760,16 @@ substantial decision-making.
 
 }
 
-\caption{Rather than selecting mid-range series that recovered quickly, we can
-  isolate those whose prices remained depressed after the recession. These seem
-  mostly to be located in Central California and the East San Francisco Bay
-  Area.}\label{fig:zillowmiddledown}
+\caption{In contrast to Figure \ref{fig:zillowmiddleup}, we can follow-up the
+  selection in Figure \ref{fig:zillowmiddlepre} by isolating those neighborhoods
+  where prices remained depressed after the recession. This is accomplished by
+  moving the brush on the right down towards lower prices. Hovering over the
+  associated highlighted nodes in the tree to reveal the associated locations,
+  we see that most of these series correspond to neighborhoods in Central
+  California and the East San Francisco Bay Area. The ability to sketch the
+  overall shapes of series using brushes and interpret the associated selections
+  using a tree simplifies what might otherwise be complex
+  comparisons.}\label{fig:zillowmiddledown}
 \end{figure}
 
 \begin{figure}
@@ -758,8 +778,15 @@ substantial decision-making.
 
 }
 
-\caption{To study the range in home prices within San Francisco County, we can
-  select the associated nodes using a treebox.}\label{fig:zillowsf}
+\caption{In contrast to Figures \ref{fig:zillowmiddlepre} to
+  \ref{fig:zillowmiddledown}, we can study the variation in series associated
+  with a subset of the tree by using treeboxes. To study the range in home
+  prices within San Francisco County, we can brush over the associated nodes in
+  the tree. The red circle indicates that the user has searched for ``San
+  Francisco,'' which guides the user to the appropriate subtree. The mouse is
+  hovering over one of the more expensive neighborhoods. Hence, though the
+  timebox tree and treebox views are similar, they are directed towards
+  different types of visual comparisons.}\label{fig:zillowsf}
 \end{figure}
 
 \subsection{Sources of Variation in Bikesharing
@@ -810,30 +837,45 @@ second year.
 
 }
 
-\caption{The two peaks at rush hour distinguish weekday series from the
-  rest.}\label{fig:working}
+\caption{The two peaks at rush hour distinguish weekday series from the rest.
+  through the timebox tree view. The display is the same type of timebox tree
+  view introduced in Figure \ref{fig:antibioticoverview}, but applied to the
+  bikesharing data, where the time axis represents the time of day and the
+  $y$-axis gives bikesharing demand. Each series is the bikesharing demand for a
+  single day, over the course of two years. The tree now corresponds to the
+  regression tree generated by predicting demand at 8am using supplementary
+  data. Two brushes are introduced to highlight the double peaks corresponding
+  to rush hours on weekdays. We see that although hierarchical structure was not
+  present immediately in the bikesharing data, it is useful to introduce and
+  interpret such structure by combining regression and visualization
+  methodology.
+}\label{fig:working}
 \end{figure}
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/weekend}
+{\centering \includegraphics[width=350px]{figure/weekend}}
 
-}
-
-\caption{Unlike weekday demand, weekend demand is unimodal. The few weekday
-  series with unimodal series seem to be associated with holidays. This is the
-  case for New Years' Eve, which is currently hovered over in the
-  tree.}\label{fig:weekend}
+\caption{By adjusting the two brushes in Figure \ref{fig:working}, we see that
+  unlike weekday demand, weekend demand is unimodal. The few weekday series with
+  unimodal series seem to be associated with holidays. This is the case for New
+  Years' Eve, which is currently hovered over in the tree. The ease of
+  transitioning from Figure \ref{fig:working} to this display indicates the
+  importances of brushing in interaction.}\label{fig:weekend}
 \end{figure}
 
 \begin{figure}
+{\centering \includegraphics[width=350px]{figure/weekday_2011}}
 
-{\centering \includegraphics[width=350px]{figure/weekday_2011}
-
-}
-
-\caption{Weeday demand appears larger in 2012 than 2011 -- compare with the next
-  figure.}\label{fig:weekday2011}
+\caption{Weekday demand appears larger in 2012 than 2011 -- compare with Figure 
+  \ref{fig:weekday2012}. Here, a brushes are introduced over the tree to see the
+  series associated with a particular split point. The red nodes are the results
+  of searches over the two nodes that are children of this split point. The fact
+  that the \texttt{yr>=0.5} selected line is larger than the \texttt{yr<0.5}
+  line means that demand was larger in 2012. In combination with searching and
+  treeboxes, it is possible to interpret more subtle split points in the decision
+  tree.}
+\label{fig:weekday2011}
 \end{figure}
 
 \begin{figure}
@@ -842,8 +884,12 @@ second year.
 
 }
 
-\caption{Weekday demand increased in 2012 -- compare with the previous
-  figure.}\label{fig:weekday2012}
+\caption{Weekday demand increased in 2012 -- compare with 
+  Figure \ref{fig:weekday2011}. The search terms are the same as in that figure,
+  but the subtree associated with the 2012 split point is highlighted, using the
+  union of two boxes. Note that unlike timebox trees, which highlighted series
+  lying through the intersection of brushes, treeboxes highlight series within the
+  union of brushes.}\label{fig:weekday2012}
 \end{figure}
 
 In contrast to these general questions about daily demand, we could ask
@@ -860,7 +906,12 @@ with the warm-weekend split, which seems quite reasonable in retrospect.
 }
 
 \caption{The samples with highest night demand tend to fall on warm
-  weekends.}\label{fig:warmweekend}
+  weekends. Here, the pan-zoom widget has been used to adjust both time and
+  demand axes to narrow on a specific window of interest. Brushes are drawn over
+  the larger among these series, and the corresponding tree nodes are located
+  close to one another, in the part of the tree corresponding to the warm / cold
+  average temperature split. More generally, panning and zooming allows
+  navigation between focus and context.}\label{fig:warmweekend}
 \end{figure}
 
 Finally, we can study the behavior of the regression tree itself using
@@ -879,8 +930,12 @@ quintiles of 8AM demand.
 
 }
 
-\caption{We can interpret the regression tree using an interactive DOI
-  representation.}\label{fig:bikesankey}
+\caption{So far, we have focused on the timebox tree and treebox representations
+  of the bikesharing data -- a complementary view is provided by the DOI sankey.
+  Here, the tree is the result of the regression tree procedure, while the
+  colors represent particular quantiles of 8am demand. This allows the
+  determination of which split descendants are associated with low or high
+  demand.}\label{fig:bikesankey}
 \end{figure}
 
 This interactive representation of regression trees is potentially more
@@ -888,7 +943,7 @@ useful on larger trees that cannot be easily parsed in a single view; in
 this sense the bikesharing tree is relatively simple. In our ideal data
 analysis workflow, we imagine the analyst applying interactive
 visualization and modeling techniques in an iterative, nonlinear
-fashion.
+fashion, in the spirit of \citep{de2003visual}.
 
 \subsection{Hierarchically Clustering the Global Patterns Data}\label{global_patterns}
 
@@ -922,7 +977,13 @@ parallel coordinates view of the \(\text{asinh}\) transformed taxa.
 
 \caption{An application to the Global Patterns demonstrates how linking in
   treelapse can be applied to combine hierarchical clustering and parallel
-  coordinates views.}\label{fig:gptimebox}
+  coordinates views. Each panel represents a different subtree cluster within
+  this data set, as indicated by the different locations for the tree brushes.
+  The paths in the lower halves of each display represent the average value
+  across different bacteria rather than timepoints, as in all previous figures.
+  Though the samples originally do not include any hierarchical structure,
+  hierarchical clustering provides such a structure which can then be
+  interpreted using treeboxes. }\label{fig:gptimebox}
 \end{figure}
 
 In Figure \ref{fig:gptimebox}, we compare two subclusters from the
@@ -977,11 +1038,17 @@ procedures.
 
 \caption{Viewing a tree of $p$-values across different methods highlights two
   subtrees with strong associations with mouse age, across several testing
-  procedures.}\label{fig:structssi}
+  procedures. The tree represents the taxonomy of bacteria, and the series
+  provides the negative log $p$-values associated with nodes as computed by
+  different tests, listed along the $x$-axis as in parallel coordinates. By
+  selecting series with larger values for a test, we see the associated subtrees
+  of significant $p$-values. Hence, hierarchical views can be useful even in the
+  confirmatory testing settings which typically study results from individual
+  tests in isolation from each other.\label{fig:structssi}}
 \end{figure}
 
 Further, selecting series with strong association between abundance and age, two
-major subtrees are brought to the forefront. Separately querying the the
+major subtrees are brought to the forefront. Separately querying the
 taxonomic identities of these bacteria reveals that they are two subgroups of
 Clostridia, which is consistent with the analysis of
 \citep{callahan2016bioconductor}. More than this specific analysis outcome, this
