@@ -99,10 +99,10 @@ our techniques.
 We have implemented our visualizations in D3, but encapsulated in an R package,
 called treelapse, to facilitate rapid turnover from data preparation and
 modeling to interactive exploration, and vice versa. Our code is open-source,
-and available at \url{https://github.com/krisrs1128/treelapse}. We hope this
-package encourages data analysts to work at the border between data modeling and
-visualization, and more generally empowers a wider audience to apply less widely
-known, but powerful, visualization ideas.
+and is linked in Section \ref{sec:supp_links} of the supplementary materials. We
+hope this package encourages data analysts to work at the border between data
+modeling and visualization, and more generally empowers a wider audience to
+apply less widely known, but powerful, visualization ideas.
 
 In summary, our key contributions are,
 \begin{itemize}
@@ -423,7 +423,7 @@ Two more subtle effects are also suggested from this view,
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/annotated_antibiotic_overview}
+{\centering \includegraphics[width=375px]{figure/annotated_antibiotic_overview}
 
 }
 
@@ -443,7 +443,7 @@ Two more subtle effects are also suggested from this view,
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/antibiotic_bacteroidetes}
+{\centering \includegraphics[width=375px]{figure/antibiotic_bacteroidetes}
 
 }
 
@@ -468,7 +468,7 @@ series that contribute to these higher-level families. The resulting view is
 given by Figure \ref{fig:antibioticfirmicutes}
 
 \begin{figure}
-{\centering \includegraphics[width=350px]{figure/antibiotic_firmicutes}
+{\centering \includegraphics[width=375px]{figure/antibiotic_firmicutes}
 
 }
 
@@ -497,7 +497,7 @@ contrast, most families seem to recover in unison after the first treatment.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/ruminococcus}
+{\centering \includegraphics[width=375px]{figure/ruminococcus}
 
 }
 
@@ -526,7 +526,7 @@ more variable estimate than the averages over the more prevalent phyla.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/verrucomicrobiae}
+{\centering \includegraphics[width=375px]{figure/verrucomicrobiae}
 
 }
 
@@ -591,7 +591,7 @@ associated with preterm births.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/preterm_csts}
+{\centering \includegraphics[width=375px]{figure/preterm_csts}
 
 }
 
@@ -613,7 +613,7 @@ associated with preterm births.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/preterm_csts_lacto}
+{\centering \includegraphics[width=375px]{figure/preterm_csts_lacto}
 
 }
 
@@ -645,37 +645,23 @@ associated with preterm births.
 \subsection{Dynamics in Housing Prices}\label{zillow-study}
 
 We next consider an application unrelated to the microbiome, but with relatively
-clear hierarchical structure. Our data are downloaded from
-Zillow\footnote{\url{http://www.zillow.com/research/data/}}, and give the Zillow
-Home Value Indexes at the neighborhood level, across the country, computed
-monthly between 1996 and 2016. In our display, we have taken the base 10 log of
-these indexes. As our hierarchical structure, we use each neighborhood's
-assignment to state, regional, county, and city levels. We represent each of
-these coarser spatial categories using the average of all neighborhoods
-contained in them. We have filtered down to the 890 neighborhoods in California;
-rendering more neighborhoods while keeping all 246 timepoints causes the
-interface to lag\footnote{See below for potential optimizations, however.}.
+clear hierarchical structure. Our data are downloaded from Zillow and give the
+Zillow Home Value Indexes at the neighborhood level, across the country,
+computed monthly between 1996 and 2016. A link to the data source is provided in
+Section \ref{sec:supp_links} of the supplementary materials. In our display, we
+have taken the natural log of these indexes. As our hierarchical structure, we
+use each neighborhood's assignment to state, regional, county, and city levels.
+We represent each of these coarser spatial categories using the average of all
+neighborhoods contained in them. We have filtered down to the 890 neighborhoods
+in California; rendering more neighborhoods while keeping all 246 timepoints
+causes a severe lag in the interface.
 
 Our basic analysis revolves around geographic and temporal variation in home
 prices. We are especially interested in the effect of the 2008 recession and any
 variation in the lead-up to or recovery from this event. These questions can be
 naturally framed using timebox trees and treeboxes.
 
-We first study variation in prices at the city level. These series can be
-highlighted using a single brush in treeboxes, since each spatial level is
-displayed at the same height in the tree. The resulting display is given in
-Figure \ref{fig:zillowcities}. From a high level, the housing bubble, decrease
-in prices due to the recession, and subsequent recovery are readily apparent.
-The city-level view makes it clear that not all neighborhoods were equally
-affected by the recession -- richer cities plateaued at their 2008 prices,
-middle-income cities saw moderate decreases, and poorer cities saw the most
-significant declines in home prices. These more significant declines tended to
-occur in cities that had recently seen rapid increases during the housing
-bubble. Finally, we note that the range in home prices seems to have increased
-after the recession, speaking to the differential long-term effect of the
-recession on prices.
-
-Alternatively, we can study the trajectories of home prices among neighborhoods,
+For example, we can study the trajectories of home prices among neighborhoods,
 conditional on their being middle-income before the recession. We generate the
 sequence of views in Figures \ref{fig:zillowmiddlepre},
 \ref{fig:zillowmiddleup}, and \ref{fig:zillowmiddledown} to this end. The first
@@ -684,17 +670,24 @@ recession, using a single timebox. Since there appears to be a divergence in
 trajectories after the recession, we introduce a second post-recession timebox,
 dragging it over series with higher and lower incomes during this second time
 period. This is the content of Figures \ref{fig:zillowmiddleup} and
-\ref{fig:zillowmiddledown}. Inspecting the highlighted tree nodes associated
-with these series, we find that most of the middle-income series that increased
+\ref{fig:zillowmiddledown}. Though not directly visible from the static figures,
+hovering the mouse over the highlighted tree nodes provides the geographic
+identities, and we find that most of the middle-income series that increased
 after the recession are associated with middle-income neighborhoods within the
-coastal Southern California counties. In contrast, those middle income series
-that saw decreases were mostly located in Central California and Oakland.
+coastal Southern California counties. For example, the mouse is currently over a
+subtree with many highlighted nodes, which is shown to be the Los Angeles-Long
+Beach-Anaheim metropolitan area. In contrast, hovering over nodes associated
+with those middle income neighborhoods that saw decreases indicates that they
+were mostly located in Central California and Oakland. In Figure
+\ref{fig:zillowmiddledown}, the mouse is positioned over the Sacramento (which
+is located in Central California) subtree, and seems enriched for this subset of
+strongly recession-affected series.
 
 The previous analysis highlights the fact that, within even narrow geographic
 regions, there can be substantial variation in prices. We can study this
 directly using treeboxes. In Figure \ref{fig:zillowsf} we have highlighted all
 series in San Francisco County. We see that, in 2016, prices range from around
-\(10^{5.6} \approx \$400,000\) to \(10^{6.7} \approx \$5 \text{ million}\). So,
+$e^{13} \approx \$440,000$ to $e^{14.5} \approx 2 \text{ million}$. So,
 while all these neighborhoods tend to be among the more expensive ones in
 California, prices can vary in a non-smooth way across geographic space.
 
@@ -705,42 +698,25 @@ substantial decision-making.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/zillow_cities}
+{\centering \includegraphics[width=375px]{figure/zillow_middle_pre}
 
 }
 
-\caption{California home prices at the city level, between 1996 and 2016. Here,
-  we provide a treebox display, as in Figure \ref{fig:antibioticfirmicutes}, but
-  of the California home prices data. In this case, the tree corresponds to a
-  geographic hierarchy, with regions at the top and neighborhoods at the bottom, while
-  time series correspond to home prices collected weekly between 1996 and 2016.
-  A brush is drawn over all nodes at the city level. The effect of the 2008
-  recession is clear, and we have hovered over the San Bernardino series, to
-  display the identity of one of the cities most strongly affected by the
-  recession. This provides an example of a dataset with meaningful (spatial)
-  hierarchical structure that might not initially be studied using trees.
-\label{fig:zillowcities}}
-\end{figure}
-
-\begin{figure}
-
-{\centering \includegraphics[width=350px]{figure/zillow_middle_pre}
-
-}
-
-\caption{Neighborhoods with mid-range home prices before the recession are
-  brushed here, using a timebox tree version of Figure \ref{fig:zillowcities}.
-  The associated tree nodes are highlighted at the top. Note that the collection
-  of series seems to widen after 2008 -- we are interested in whether there are
-  reliable predictors of these alternate trajectories, given their similar
-  starting points. This serves as a baseline with which to compare Figure
+\caption{The time series here represent California neighborhood home prices
+  between 1996 and 2016, and the tree corresponds to a geographic hierarchy,
+  with regions at the top and neighborhoods at the bottom. We have brushed the
+  neighborhoods with mid-range home prices before the recession. The associated
+  tree nodes are highlighted at the top. Note that the collection of series
+  seems to widen after 2008 -- we are interested in whether there are reliable
+  predictors of these alternate trajectories, given their similar starting
+  points. This serves as a baseline with which to compare Figure
   \ref{fig:zillowmiddleup} -- these views are easy to transition between
   interactively.}\label{fig:zillowmiddlepre}
 \end{figure}
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/zillow_middle_up}
+{\centering \includegraphics[width=375px]{figure/zillow_middle_up}
 
 }
 
@@ -756,7 +732,7 @@ substantial decision-making.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/zillow_middle_down}
+{\centering \includegraphics[width=375px]{figure/zillow_middle_down}
 
 }
 
@@ -774,7 +750,7 @@ substantial decision-making.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/zillow_sf}
+{\centering \includegraphics[width=375px]{figure/zillow_sf}
 
 }
 
@@ -792,17 +768,17 @@ substantial decision-making.
 \subsection{Sources of Variation in Bikesharing
 Demand}\label{bikesharing-study}
 
-Our next example is a study in bikesharing demand, included as an
-example of analyzing collections of time series when there is no obvious
-hierarchical structure a priori. The data are available at the UCI
-Repository\footnote{\url{https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset}}
-and were originally collected by a Washington D.C.-based bikesharing
-system for use in a Kaggle prediction competition. The data are hourly
-measurements of bike demand, aggregated across all bikesharing stations,
-over two years, along with supplemental weather data. In the
-competition, participants were asked to predict the hourly demand on a
-held-out test set. Here, we adopt a descriptive view instead, attempting
-to characterize factors associated with variation in bikesharing demand.
+Our next example is a study in bikesharing demand, included as an example of
+analyzing collections of time series when there is no obvious hierarchical
+structure a priori. The data are available at the UCI Repository and were
+originally collected by a Washington D.C.-based bikesharing system for use in a
+Kaggle prediction competition. A link is provided in Section
+\ref{sec:supp_links} of the supplementary materials. The data are hourly
+measurements of bike demand, aggregated across all bikesharing stations, over
+two years, along with supplemental weather data. In the competition,
+participants were asked to predict the hourly demand on a held-out test set.
+Here, we adopt a descriptive view instead, attempting to characterize factors
+associated with variation in bikesharing demand.
 
 Like the Zillow home prices application, we study this problem as one of
 describing a large collection of related time series. Here, we consider
@@ -833,7 +809,7 @@ second year.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/working}
+{\centering \includegraphics[width=375px]{figure/working}
 
 }
 
@@ -853,43 +829,38 @@ second year.
 \end{figure}
 
 \begin{figure}
-
-{\centering \includegraphics[width=350px]{figure/weekend}}
-
-\caption{By adjusting the two brushes in Figure \ref{fig:working}, we see that
-  unlike weekday demand, weekend demand is unimodal. The few weekday series with
-  unimodal series seem to be associated with holidays. This is the case for New
-  Years' Eve, which is currently hovered over in the tree. The ease of
-  transitioning from Figure \ref{fig:working} to this display indicates the
-  importances of brushing in interaction.}\label{fig:weekend}
+  \centering
+  \includegraphics[width=375px]{figure/weekend}
+    \caption{By adjusting the two brushes in Figure \ref{fig:working}, we see that
+      unlike weekday demand, weekend demand is unimodal. The few weekday series with
+      unimodal series seem to be associated with holidays. This is the case for New
+      Years' Eve, which is currently hovered over in the tree. The ease of
+      transitioning from Figure \ref{fig:working} to this display indicates the
+      importances of brushing in interaction.}\label{fig:weekend}
 \end{figure}
 
 \begin{figure}
-{\centering \includegraphics[width=350px]{figure/weekday_2011}}
-
-\caption{Weekday demand appears larger in 2012 than 2011 -- compare with Figure 
-  \ref{fig:weekday2012}. Here, a brushes are introduced over the tree to see the
-  series associated with a particular split point. The red nodes are the results
-  of searches over the two nodes that are children of this split point. The fact
-  that the \texttt{yr>=0.5} selected line is larger than the \texttt{yr<0.5}
-  line means that demand was larger in 2012. In combination with searching and
-  treeboxes, it is possible to interpret more subtle split points in the decision
-  tree.}
-\label{fig:weekday2011}
+  \centering
+  \includegraphics[width=375px]{figure/weekday_2011}
+    \caption{Weekday demand appears larger in 2012 than 2011 -- compare with Figure 
+      \ref{fig:weekday2012}. Here, a brushes are introduced over the tree to see the
+      series associated with a particular split point. The red nodes are the results
+      of searches over the two nodes that are children of this split point. The fact
+      that the \texttt{yr>=0.5} selected line is larger than the \texttt{yr<0.5}
+      line means that demand was larger in 2012. In combination with searching and
+      treeboxes, it is possible to interpret more subtle split points in the decision
+      tree.} \label{fig:weekday2011}
 \end{figure}
 
 \begin{figure}
-
-{\centering \includegraphics[width=350px]{figure/weekday_2012}
-
-}
-
-\caption{Weekday demand increased in 2012 -- compare with 
-  Figure \ref{fig:weekday2011}. The search terms are the same as in that figure,
-  but the subtree associated with the 2012 split point is highlighted, using the
-  union of two boxes. Note that unlike timebox trees, which highlighted series
-  lying through the intersection of brushes, treeboxes highlight series within the
-  union of brushes.}\label{fig:weekday2012}
+  \centering
+  \includegraphics[width=375px]{figure/weekday_2012}
+  \caption{Weekday demand increased in 2012 -- compare with 
+    Figure \ref{fig:weekday2011}. The search terms are the same as in that figure,
+    but the subtree associated with the 2012 split point is highlighted, using the
+    union of two boxes. Note that unlike timebox trees, which highlighted series
+    lying through the intersection of brushes, treeboxes highlight series within the
+    union of brushes.}\label{fig:weekday2012}
 \end{figure}
 
 In contrast to these general questions about daily demand, we could ask
@@ -901,7 +872,7 @@ with the warm-weekend split, which seems quite reasonable in retrospect.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/warm_weekend}
+{\centering \includegraphics[width=375px]{figure/warm_weekend}
 
 }
 
@@ -926,7 +897,7 @@ quintiles of 8AM demand.
 
 \begin{figure}
 
-{\centering \includegraphics[width=350px]{figure/bike_sankey}
+{\centering \includegraphics[width=375px]{figure/bike_sankey}
 
 }
 
@@ -1032,7 +1003,7 @@ procedures.
 
 \begin{figure}
 
-{\centering \includegraphics[width=250px]{figure/structssi}
+{\centering \includegraphics[width=325px]{figure/structssi}
 
 }
 
@@ -1075,10 +1046,12 @@ Further, we have only worked with the DOI distribution described in
 notion of interest along nodes, based on cognostics, for example
 \citep{hafen2013trelliscope, friedman2002john}. A simple extension could be to
 allow graph layouts instead of trees in time and treebox displays, for data that
-cannot be coerced into a hierarchical structure. Finally, if these ideas turn
+cannot be coerced into a hierarchical structure. Further, if these ideas turn
 out to be useful in practice, it would be valuable to modularize the basic
 visualization layouts and relationships into a library, allowing the wider
 community to construct novel linked, interactive graphics with minimal effort.
+Finally, formal quantitative assessments of interface design through a user
+study could guide changes that improve the experience of practitioners.
 
 In summary, we have built an easily accessible R package for visualization
 techniques in a very specific methodology problem -- analysis of differential
@@ -1097,5 +1070,19 @@ commuter bikesharing systems.
 
 \bibliographystyle{plainnat}
 \bibliography{bibliography}
+
+\section{Supplemental Materials}
+
+\subsection{Links}
+\label{sec:supp_links}
+
+\begin{itemize}
+\item treelapse home page: \url{https://krisrs1128.github.io/treelapse/}
+\item treelapse development page: \url{https://github.com/krisrs1128/treelapse}
+\item treelapse video demo: \url{https://www.youtube.com/watch?v=EcmYBRMVMbI&t=14s}
+\item Home prices data: \url{http://www.zillow.com/research/data/}
+\item Bikesharing data: \url{https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset}
+\end{itemize}
+
 
 \end{document}
