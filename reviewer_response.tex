@@ -1,139 +1,307 @@
 \documentclass{article}
 \usepackage{natbib}
+\usepackage{setspace}
 \usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{color}
 \input{preamble.tex}
 
-\begin{document}
+\title{Response to Reviews: ``Interactive Visualization of Hierarchically Structured Data''}
+\author{Kris Sankaran and Susan P. Holmes}
+\linespread{1.25}
 
-We would like to thank the two reviewers and the associate editor for insightful
-and constructive comments on our work. Below, we describe changes to the paper
-text and software based on this feedback.
+\begin{document}
+\maketitle
+
+We would like to thank the two reviewers and the editor and associate editor for
+insightful and constructive comments on our work. Below, we document changes to
+the paper text and software based on this feedback. The original reviewer
+comments are printed in blue, and our responses are in black.
 
 \subsection{Reviewer 1}
 
-\textit{This small sampling of a large body of work points to the need for a
-  cleaner conceptualization and clarifications of the contribution of the work
-  presented in this paper relative to prior efforts.}
+\color{blue}
+
+Although I have a few comments on the implementation and reporting detail (given
+below), my main complaint with this paper lies in the lack of context. Although
+the authors make some reference to DOI Trees and Timeboxes, there is very little
+discussion of the wide range of relevant approaches that have been explored in
+25 years of tree visualization efforts. Review papers such as Heer \&
+Shneiderman Interactive Dynamics for Visual Analysis
+(https://doi.org/10.1145/2133416.2146416), and Oliveir and Levkwoitz From visual
+data exploration to visual data mining: a survey (10.1109/TVCG.2003.1207445)
+provide general background, while Graham and Kennedy A Survey of Multiple Tree
+Visualisation (http://journals.sagepub.com/doi/10.1057/ivs.2009.29) covers
+details of tree comparison and Aigner, et al. Visualization of Time-Oriented
+Data provides an overview of temporal data. This small sampling of a large body
+of work points to the need for a clearer conceptualization and clarification of
+the contribution of the work presented in this paper relative to prior efforts.
+
+\color{black}
 
 We have added material at the beginning of the literature review (Section 1.3) that
 describes the larger body of work within which our study lives. We explain some of
 the main ideas in the surveys you mentioned before proceeding to the more narrow
 set of ideas that are directly adapted in our work. Further, we have provided a
-bullet list in the introduction that explicitly describes the contribution of
+bullet list in the introduction that explicitly describes the contributions of
 this paper.
 
-\textit{My main concern regarding the presentation of the work lies in the third
-  and fourth views - why are they presented as distinct? It would seem to me
-  that all of the described functionality could be configured in that one view.
-  In fact, I could imagine including the DOi in the same view as well - why are
-  multiple views needed?}
+\color{blue}
 
+My main concern regarding the presentation of the work lies in the third and
+fourth views - why are they presented as distinct? It would seem to me that all
+of the described functionality could be configured in that one view. In fact, I
+could imagine including the DOi in the same view as well - why are multiple
+views needed?
+
+\color{black}
 The idea of combining these displays is interesting, and we have attempted to
 implement a version which would highlight the series / nodes that lay in both
 (1) the union of all treeboxes and (2) the intersection of all timeboxes.
 However, we found this idea difficult to implement, for technical rather than
 conceptual reasons -- when attempting to have both brush interactions for
 querying and mouseover interactions for providing detail, the events conflict.
-Indeed, we implemented the first and third recommendations described in
-\href{https://github.com/d3/d3/issues/1604}{this D3 issue}, but in both cases we
+Indeed, we implemented the first and third recommendations described in this D3
+issue: https://github.com/d3/d3/issues/1604. However, in both approaches we
 found it necessary to introduce a lag between mousedown and the start of
 brushing in order for the event to properly register. This lag created a drag on
 responsiveness, and the value gained by unifying the displays did not seem worth
 the cost of less fluid interactivity.
 
-\textit{Some detail about the scale of the tool would be useful. How many nodes
+\color{blue} Some detail about the scale of the tool would be useful. How many nodes
   can be included in the tree? How many time series, of what length? Rough
-  estimates would help readers assess utility.}
+  estimates would help readers assess utility.
 
+\color{black}
 We have added a discussion of scalability at the end of Section 1.4. We also
-explicitly list the problem dimensions in Table 1. Also, all examples (and more)
-are available as pre-compiled Rmarkdown vignettes linked from our package
-webpage, so users can assess utility in this examples easily without having to
-even install the package.
+explicitly list the problem dimensions in Table 1. Also, all case studies (as
+well as other examples) are available as pre-compiled Rmarkdown vignettes linked
+from our package webpage, so users can assess utility in this examples easily
+without having to even install the package.
+
+\color{blue} Finally, given the difficulty of building effective and usable
+  visualizations, the authors might note that the case studies are not
+  equivalent to an empirical validation of the tool through a user study. I see
+  no reason to believe that this tool wouldn't be highly usable, but
+  demonstrating that value is often harder than one might think.
+
+\color{black}
+We agree that a user study would provide data to improve design in the future,
+and have added a note to that end in the conclusion. However, we believe that
+such a study is out of scope for this work.
 
 \subsection{Reviewer 2}
 
-\textit{In the case studies, it would be interesting to see how the highlighted
+\color{blue} 1. In the case studies, it would be interesting to see how the highlighted
   nodes change when you shrink or pan the selecting area in the time series
-  plot.}
+  plot.
 
-This is visible online in our video demo. It is also possible to see this effect
-directly by interacting with precompiled versions in our compiled rmarkdown
-vignettes. We have further added a short supplementary note providing static
-figures describing this effect.
+\color{black}
+This is visible online in our video demo, which is now linked in the
+supplementary materials. It is also possible to see this effect directly by
+interacting with precompiled versions in our Rmarkdown vignettes, available on
+the treelapse home page.
 
-\textit{Is it possible to combine the DOI sankey idea with the timebox trees, so
-  that the time series can be conditioned on the categorical variable?}
+\color{blue} 2. Is it possible to combine the DOI sankey idea with the timebox trees,
+  so that the time series can be conditioned on the categorical variable?
 
-It would be possible to colo series according to different properties, or
+\color{black}
+It would be possible to color series according to different properties, or
 alternatively faceting different series into separate panels. We have these
-extensions in mind for a future version of the package, though these are not
+extensions in mind for a future version of the package, but they are not
 possible in the package as it currently stands.
 
-\textit{As the authors mentioned in the conclusion part, faceting is an
+\color{blue} 3. As the authors mentioned in the conclusion part, faceting is an
   important feature to be added in the interactive time series plot. Also,
   zooming in $y$-scale is needed when the lines are very intensive, like the
-  bottom of Figure 1.}
+  bottom of Figure 1.
 
-As mentioned above, faceting is a natural next step, but we have not implemented
-it yet. On zooming however, it is already possible to zoom the $y$-axis, using
-the pan-zoom widget.
+\color{black}
+We agree, faceting is a natural next step, but we have not implemented it yet.
+Regarding zooming however, it is already possible to zoom the $y$-axis, using
+the pan-zoom widget. This is visible in Figures 3, 18, and 20 of the revised
+draft, for example.
 
-\textit{In the case studies, when there are two colors in the time series plot
+\color{blue} 4. In the case studies, when there are two colors in the time series plot
   (Figures 4, 9, 13, 16), the brown color is almost hidden by the blue. It would
   be nicer to have the brown highlighted on the top, or add the transparency to
-  the blue.}
+  the blue.
 
+\color{black}
 It is already possible to customize the transparency of the blue selected lines
 by using the \texttt{ts\$opacity\_selected} argument in the \texttt{style\_opts}
-argument to the R plotting functions. However, we realize this is not the ideal
-approach to displaying the searched series, and since searching is an important
-function, we have revised our implementation and the relevant figures so that
-the searched series are always displayed on top.
+argument to the \texttt{timebox\_tree} and \texttt{treebox} functions. However,
+we realize this is not the ideal approach to displaying the searched series, and
+as suggested by the reviewer, we have revised our implementation and the updated
+figures so that the searched lines are always displayed on top.
 
-\textit{In the clustering example, it doesn't make sense to show the internal
-  nodes. It is better to display only the leaves in the time series plot.}
+\color{blue}
 
-We actually think that the nodes are useful to plot, because they can be
+5. Can you brush two blocks of nodes and compare the time series from two
+selected areas?
+
+\color{black}
+Yes, you can, this is displayed in Figure 17, for example. As it is, the colors
+of the series are the same regardless of which brush was applied to it (you
+could imagine a version with different colors for different brushes, but this is
+not currently implemented). However, it is relatively straightforwards to see
+which series are associated with a given brush when working interactively,
+because when moving one brush, the series associated with all others stay
+constant.
+
+\color{blue}
+
+6. In the clustering example, it doesn't make sense to show the internal nodes.
+It is better to display only the leaves in the time series plot.
+
+\color{black}
+We actually think that the nodes are useful to display, because they can be
 interpreted as centroids of the associated subtree, which are a natural object
-of study.
+of interest.
 
-\textit{Page 7, Line 46, ``node sizes reflecting the time series value at that
-  node''. Does that mean the node size will change when the time changes?}
+\color{blue}
 
-Sorry, what we actually meant is that the node size reflects the
-\textit{average} value across all times. This has been clarified in the text.
+In addition, there are some issues in the article:
 
-\textit{Page 11, lines 28-40. Should have referred to Figure 5.}
+\color{blue}
 
+1. Page 7, Line 46, ``node sizes reflecting the time series value at that
+node''. Does that mean the node size will change when the time changes?
+
+\color{black}
+What we actually meant is that the node size reflects the \textit{average} value
+across all times. This has been clarified in the text.
+
+\color{blue} 2. Page 11, lines 28-40. Should have referred to Figure 5.
+
+\color{black}
 We have added a reference to Figure 5 at the point that we start describing the
 series for Verrucomicrobiae.
 
-\textit{Page 13, Line 42. ``The red edges are associated with preterm births''.
-  Actually red represents term in Figure 8. Hence lines 45-47 are not correct.}
+\color{blue} 3. Page 13, Line 42. ``The red edges are associated with preterm
+  births''. Actually red represents term in Figure 8. Hence lines 45-47 are not
+  correct.
 
-We have fixed this in the text to refer to the green and yellow edges.
+\color{black}
+We have fixed this in the text so that we refer to the green and yellow edges.
 
-\textit{Page 15, Line 46. How did you get the numbers of the power, 5.6 and 6.7?
-  In Figure 13 the $y$-axis goes from around 11 to 15, and I can't find any
-  number close to 6.}
+\color{blue}
 
+4. Page 15, Line 46. How did you get the numbers of the power, 5.6 and 6.7? In
+Figure 13 the $y$-axis goes from around 11 to 15, and I can't find any number
+close to 6.
+
+\color{black}
 We had accidentally changed the base of the log between generating this figure
-and our text. The text and figure now both use base 10 logs.
+and writing our text. The text and figure now both use natural logs, and the
+short calculation for the price ranges has been updated according ot the new
+$y$-axis values.
 
-\textit{Some of the analysis from the figures are not grounded. For example,
-  page 14 lines 45-47 can not be concluded from Figure 9 easily. The analysis on
-  page 15 lines 37-39 are not directly from the plot, because Figures 11 and 12
-  themselves do not tell the county names.}
+\color{blue}
+5. Some of the analysis from the figures are not grounded. For example, page 14
+lines 45-47 can not be concluded from Figure 9 easily. The analysis on page 15
+lines 37-39 are not directly from the plot, because Figures 11 and 12 themselves
+do not tell the county names.
 
-We realize this is a difficulty of explaining inferences gathered from
-interactive visualizations through a sequence of static figures. In the text, we
-have now noted some of the interactive gestures the user would have to make to
-completely ground these analysis. For this issue of reproducibility, we have
-also made compiled interactive versions of these examples avaialble so that
-users can confirm the analysis for themselves, without having to install
-treelapse or rerun examples.
+\color{black}
+We have removed lines 45 - 47 on page 14. That conclusion is apparent when
+brushing up and down along the time series within that display, but we agree
+that it is not obvious from the single static image. If that finding is
+considered particularly interesting, we could create a sequence of images
+showing this effect. However, since we have another sequence with an analogous
+story in the subsequent figures, we have chosen to instead remove this
+discussion.
 
-\subsection{Associate Editor Review}
+For the analysis related to Figures 11 and 12, we have clarified that these
+county names are only visible upon hovering over the associated tree nodes. Further,
+we have added sentences explaining that the mouse is currently hovered over
+nodes of regions among the set that we claim have the effect, so that our
+statement is at least partially validated even from the static image alone.
+
+\subsection{Editor's comments to Author}
+
+\color{blue}
+
+Unorthodox structure: sections need numbering, and various pieces at the
+beginning would all be part of an introduction.
+
+\color{black}
+We have added numbering to the sections. Also, the subsections ``problem
+motivation'' through ``specific proposals'' are all contained within the
+introduction now.
+
+\color{blue}
+
+Captions need three pieces: (1) what the plot is about, (2) specific mapping of
+variables to graphical elements, like color, (3) a sentence that tells the
+reader what they should learn by looking at the plot.
+
+\color{black}
+We have added more detail to each caption, and structured them so that they
+include these three components.
+
+\color{blue}
+
+With interactive graphics, I would recommend that you add video illustrations.
+You can do this by loading the videos to a standard site like vimeo or youtube
+and providing the link in the paper pdf.
+
+\color{black}
+We have created a youtube video, which is now provided in the Supplementary
+Material. It describes the basic views available in treelapse, and walks through
+the antibiotics case study.
+
+We have also made precompiled vignettes available on the treelapse home page
+(linked in the Supplementary Materials), so that users can play with the actual
+interactive figures in this paper without installing the package.
+
+\color{blue} You have links embedded in the text. Make a supplementary materials
+  section, with a list of links instead.
+
+\color{black}
+We have added a supplementary materials section with a links subsection, which
+is not referred to from within the text.
+
+\color{blue}
+You have blinded the paper. I would suggest that this really doesn't work for
+you to get an adequate review. At this point the reviewers have favorably viewed
+the work, so the paper has passed the first stage of evaluation. The reviewers
+will need to be able to play with the software in the next review to give you
+useful feedback.
+
+\color{black}
+The revised version is no longer blinded, and we provided links to all the
+software and case studies. We look forwards to feedback on the actual software.
+
+\subsection{Associate Editor comments to the author}
+
+\color{blue}
+
+Please address the ``lack of context'' issues pointed out by reviewer 1 and the
+comments from both reviewers that relate to clarifying explanations in the text
+and/or figures.
+
+\color{black}
+We have added a more general literature review and revised our discussion of the
+figures to ensure analysis conclusions are visible from the figure (or have
+clarified within the text which other interactive steps are necessary), as
+detailed in the response to Reviewer 2's $5^{th}$ issue.
+
+\color{blue}
+
+The figures are not particularly attractive. You might consider making them a
+little larger so that individual features are more visible. It is also difficult
+to convey interactivity via static images; have you considered producing short
+video demonstrations for each case study?
+
+\color{black}
+We have increased the sizes of figures. Most had been 350px across, and are now
+375px wide.
+
+We have also created a video demo, linked in the supplementary material, but the
+focus is on the antibiotics case study. If the editors think it is necessary to
+have similar videos for the other case studies, we could create create them,
+though we hope it would be enough to include one demo video and links to the
+rest of the compiled vignettes.
 
 \end{document}
