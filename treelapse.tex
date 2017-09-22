@@ -345,6 +345,13 @@ the children below a single node makes it possible to see how much correlation
 and competition there is between taxonomically similar bacteria. As in the
 timebox trees display, a search box and pan-zoom scented widget are provided.
 
+In principle, it would be desirable to combine the timebox and treebox displays,
+so that highlighted nodes and series could be determined through brushes on both
+the tree and series. For example, it would be useful to highlight the samples
+that lie in the intersection of all timeboxes and union of all treeboxes.
+However, the authors have found practical implementation of this idea
+challenging.
+
 To be practically useful, the resulting visualizations must respond fluidly to
 user interaction. As the data increase in scale, this fluidity can deteriorate
 for two reasons. First, rendering many SVG elements in a framework like D3 is
