@@ -65,8 +65,8 @@ might help.
 \color{blue}
 Comments to the Author
 
-The authors have made substantial changes to the
-manuscript according to the comments from reviewers and editors.
+The authors have made substantial changes to the manuscript according to the
+comments from reviewers and editors.
 
 However, I still have one concern about the display of hierarchical clustering.
 The authors did answer the question about this example from the second reviewer:
@@ -89,6 +89,15 @@ different levels of nodes. For example, if the user selects the lowest level,
 only the original data points will appear.
 
 \color{black}
+We appreciate the reviewers elaboration of the problems that can arise when
+plotting series associated with internal nodes, and have taken the recommended
+steps to resolve the issue. In particular, for both timebox trees and treeboxes,
+we have added functionality to either (1) only display time series associated
+with leaves (original data samples) or (2) only display time series within a
+certain window of depths on the tree.
 
+We have updated Figure 19 (the hierarchical clustering example), so that only
+series associated with leaves are shown. The vignette for this example has also
+been updated, so that users can see how to access this functionality.
 
 \end{document}
