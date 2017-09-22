@@ -953,15 +953,19 @@ parallel coordinates view of the \(\text{asinh}\) transformed taxa.
   across different bacteria rather than timepoints, as in all previous figures.
   Though the samples originally do not include any hierarchical structure,
   hierarchical clustering provides such a structure which can then be
-  interpreted using treeboxes. }\label{fig:gptimebox}
+  interpreted using treeboxes.}\label{fig:gptimebox}
 \end{figure}
 
 In Figure \ref{fig:gptimebox}, we compare two subclusters from the
 hierarchical clustering tree, after zooming to a few of the bacteria
-that distinguish between the clusters. Upon revisiting the original
-data, it becomes clear that the samples highlighted on the left come
-from freshwater samples, while those on the right come from soil and
-skin, and looking up taxonomic groups associated with the distinguishing
+that distinguish between the clusters. In contrast to the figures displayed to
+this point, we only print time series associated with observed samples -- the
+leaves of the hierarchical clustering tree. This reduces visual artifacts that
+can be created by plotting many similar internal nodes, and which can overwhelm
+patterns occuring in the leaves, which are those of central interest. Upon
+revisiting the original data, it becomes clear that the samples highlighted on
+the left come from freshwater samples, while those on the right come from soil
+and skin, and looking up taxonomic groups associated with the distinguishing
 bacteria confirms this. For example, many of the species with high
 abundances in the left figure come from order Oceanospirillales.
 
