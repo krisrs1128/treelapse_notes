@@ -1,0 +1,35 @@
+
+Main Tar
+--------
+
+* treelapse.tex: The tex of the main paper
+* treelapse.pdf: The compiled pdf
+* treelapse.bbl: The bbl with references
+* bibliography.bib: The bibtex file with reference
+* figure/: A directory containing all figures used in the manuscript
+    - annotated_antibiotic_overview.png (figure 1)
+    - antibiotic_bacteroidetes.png (figure 2)
+    - antibiotic_firmicutes.png (figure 3)
+    - ruminoccocus.png (figure 4)
+    - verrucomicrobiae.png (figure 5)
+    - preterm_csts.png (figure 6)
+    - preterm_csts_lacto.png (figure 7)
+    - preterm_preterm.png (figure 8)
+    - zillow_middle_pre.png (figure 9)
+    - zillow_middle_up.png (figure 10)
+    - zillow_middle_down.png (figure 11)
+    - zillow_sf.png (figure 12)
+    - working.png (figure 13)
+    - weekend.png (figure 14)
+    - weekend_2011.png (figure 15)
+    - weekend_2012.png (figure 16)
+    - warm_weekend.png (figure 17)
+    - bike_sankey.png (figure 18)
+    - gp_cluster1.png and gp_cluster2.png (figure 19)
+    - structssi.png (figure 20)
+
+Supplemental TAR
+----------------
+
+* supplement.tex: The list of supplemental links
+* supplement.pdf: The compiled list of supplemental links

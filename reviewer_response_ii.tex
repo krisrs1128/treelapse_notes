@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{color}
+\linespread{1.25}
+
+\title{Response to Reviews: JCGS-17-033.R2}
+\begin{document}
+\maketitle
+
+We would like to thank the reviewers for their encouragement and comments
+leading to valuable improvements of our software and paper. The original
+reviewer comments are printed in blue, and our responses are in black.
+
+\subsection{Reviewer 1}
+\label{subsec:reviewer_1}
+
+\color{blue}
+Comments to the Author
+
+Thanks to the authors for having addressed concerns from the previous review.
+The revisions made in response to these comments have, in my opinion,
+strengthened the paper.
+
+I als want to commend the details presented in the video and on the GitHub
+pages. Very nicely done.
+
+I have a few minor suggestions for a few additional revisions that might help
+the paper.
+
+1. Regarding the third and fourth view, your response to earlier comments
+suggests that implementation details interfered with attempts to combine these
+views. Discussing these concerns in the paper (or on the documentation website)
+might help others either avoid such difficulties or identify appropriate
+work-arounds. Please consider adding relevant text to the paper.
+
+\color{black}
+We have added a brief discussion of the possibility of combining the third and
+fourth views in a paragraph following their introduction (``In principle, it
+would be desirable...''). We describe the difficulties we found, and provide a
+link to a github branch with the partial solution that we found unsatisfactory.
+
+\color{blue}
+2. On page 7, the description of the tree reads: "Every edge in the tree is
+split into two colors1, with relative widths of the different colors reflecting
+differences in sizes for the two groups. The overall width of each edge
+represents the sum of values across all groups." I was a bit confused by these
+sentences, as they seem redundant. Doesn't the second sentence follow directly
+from the first? If not, some additional clarification is needed.
+
+\color{black}
+It's true, those sentences are redundant. We realize now that this can be
+confusing, so we have removed the second sentence.
+
+\color{blue}
+3. Regarding the tree ordering, I found myself wondering about the reordering of
+the trees based on the size of the subtree. As this seems to be to be a tradeoff
+between information clarity and consistency, I can imagine some cases where this
+behavior might be useful, and others where it might be distracting. Have you
+considered the possibility of animating the transition, so was to help users
+avoid disorientation? Alternatively, a toggle to enable/disable this behavior
+might help.
+
+\color{black}
+We had not previously considered using orderings other than D3's default.
+However, we were able to incorporate the reviewer's suggestion by adding a
+``toggle layout'' button, which smoothly transitions between D3's default ordering
+(descending height and then ascending ID) and an ordering based on the number of
+total descendants. The online vignettes have been updated to include this new
+functionality.
+
+\subsection{Reviewer 2}
+\label{subsec:reviewer_2}
+
+\color{blue}
+Comments to the Author
+
+The authors have made substantial changes to the manuscript according to the
+comments from reviewers and editors.
+
+However, I still have one concern about the display of hierarchical clustering.
+The authors did answer the question about this example from the second reviewer:
+"...the (internal) nodes are useful to display, because they can be interpreted
+as centroids of the associated subtree..." I agree that in other examples and
+some scenarios where the internal nodes serve as meaningful group dividers, like
+the California home prices data, they are useful to display. But hierarchical
+clustering is a different story. All the internal nodes are binary, and the
+centroids of subtrees are not of interest especially for those lower-level
+subtrees. Too many time series lines for the centroids may mislead or increase
+the difficulty of user's understanding about the original data. For the Global
+Patterns data, Figure 19 (left) highlights 11 nodes of which only 6 are the
+leaves, i.e., the original samples. So there are almost half of the time series
+lines are additional. Things will get worse when the subtree is unbalanced,
+because the centroids will emphasize the larger subgroups and weaken the smaller
+subgroups by drawing more time series lines for the larger subgroups.
+
+To solve this problem, it would be good to provide the option to highlight
+different levels of nodes. For example, if the user selects the lowest level,
+only the original data points will appear.
+
+\color{black}
+We appreciate the reviewers elaboration of the problems that can arise when
+plotting series associated with internal nodes, and have taken the recommended
+steps to resolve the issue. In particular, for both timebox trees and treeboxes,
+we have added functionality to either (1) only display time series associated
+with leaves (original data samples) or (2) only display time series within a
+certain window of depths on the tree.
+
+We have updated Figure 19 (the hierarchical clustering example), so that only
+series associated with leaves are shown. The vignette for this example has also
+been updated, so that users can see how to access this functionality.
+
+\end{document}
