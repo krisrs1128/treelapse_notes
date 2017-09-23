@@ -99,10 +99,10 @@ our techniques.
 We have implemented our visualizations in D3, but encapsulated in an R package,
 called treelapse, to facilitate rapid turnover from data preparation and
 modeling to interactive exploration, and vice versa. Our code is open-source,
-and is linked in Section \ref{sec:supp_links} of the supplementary materials. We
-hope this package encourages data analysts to work at the border between data
-modeling and visualization, and more generally empowers a wider audience to
-apply less widely known, but powerful, visualization ideas.
+and is linked in the supplementary materials. We hope this package encourages
+data analysts to work at the border between data modeling and visualization, and
+more generally empowers a wider audience to apply less widely known, but
+powerful, visualization ideas.
 
 In summary, our key contributions are,
 \begin{itemize}
@@ -302,8 +302,7 @@ For example, suppose we have the average counts for treatment and control groups
 at each tree node. Every edge in the tree is split into two colors\footnote{We
   use the colorbrewer palette to facilitate readability
   \citep{brewer2003colorbrewer}}, with relative widths of the different colors
-reflecting differences in sizes for the two groups. The overall width of each
-edge represents the sum of values across all groups.
+reflecting differences in sizes for the two groups.
 
 This display is designed to facilitate investigation of the tree structured
 differential abundance question. For example, for a single node and a single
@@ -348,9 +347,16 @@ timebox trees display, a search box and pan-zoom scented widget are provided.
 In principle, it would be desirable to combine the timebox and treebox displays,
 so that highlighted nodes and series could be determined through brushes on both
 the tree and series. For example, it would be useful to highlight the samples
-that lie in the intersection of all timeboxes and union of all treeboxes.
-However, the authors have found practical implementation of this idea
-challenging.
+that lie in the intersection of all timeboxes and union of all treeboxes. This
+could allow more complex queries than are currently available. However, while
+conceptually appealing, the authors encountered obstacles in practical
+implementation: brush and mouseover events are required to occupy the same space
+in this combined view. Properly distinguishing these events can be challenging,
+and a solution based on the introduction of a lag between mousedown and the
+manipulation of a brush led to a deteriorated user experience\footnote{However,
+  the code for this approach is available publicly, in a separate branch of
+  treelapse:
+  \url{https://github.com/krisrs1128/treelapse/tree/combined-brushes}.}.
 
 To be practically useful, the resulting visualizations must respond fluidly to
 user interaction. As the data increase in scale, this fluidity can deteriorate
@@ -654,13 +660,13 @@ We next consider an application unrelated to the microbiome, but with relatively
 clear hierarchical structure. Our data are downloaded from Zillow and give the
 Zillow Home Value Indexes at the neighborhood level, across the country,
 computed monthly between 1996 and 2016. A link to the data source is provided in
-Section \ref{sec:supp_links} of the supplementary materials. In our display, we
-have taken the natural log of these indexes. As our hierarchical structure, we
-use each neighborhood's assignment to state, regional, county, and city levels.
-We represent each of these coarser spatial categories using the average of all
-neighborhoods contained in them. We have filtered down to the 890 neighborhoods
-in California; rendering more neighborhoods while keeping all 246 timepoints
-causes a severe lag in the interface.
+the supplementary materials. In our display, we have taken the natural log of
+these indexes. As our hierarchical structure, we use each neighborhood's
+assignment to state, regional, county, and city levels. We represent each of
+these coarser spatial categories using the average of all neighborhoods
+contained in them. We have filtered down to the 890 neighborhoods in California;
+rendering more neighborhoods while keeping all 246 timepoints causes a severe
+lag in the interface.
 
 Our basic analysis revolves around geographic and temporal variation in home
 prices. We are especially interested in the effect of the 2008 recession and any
@@ -778,13 +784,12 @@ Our next example is a study in bikesharing demand, included as an example of
 analyzing collections of time series when there is no obvious hierarchical
 structure a priori. The data are available at the UCI Repository and were
 originally collected by a Washington D.C.-based bikesharing system for use in a
-Kaggle prediction competition. A link is provided in Section
-\ref{sec:supp_links} of the supplementary materials. The data are hourly
-measurements of bike demand, aggregated across all bikesharing stations, over
-two years, along with supplemental weather data. In the competition,
-participants were asked to predict the hourly demand on a held-out test set.
-Here, we adopt a descriptive view instead, attempting to characterize factors
-associated with variation in bikesharing demand.
+Kaggle prediction competition. A link is provided in the supplementary
+materials. The data are hourly measurements of bike demand, aggregated across
+all bikesharing stations, over two years, along with supplemental weather data.
+In the competition, participants were asked to predict the hourly demand on a
+held-out test set. Here, we adopt a descriptive view instead, attempting to
+characterize factors associated with variation in bikesharing demand.
 
 Like the Zillow home prices application, we study this problem as one of
 describing a large collection of related time series. Here, we consider
@@ -1076,19 +1081,5 @@ commuter bikesharing systems.
 
 \bibliographystyle{plainnat}
 \bibliography{bibliography}
-
-\section{Supplemental Materials}
-
-\subsection{Links}
-\label{sec:supp_links}
-
-\begin{itemize}
-\item treelapse home page: \url{https://krisrs1128.github.io/treelapse/}
-\item treelapse development page: \url{https://github.com/krisrs1128/treelapse}
-\item treelapse video demo: \url{https://www.youtube.com/watch?v=EcmYBRMVMbI&t=14s}
-\item Home prices data: \url{http://www.zillow.com/research/data/}
-\item Bikesharing data: \url{https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset}
-\end{itemize}
-
 
 \end{document}
