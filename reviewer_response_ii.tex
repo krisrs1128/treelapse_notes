@@ -37,6 +37,10 @@ might help others either avoid such difficulties or identify appropriate
 work-arounds. Please consider adding relevant text to the paper.
 
 \color{black}
+We have added a brief discussion of the possibility of combining the third and
+fourth views in a paragraph following their introduction (``In principle, it
+would be desirable...''). We describe the difficulties we found, and provide a
+link to a github branch with the partial solution that we found unsatisfactory.
 
 \color{blue}
 2. On page 7, the description of the tree reads: "Every edge in the tree is
@@ -60,6 +64,12 @@ avoid disorientation? Alternatively, a toggle to enable/disable this behavior
 might help.
 
 \color{black}
+We had not previously considered using orderings other than D3's default.
+However, we were able to incorporate the reviewer's suggestion by adding a
+``toggle layout'' button, which smoothly transitions between D3's default ordering
+(descending height and then ascending ID) and an ordering based on the number of
+total descendants. The online vignettes have been updated to include this new
+functionality.
 
 \subsection{Reviewer 2}
 \label{subsec:reviewer_2}
